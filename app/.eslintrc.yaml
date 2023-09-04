@@ -17,4 +17,4 @@ settings:
 
 rules:
   no-plusplus: [ "error", { "allowForLoopAfterthoughts": true } ]
-#  react/react-in-jsx-scope: off
+  react/react-in-jsx-scope: off
