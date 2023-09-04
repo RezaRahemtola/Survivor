@@ -3,6 +3,4 @@
 /.expo/
 
 # Infrastructure
-/.dockerignore
 /Dockerfile
-/.gitignore
