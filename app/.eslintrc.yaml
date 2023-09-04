@@ -6,6 +6,8 @@ extends:
   - plugin:react/recommended
   - prettier
 
+parser: "@typescript-eslint/parser"
+
 parserOptions:
   project: tsconfig.json
   ecmaVersion: latest
@@ -17,4 +19,6 @@ settings:
 
 rules:
   no-plusplus: [ "error", { "allowForLoopAfterthoughts": true } ]
+
   react/react-in-jsx-scope: off
+  react/no-unescaped-entities: off
