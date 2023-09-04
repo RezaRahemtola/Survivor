@@ -9,7 +9,8 @@
     "start:ios": "expo start --ios",
     "start:web": "expo start --web",
     "lint": "eslint **/*.tsx --max-warnings=0",
-    "lint:fix": "eslint **/*.tsx --fix --max-warnings=0"
+    "lint:fix": "eslint **/*.tsx --fix --max-warnings=0",
+    "format": "prettier **/*.tsx --write"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
