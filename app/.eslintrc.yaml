@@ -1,0 +1,20 @@
+env:
+  browser: true
+  es2022: true
+
+extends:
+  - plugin:react/recommended
+  - prettier
+
+parserOptions:
+  project: tsconfig.json
+  ecmaVersion: latest
+  sourceType: module
+
+settings:
+  react:
+    version: "detect"
+
+rules:
+  no-plusplus: [ "error", { "allowForLoopAfterthoughts": true } ]
+#  react/react-in-jsx-scope: off

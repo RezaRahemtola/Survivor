@@ -7,7 +7,9 @@
     "start:tunnel": "expo start --host tunnel",
     "start:android": "expo start --android",
     "start:ios": "expo start --ios",
-    "start:web": "expo start --web"
+    "start:web": "expo start --web",
+    "lint": "eslint **/*.tsx --max-warnings=0",
+    "lint:fix": "eslint **/*.tsx --fix --max-warnings=0"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
@@ -32,6 +34,10 @@
     "@babel/core": "^7.22.15",
     "@expo/ngrok": "^4.1.1",
     "@types/react": "~18.2.21",
+    "eslint": "^8.48.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   },
   "private": true
