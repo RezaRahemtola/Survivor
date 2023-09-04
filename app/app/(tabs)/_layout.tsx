@@ -49,6 +49,13 @@ export default function TabLayout() {
 					tabBarIcon: ({ color }) => <TabBarIcon name="picture" source="AntDesign" color={color} />,
 				}}
 			/>
+			<Tabs.Screen
+				name="widgets"
+				options={{
+					title: "Widgets",
+					tabBarIcon: ({ color }) => <TabBarIcon name="widgets" source="MaterialIcons" color={color} />,
+				}}
+			/>
 		</Tabs>
 	);
 }
