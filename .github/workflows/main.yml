@@ -9,7 +9,6 @@ jobs:
   push_to_mirror:
     name: Push to Epitech repository
     runs-on: ubuntu-latest
-    if: ${{ github.event_name }} == "push"
     steps:
       - name: Repository checkout
         uses: actions/checkout@v3
