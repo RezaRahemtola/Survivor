@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  expo_app:
+    container_name: survivor_expo
+    build: ./app
+    tty: true
+    ports:
+      - '19006:19006'
+      - '19001:19001'
+      - '19002:19002'

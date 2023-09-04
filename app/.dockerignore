@@ -1,0 +1,8 @@
+# Expo
+/node_modules
+/.expo/
+
+# Infrastructure
+/.dockerignore
+/Dockerfile
+/.gitignore
