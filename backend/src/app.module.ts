@@ -1,3 +1,4 @@
+import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
@@ -13,6 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
       entities: [],
       synchronize: true,
     }),
+    CacheModule.register(),
   ],
   controllers: [],
   providers: [],
