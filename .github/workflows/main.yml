@@ -25,11 +25,12 @@ jobs:
       - name: Run eslint
         run: yarn lint > eslint-results
       - name: Get eslint results
-        uses: actions/upload-artifact@v1
-        if: always()
+        uses: actions/upload-artifact@v3
+        if: failure()
         with:
           name: eslint-results
           path: app/eslint-results
+          retention-days: 5
 
   push_to_mirror:
     name: Push to Epitech repository
