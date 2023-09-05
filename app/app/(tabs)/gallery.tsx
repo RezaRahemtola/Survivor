@@ -1,14 +1,20 @@
 import { StyleSheet } from "react-native";
-
-import EditScreenInfo from "../../components/EditScreenInfo";
-import { Text, View } from "../../components/Themed";
+import { View } from "../../components/Themed";
+import { useState } from "react";
+import { Searchbar } from "react-native-paper";
 
 export default function GalleryScreen() {
+	const [search, setSearch] = useState("");
+
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Gallery</Text>
-			<View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-			<EditScreenInfo path="app/(tabs)/gallery.tsx" />
+			<Searchbar
+				style={styles.searchBar}
+				placeholder="Search"
+				onChangeText={(value) => setSearch(value)}
+				value={search}
+				editable
+			/>
 		</View>
 	);
 }
@@ -16,16 +22,8 @@ export default function GalleryScreen() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
 	},
-	title: {
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-	separator: {
-		marginVertical: 30,
-		height: 1,
-		width: "80%",
+	searchBar: {
+		marginTop: 30,
 	},
 });
