@@ -1,5 +1,5 @@
 import { Button, StyleSheet, TextInput, View } from "react-native";
-import { useAuthContext } from "../../context/auth";
+import { useAuthContext } from "@/context/auth";
 import { useState } from "react";
 
 export default function SignIn() {

@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
-import { View } from "../../components/Themed";
 import { useState } from "react";
 import { Searchbar } from "react-native-paper";
-import { useAuthContext } from "../../context/auth";
-import GalleryCard from "../../components/gallery/GalleryCard";
+
+import { View } from "@/components/Themed";
+import { useAuthContext } from "@/context/auth";
+import GalleryCard from "@/components/gallery/GalleryCard";
 
 export default function GalleryScreen() {
 	const [search, setSearch] = useState("");

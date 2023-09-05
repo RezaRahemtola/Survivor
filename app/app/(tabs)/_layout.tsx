@@ -1,8 +1,8 @@
 import { Tabs } from "expo-router";
 import { useColorScheme } from "react-native";
 
-import Colors from "../../constants/Colors";
-import Icon, { IconProps } from "../../components/Icon";
+import Colors from "@/constants/Colors";
+import Icon, { IconProps } from "@/components/Icon";
 
 const TabBarIcon = (props: IconProps) => <Icon size={28} style={{ marginBottom: -3 }} {...props} />;
 

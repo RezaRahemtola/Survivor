@@ -1,5 +1,6 @@
-import UserLayout, { UserLayoutProps } from "../../layouts/User";
 import { useLocalSearchParams } from "expo-router";
+
+import UserLayout, { UserLayoutProps } from "@/layouts/User";
 
 export default function ModalScreen() {
 	const params = useLocalSearchParams<UserLayoutProps>();

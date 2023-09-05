@@ -1,9 +1,10 @@
 import React from "react";
 import { Card } from "react-native-elements";
 import { Image, ImageBackground, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
-import ValueLine from "../components/user/ValueLine";
-import Icon from "../components/Icon";
-import { User } from "../types/user";
+
+import ValueLine from "@/components/user/ValueLine";
+import Icon from "@/components/Icon";
+import { User } from "@/types/user";
 
 type HeadComponentProps = {
 	name: string;
