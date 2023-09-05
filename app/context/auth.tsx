@@ -1,6 +1,7 @@
 import { router, useRootNavigationState, useSegments } from "expo-router";
 import React, { ComponentProps, createContext, useContext, useEffect, useMemo, useState } from "react";
-import { AuthUser } from "../types/user";
+
+import { AuthUser } from "@/types/user";
 
 type AuthContextType = {
 	signIn: () => void;

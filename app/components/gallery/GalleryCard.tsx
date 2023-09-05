@@ -1,9 +1,10 @@
 import React from "react";
 import { Card } from "react-native-elements";
 import { Image, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
-import Icon from "../../components/Icon";
-import { User } from "../../types/user";
 import { router } from "expo-router";
+
+import Icon from "@/components/Icon";
+import { User } from "@/types/user";
 
 type GalleryCardProps = Omit<User, "id">;
 const GalleryCard = ({ email, name, surname, birth_date, gender, picture, work }: GalleryCardProps) => {
