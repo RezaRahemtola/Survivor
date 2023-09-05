@@ -6,7 +6,7 @@ import styled from "styled-components/native";
 import dayjs from "@/config/dayjs";
 import { Text } from "@/components/Themed";
 
-const DailyWeatherForecast = ({ day, index }: { day: any; index: number }) => {
+const DailyWeatherForecast = ({ day }: { day: any }) => {
 	return (
 		<DayContainer>
 			<DateContainer>
