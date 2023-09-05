@@ -32,7 +32,7 @@ const useProtectedRoute = (user: boolean) => {
 			// Redirect to the sign-in page.
 			router.replace("/sign-in");
 		} else if (user && inAuthGroup) {
-			// Redirect away from the sign-in page.
+			// Redirect to the home page
 			router.replace("/(tabs)/home");
 		}
 	}, [user, segments, navigationState]);
@@ -45,8 +45,14 @@ const Provider = (props: ComponentProps<any>) => {
 
 	const authValue = useMemo(
 		() => ({
-			signIn: () => setAuth(true),
-			signOut: () => setAuth(false),
+			signIn: () => {
+				setAuth(true);
+				router.push("/(tabs)/home");
+			},
+			signOut: () => {
+				setAuth(false);
+				router.replace("/sign-in");
+			},
 			user,
 		}),
 		[user],
