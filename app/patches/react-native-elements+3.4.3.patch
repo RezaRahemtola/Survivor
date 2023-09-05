@@ -1,0 +1,16 @@
+diff --git a/node_modules/react-native-elements/dist/card/Card.d.ts b/node_modules/react-native-elements/dist/card/Card.d.ts
+index c56b2a9..318242b 100644
+--- a/node_modules/react-native-elements/dist/card/Card.d.ts
++++ b/node_modules/react-native-elements/dist/card/Card.d.ts
+@@ -1,9 +1,10 @@
+-import React from 'react';
++import React, { ReactNode } from "react";
+ import { StyleProp, ViewStyle } from 'react-native';
+ import { RneFunctionComponent } from '../helpers';
+ export declare type CardProps = {
+     containerStyle?: StyleProp<ViewStyle>;
+     wrapperStyle?: StyleProp<ViewStyle>;
++    children?: React.ReactNode
+ };
+ interface Card extends RneFunctionComponent<CardProps> {
+ }
