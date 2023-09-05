@@ -16,6 +16,7 @@
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@react-navigation/native": "^6.1.7",
+    "dayjs": "^1.11.9",
     "expo": "~49.0.9",
     "expo-device": "^5.4.0",
     "expo-font": "~11.4.0",

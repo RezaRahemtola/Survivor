@@ -3,11 +3,13 @@ import React from "react";
 
 import CurrentWeatherForecast from "@/components/weather/CurrentWeatherForecast";
 import mockedWeather from "@/mocks/weather.json";
+import DailyWeatherForecast from "@/layouts/DailyWeatherForecast";
 
 export default function HomeScreen() {
 	return (
 		<View style={styles.container}>
 			<CurrentWeatherForecast currentWeather={mockedWeather} />
+			<DailyWeatherForecast weather={mockedWeather} />
 		</View>
 	);
 }
