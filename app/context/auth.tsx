@@ -1,10 +1,11 @@
 import { router, useRootNavigationState, useSegments } from "expo-router";
 import React, { ComponentProps, createContext, useContext, useEffect, useMemo, useState } from "react";
+import { AuthUser } from "../types/user";
 
 type AuthContextType = {
 	signIn: () => void;
 	signOut: () => void;
-	user: boolean;
+	user: AuthUser | null;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -15,7 +16,7 @@ export const useAuthContext = (): AuthContextType => {
 };
 
 // This hook will protect the route access based on user authentication.
-const useProtectedRoute = (user: boolean) => {
+const useProtectedRoute = (user: AuthUser | null) => {
 	const segments = useSegments();
 	const navigationState = useRootNavigationState();
 
@@ -26,12 +27,12 @@ const useProtectedRoute = (user: boolean) => {
 
 		if (
 			// If the user is not signed in and the initial segment is not anything in the auth group.
-			!user &&
+			user === null &&
 			!inAuthGroup
 		) {
 			// Redirect to the sign-in page.
 			router.replace("/sign-in");
-		} else if (user && inAuthGroup) {
+		} else if (user !== null && inAuthGroup) {
 			// Redirect to the home page
 			router.replace("/(tabs)/home");
 		}
@@ -39,18 +40,30 @@ const useProtectedRoute = (user: boolean) => {
 };
 
 const Provider = (props: ComponentProps<any>) => {
-	const [user, setAuth] = useState(false);
+	const [user, setAuth] = useState<AuthUser | null>(null);
 
 	useProtectedRoute(user);
 
 	const authValue = useMemo(
 		() => ({
 			signIn: () => {
-				setAuth(true);
+				// TODO Reza: Remove hardcoded value
+				const user: AuthUser = {
+					id: 1,
+					email: "billy.bob@masurao.jp",
+					name: "Billy",
+					surname: "Bob",
+					birth_date: "1973-07-16",
+					gender: "Male",
+					work: "CEO",
+					subordinates: [],
+					access_token: "token",
+				};
+				setAuth(user);
 				router.push("/(tabs)/home");
 			},
 			signOut: () => {
-				setAuth(false);
+				setAuth(null);
 				router.replace("/sign-in");
 			},
 			user,
