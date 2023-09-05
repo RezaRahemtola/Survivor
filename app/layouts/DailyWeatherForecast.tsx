@@ -1,10 +1,10 @@
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 import DailyWeather from "@/components/weather/DailyWeatherForecast";
 import { Text } from "@/components/Themed";
 
 const DailyWeatherForecast = ({ weather }: any) => (
-	<>
+	<ScrollView>
 		{weather.daily ? (
 			weather.daily.map((day: any) => {
 				return <DailyWeather key={day.dt} day={day} />;
@@ -12,7 +12,7 @@ const DailyWeatherForecast = ({ weather }: any) => (
 		) : (
 			<Text style={styles.noWeather}>No Weather to show</Text>
 		)}
-	</>
+	</ScrollView>
 );
 
 const styles = StyleSheet.create({
@@ -20,4 +20,5 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 	},
 });
+
 export default DailyWeatherForecast;
