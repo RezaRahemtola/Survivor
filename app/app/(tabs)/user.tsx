@@ -5,49 +5,47 @@ import { Image, ImageBackground, Platform, ScrollView, StyleSheet, Text, View } 
 import { useAuthContext } from "../../context/auth";
 import ValueLine from "../../components/user/ValueLine";
 import Icon from "../../components/Icon";
-import { User } from "../../types/user";
 
 type HeadComponentProps = {
 	name: string;
 	surname: string;
 	work: string;
+	picture: string;
 };
-const HeadComponent = ({ name, surname, work }: HeadComponentProps) => {
-	const avatar = "https://i.imgur.com/GfkNpVG.jpg";
-	const avatarBackground = "https://i.imgur.com/rXVcgTZ.jpg";
-
-	return (
-		<View style={styles.headComponent}>
-			<ImageBackground style={styles.headerBackgroundImage} blurRadius={10} source={{ uri: avatarBackground }}>
-				<View style={styles.headerColumn}>
-					<Image style={styles.userImage} source={{ uri: avatar }} />
-					<Text style={styles.userNameText}>
-						{name} {surname}
-					</Text>
-					<View style={styles.userWorkRow}>
-						<View>
-							<Icon name="office-building" source="MaterialCommunityIcons" style={styles.workIcon} />
-						</View>
-						<View style={styles.userWorkContent}>
-							<Text style={styles.userWorkText}>{work}</Text>
-						</View>
+const HeadComponent = ({ name, surname, work, picture }: HeadComponentProps) => (
+	<View style={styles.headComponent}>
+		<ImageBackground
+			style={styles.headerBackgroundImage}
+			blurRadius={10}
+			source={{ uri: "https://i.imgur.com/rXVcgTZ.jpg" }}
+		>
+			<View style={styles.headerColumn}>
+				<Image style={styles.userImage} source={{ uri: `data:image/png;base64,${picture}` }} />
+				<Text style={styles.userNameText}>
+					{name} {surname}
+				</Text>
+				<View style={styles.userWorkRow}>
+					<View>
+						<Icon name="office-building" source="MaterialCommunityIcons" style={styles.workIcon} />
+					</View>
+					<View style={styles.userWorkContent}>
+						<Text style={styles.userWorkText}>{work}</Text>
 					</View>
 				</View>
-			</ImageBackground>
-		</View>
-	);
-};
+			</View>
+		</ImageBackground>
+	</View>
+);
 
-type UserScreenProps = Omit<User, "id" | "subordinates" | "access_token">;
 const UserScreen = () => {
 	const { user } = useAuthContext();
-	const { email, name, surname, birth_date, gender, work } = user!;
+	const { email, name, surname, birth_date, gender, work, picture } = user!;
 
 	return (
 		<ScrollView style={styles.scroll}>
 			<View style={styles.container}>
 				<Card>
-					<HeadComponent name={name} surname={surname} work={work} />
+					<HeadComponent name={name} surname={surname} work={work} picture={picture} />
 					<ValueLine value={email} icon={{ name: "email", source: "MaterialIcons" }} />
 					<ValueLine
 						value={gender}

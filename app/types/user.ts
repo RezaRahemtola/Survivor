@@ -10,6 +10,7 @@ export type User = BaseUser & {
 	gender: string;
 	work: string;
 	subordinates: number[];
+	picture: string;
 };
 
 export type AuthUser = User & {
