@@ -5,12 +5,7 @@ import { Pressable, useColorScheme } from "react-native";
 import Colors from "../../constants/Colors";
 import Icon, { IconProps } from "../../components/Icon";
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: IconProps) {
-	return <Icon size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+const TabBarIcon = (props: IconProps) => <Icon size={28} style={{ marginBottom: -3 }} {...props} />;
 
 export default function TabLayout() {
 	const colorScheme = useColorScheme();
