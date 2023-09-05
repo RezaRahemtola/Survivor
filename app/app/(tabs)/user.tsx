@@ -17,7 +17,7 @@ const HeadComponent = ({ name, surname, work }: HeadComponentProps) => {
 	const avatarBackground = "https://i.imgur.com/rXVcgTZ.jpg";
 
 	return (
-		<View>
+		<View style={styles.headComponent}>
 			<ImageBackground style={styles.headerBackgroundImage} blurRadius={10} source={{ uri: avatarBackground }}>
 				<View style={styles.headerColumn}>
 					<Image style={styles.userImage} source={{ uri: avatar }} />
@@ -65,6 +65,9 @@ export default UserScreen;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+	},
+	headComponent: {
+		paddingBottom: 30,
 	},
 	headerBackgroundImage: {
 		paddingBottom: 20,
