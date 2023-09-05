@@ -12,7 +12,7 @@ const GalleryCard = ({ email, name, surname, birth_date, gender, picture, work }
 			<TouchableWithoutFeedback
 				onPress={() =>
 					router.push({
-						pathname: "/modal",
+						pathname: "/user/modal",
 						params: { email, name, surname, birth_date, gender, work, picture },
 					})
 				}
