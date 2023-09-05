@@ -2,17 +2,18 @@ import { Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
 import LoginResultDto from './dto/login-result.dto'
 import CredentialsDto from './dto/credentials.dto'
+import { firstValueFrom } from 'rxjs'
 
 @Injectable()
 export class AuthService {
   constructor(private readonly httpService: HttpService) {
   }
 
-  logIn({email, password}: CredentialsDto): LoginResultDto {
-    return this.httpService.post<LoginResultDto>('/login', {email, password}, {
+  async logIn({email, password}: CredentialsDto): Promise<LoginResultDto> {
+    return (await firstValueFrom(this.httpService.post<LoginResultDto>('/employees/login', {email, password}, {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    }))).data
   }
 }

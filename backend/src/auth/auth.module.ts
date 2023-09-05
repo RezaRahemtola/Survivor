@@ -5,7 +5,14 @@ import { AuthController } from './auth.controller'
 
 @Module({
   imports: [
-    HttpModule,
+    HttpModule.register({
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'X-Group-Authorization': '5roNHlfWme2GWpfbKyKeL0_7Ld0u5g7i',
+      },
+      baseURL: 'https://masurao.fr/api',
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService],
