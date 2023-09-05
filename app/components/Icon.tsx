@@ -1,5 +1,5 @@
 import { ComponentProps } from "react";
-import { AntDesign, FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, FontAwesome, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
 type FontAwesomeIconProps = {
 	name: ComponentProps<typeof FontAwesome>["name"];
@@ -16,7 +16,16 @@ type MaterialIconsIconProps = {
 	source: "MaterialIcons";
 } & ComponentProps<typeof MaterialIcons>;
 
-export type IconProps = FontAwesomeIconProps | AntDesignIconProps | MaterialIconsIconProps;
+type MaterialCommunityIconsIconProps = {
+	name: ComponentProps<typeof MaterialCommunityIcons>["name"];
+	source: "MaterialCommunityIcons";
+} & ComponentProps<typeof MaterialCommunityIcons>;
+
+export type IconProps =
+	| FontAwesomeIconProps
+	| AntDesignIconProps
+	| MaterialIconsIconProps
+	| MaterialCommunityIconsIconProps;
 
 const Icon = ({ name, source, color, ...props }: IconProps) => {
 	if (source === "FontAwesome") {
@@ -25,6 +34,8 @@ const Icon = ({ name, source, color, ...props }: IconProps) => {
 		return <AntDesign name={name} {...props} />;
 	} else if (source === "MaterialIcons") {
 		return <MaterialIcons name={name} {...props} />;
+	} else if (source === "MaterialCommunityIcons") {
+		return <MaterialCommunityIcons name={name} {...props} />;
 	}
 };
 
