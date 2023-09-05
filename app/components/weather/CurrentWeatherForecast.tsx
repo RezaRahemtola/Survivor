@@ -1,11 +1,13 @@
 import React from "react";
+import { StyleSheet } from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";
+import { Text } from "@/components/Themed";
 
 const CurrentWeatherForecast = ({ currentWeather }: any) => {
 	return (
 		<CurrentView>
-			<Timezone>{currentWeather.timezone}</Timezone>
+			<Text style={styles.timezone}>{currentWeather.timezone}</Text>
 			<MainInfoContainer>
 				<CurrentTempView>
 					{currentWeather.current && (
@@ -16,55 +18,77 @@ const CurrentWeatherForecast = ({ currentWeather }: any) => {
 							resizeMode={"contain"}
 						/>
 					)}
-					<CurrentDegrees>
+					<Text style={styles.currentDegrees}>
 						{Math.round(currentWeather.current && currentWeather.current?.temp)}
 						°C
-					</CurrentDegrees>
+					</Text>
 				</CurrentTempView>
-				<Description>{currentWeather.current && currentWeather.current.weather[0].description}</Description>
+				<Text style={styles.details}>{currentWeather.current && currentWeather.current.weather[0].description}</Text>
 			</MainInfoContainer>
 			<SecondaryInfoContainer>
 				<Row>
 					<DetailsBox>
-						<Label>Feels</Label>
-						<Details>
+						<Text style={styles.labels}>Feels</Text>
+						<Text style={styles.details}>
 							{currentWeather.current && Math.round(currentWeather.current.feels_like)}
 							°C
-						</Details>
+						</Text>
 					</DetailsBox>
 					<DetailsBox>
-						<Label>Low</Label>
-						<Details>
+						<Text style={styles.labels}>Low</Text>
+						<Text style={styles.details}>
 							{currentWeather.daily && Math.round(currentWeather.daily[0].temp.min)}
 							°C
-						</Details>
+						</Text>
 					</DetailsBox>
 					<DetailsBox>
-						<Label>High</Label>
-						<Details>
+						<Text style={styles.labels}>High</Text>
+						<Text style={styles.details}>
 							{currentWeather.daily && Math.round(currentWeather.daily[0].temp.max)}
 							°C
-						</Details>
+						</Text>
 					</DetailsBox>
 				</Row>
 				<Row>
 					<DetailsBox>
-						<Label>Wind</Label>
-						<Details>{currentWeather.current && currentWeather.current.wind_speed} m/s</Details>
+						<Text style={styles.labels}>Wind</Text>
+						<Text style={styles.details}>{currentWeather.current && currentWeather.current.wind_speed} m/s</Text>
 					</DetailsBox>
 					<DetailsBox>
-						<Label>Humidity</Label>
-						<Details>{currentWeather.current && currentWeather.current.humidity}%</Details>
+						<Text style={styles.labels}>Humidity</Text>
+						<Text style={styles.details}>{currentWeather.current && currentWeather.current.humidity}%</Text>
 					</DetailsBox>
 					<DetailsBox>
-						<Label>Rain</Label>
-						<Details>{currentWeather.daily > 0 ? currentWeather.daily[0].rain : "0"} MM</Details>
+						<Text style={styles.labels}>Rain</Text>
+						<Text style={styles.details}>{currentWeather.daily > 0 ? currentWeather.daily[0].rain : "0"} MM</Text>
 					</DetailsBox>
 				</Row>
 			</SecondaryInfoContainer>
 		</CurrentView>
 	);
 };
+
+const styles = StyleSheet.create({
+	timezone: {
+		display: "flex",
+		justifyContent: "center",
+		marginTop: 10,
+		fontSize: 15,
+	},
+	currentDegrees: {
+		display: "flex",
+		justifyContent: "center",
+		marginTop: 10,
+		fontSize: 60,
+	},
+	details: {
+		fontSize: 15,
+		textTransform: "capitalize",
+	},
+	labels: {
+		fontSize: 18,
+	},
+});
 
 const CurrentView = styled.View`
 	display: flex;
@@ -85,12 +109,6 @@ const MainInfoContainer = styled.View`
 	align-items: center;
 `;
 
-const Description = styled.Text`
-	color: white;
-	font-size: 15px;
-	text-transform: capitalize;
-`;
-
 const SecondaryInfoContainer = styled.View`
 	background-color: rgba(255, 255, 255, 0.8);
 	border-radius: 20px;
@@ -107,22 +125,6 @@ const WeatherIcon = styled.Image`
 	height: 50px;
 `;
 
-const Timezone = styled.Text`
-	color: white;
-	display: flex;
-	justify-content: center;
-	margin-top: 10px;
-	font-size: 15px;
-`;
-
-const CurrentDegrees = styled.Text`
-	color: white;
-	display: flex;
-	justify-content: center;
-	margin-top: 10px;
-	font-size: 60px;
-`;
-
 const Row = styled.View`
 	display: flex;
 	flex-direction: row;
@@ -134,16 +136,6 @@ const Row = styled.View`
 
 const DetailsBox = styled.View`
 	display: flex;
-`;
-
-const Label = styled.Text`
-	font-size: 18px;
-`;
-
-const Details = styled.Text`
-	color: black;
-	font-size: 15px;
-	text-transform: capitalize;
 `;
 
 export default CurrentWeatherForecast;
