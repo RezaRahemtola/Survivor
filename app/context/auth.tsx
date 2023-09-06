@@ -1,13 +1,13 @@
 import { router, useRootNavigationState, useSegments } from "expo-router";
-import React, { ComponentProps, createContext, useContext, useEffect, useMemo, useState } from "react";
+import { ComponentProps, createContext, useContext, useEffect, useMemo, useState } from "react";
 
-import { AuthUser } from "@/types/user";
 import axios from "@/config/axios";
+import { AuthRequest } from "@/types/auth";
 
 type AuthContextType = {
 	signIn: (email: string, password: string) => void;
 	signOut: () => void;
-	user: AuthUser | null;
+	accessToken: string | null;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -17,8 +17,7 @@ export const useAuthContext = (): AuthContextType => {
 	return context;
 };
 
-// This hook will protect the route access based on user authentication.
-const useProtectedRoute = (user: AuthUser | null) => {
+const useProtectedRoute = (accessToken: string | null) => {
 	const segments = useSegments();
 	const navigationState = useRootNavigationState();
 
@@ -27,33 +26,26 @@ const useProtectedRoute = (user: AuthUser | null) => {
 
 		const inAuthGroup = segments[0] === "(auth)";
 
-		if (
-			// If the user is not signed in and the initial segment is not anything in the auth group.
-			user === null &&
-			!inAuthGroup
-		) {
-			// Redirect to the sign-in page.
+		if (!accessToken && !inAuthGroup) {
 			router.replace("/sign-in");
-		} else if (user !== null && inAuthGroup) {
-			// Redirect to the home page
+		} else if (accessToken && inAuthGroup) {
 			router.replace("/(tabs)/home");
 		}
-	}, [user, segments, navigationState]);
+	}, [accessToken, segments, navigationState]);
 };
 
 const Provider = (props: ComponentProps<any>) => {
-	const [user, setUser] = useState<AuthUser | null>(null);
+	const [accessToken, setAccessToken] = useState<string | null>(null);
 
-	useProtectedRoute(user);
+	useProtectedRoute(accessToken);
 
 	const authValue = useMemo(
 		() => ({
 			signIn: (email: string, password: string) => {
 				axios
-					.post<AuthUser>("/auth/login", { email, password })
+					.post<AuthRequest>("/auth/login", { email, password })
 					.then((response) => {
-						const user = response.data;
-						setUser(user);
+						setAccessToken(response.data.access_token);
 						router.push("/(tabs)/home");
 					})
 					.catch((error) => {
@@ -62,12 +54,12 @@ const Provider = (props: ComponentProps<any>) => {
 					});
 			},
 			signOut: () => {
-				setUser(null);
+				setAccessToken(null);
 				router.replace("/sign-in");
 			},
-			user,
+			accessToken,
 		}),
-		[user],
+		[accessToken],
 	);
 
 	return <AuthContext.Provider value={authValue}>{props.children}</AuthContext.Provider>;

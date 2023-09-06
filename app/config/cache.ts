@@ -1,7 +1,6 @@
 import { Cache } from "react-native-cache";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "@/config/axios";
-import { useAuthContext } from "@/context/auth";
 
 const picturesCache = new Cache({
 	namespace: "survivor",
@@ -12,13 +11,12 @@ const picturesCache = new Cache({
 	backend: AsyncStorage,
 });
 
-export const getPicture = async (userId: number): Promise<string | undefined> => {
+export const getPicture = async (userId: number, accessToken: string | null): Promise<string | undefined> => {
 	const cachedPicture = await picturesCache.get(userId.toString());
 	if (cachedPicture) return cachedPicture;
 
-	const { user: authUser } = useAuthContext();
 	const fetchedPicture = await axios.get<string>(`/employees/${userId}/picture`, {
-		headers: { Authorization: `Bearer ${authUser?.access_token}` },
+		headers: { Authorization: `Bearer ${accessToken}` },
 	});
 	picturesCache.set(userId.toString(), fetchedPicture.data);
 	return fetchedPicture.data;

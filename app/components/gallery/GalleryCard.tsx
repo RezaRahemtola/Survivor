@@ -8,7 +8,7 @@ import axios from "@/config/axios";
 import { useAuthContext } from "@/context/auth";
 
 const GalleryCard = ({ user }: { user: User }) => {
-	const { user: authUser } = useAuthContext();
+	const { accessToken } = useAuthContext();
 
 	return (
 		<View style={styles.container}>
@@ -21,7 +21,7 @@ const GalleryCard = ({ user }: { user: User }) => {
 						});
 					}
 					const response = await axios.get<FullUser>(`/employees/${user.id}`, {
-						headers: { Authorization: `Bearer ${authUser?.access_token}` },
+						headers: { Authorization: `Bearer ${accessToken}` },
 					});
 
 					router.push({

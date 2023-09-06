@@ -4,7 +4,7 @@ import { Image, ImageBackground, Platform, ScrollView, StyleSheet, Text, View } 
 
 import ValueLine from "@/components/user/ValueLine";
 import Icon from "@/components/Icon";
-import { User } from "@/types/user";
+import { ModalUser } from "@/types/user";
 
 type HeadComponentProps = {
 	name: string;
@@ -37,18 +37,17 @@ const HeadComponent = ({ name, surname, work, picture }: HeadComponentProps) => 
 	</View>
 );
 
-export type UserLayoutProps = Omit<User, "id" | "subordinates">;
-const UserLayout = ({ email, name, surname, birth_date, gender, work, picture }: UserLayoutProps) => (
+const UserLayout = ({ user }: { user: ModalUser }) => (
 	<ScrollView style={styles.scroll}>
 		<View style={styles.container}>
 			<Card>
-				<HeadComponent name={name} surname={surname} work={work} picture={picture} />
-				<ValueLine value={email} icon={{ name: "email", source: "MaterialIcons" }} />
+				<HeadComponent name={user.name} surname={user.surname} work={user.work} picture={user.picture!} />
+				<ValueLine value={user.email} icon={{ name: "email", source: "MaterialIcons" }} />
 				<ValueLine
-					value={gender}
-					icon={{ source: "MaterialCommunityIcons", name: gender === "Male" ? "gender-male" : "gender-female" }}
+					value={user.gender}
+					icon={{ source: "MaterialCommunityIcons", name: user.gender === "Male" ? "gender-male" : "gender-female" }}
 				/>
-				<ValueLine value={birth_date} icon={{ source: "FontAwesome", name: "birthday-cake" }} />
+				<ValueLine value={user.birth_date} icon={{ source: "FontAwesome", name: "birthday-cake" }} />
 			</Card>
 		</View>
 	</ScrollView>
