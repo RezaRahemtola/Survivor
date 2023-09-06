@@ -1,41 +1,45 @@
 import {
   Controller,
   Get,
-  Headers,
+  Inject,
   Param,
+  Req,
   UseInterceptors,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import JwtValidatorInterceptor, {
+  RequestWithToken,
+} from '../jwt-validator.interceptor';
+import TokenAwareCacheInterceptor from '../token-aware-cache.interceptor';
 
 @Controller('employees')
 export class EmployeesController {
-  constructor(private readonly employeesService: EmployeesService) {}
+  constructor(
+    private readonly employeesService: EmployeesService,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
+  ) {}
 
-  @UseInterceptors(CacheInterceptor)
+  @UseInterceptors(JwtValidatorInterceptor, TokenAwareCacheInterceptor)
   @Get()
-  getEmployees(@Headers('Authorization') accessToken: string) {
-    return this.employeesService.getEmployeesShort(accessToken.split(' ')[1]);
+  getEmployees(@Req() { token }: RequestWithToken) {
+    return this.employeesService.getEmployeesShort(token);
   }
 
-  @UseInterceptors(CacheInterceptor)
+  @UseInterceptors(JwtValidatorInterceptor, TokenAwareCacheInterceptor)
   @Get('/:id')
-  getEmployee(
-    @Param('id') id: number,
-    @Headers('Authorization') accessToken: string,
-  ) {
-    return this.employeesService.getEmployeeLong(id, accessToken.split(' ')[1]);
+  getEmployee(@Param('id') id: number, @Req() { token }: RequestWithToken) {
+    return this.employeesService.getEmployeeLong(id, token);
   }
 
-  @UseInterceptors(CacheInterceptor)
+  @UseInterceptors(JwtValidatorInterceptor, TokenAwareCacheInterceptor)
   @Get('/:id/picture')
   getEmployeePicture(
     @Param('id') id: number,
-    @Headers('Authorization') accessToken: string,
+    @Req() { token }: RequestWithToken,
   ) {
-    return this.employeesService.getEmployeePicture(
-      id,
-      accessToken.split(' ')[1],
-    );
+    return this.employeesService.getEmployeePicture(id, token);
   }
 }
