@@ -6,6 +6,7 @@ import { EmployeesController } from './employees.controller'
   imports: [],
   controllers: [EmployeesController],
   providers: [EmployeesService],
+  exports: [EmployeesService],
 })
 export class EmployeesModule {
 }
