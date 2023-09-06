@@ -1,7 +1,7 @@
 import { locationAtom, locationErrorAtom, weatherAtom } from "@/stores/widgets";
 import { useAtom } from "jotai";
 import * as Location from "expo-location";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import axios from "axios";
 
 import { Text } from "@/components/Themed";
