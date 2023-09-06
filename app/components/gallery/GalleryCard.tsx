@@ -1,21 +1,20 @@
-import React from "react";
-import { Card } from "react-native-elements";
 import { Image, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
-import { router } from "expo-router";
+import { Card } from "react-native-elements";
 
 import Icon from "@/components/Icon";
-import { User } from "@/types/user";
+import { BaseUserWithPicture } from "@/types/user";
 
-type GalleryCardProps = Omit<User, "id">;
-const GalleryCard = ({ email, name, surname, birth_date, gender, picture, work }: GalleryCardProps) => {
+
+const GalleryCard = ({ email, name, surname, picture }: BaseUserWithPicture) => {
 	return (
 		<View style={styles.container}>
 			<TouchableWithoutFeedback
-				onPress={() =>
-					router.push({
-						pathname: "/user/modal",
-						params: { email, name, surname, birth_date, gender, work, picture },
-					})
+				onPress={
+					() => {}
+					// router.push({
+					// 	pathname: "/user/modal",
+					// 	params: { email, name, surname, birth_date, gender, work, picture },
+					// })
 				}
 			>
 				<Card>
@@ -24,12 +23,12 @@ const GalleryCard = ({ email, name, surname, birth_date, gender, picture, work }
 						<Text style={styles.userNameText}>
 							{name} {surname}
 						</Text>
-						<View style={styles.userWorkRow}>
+						<View style={styles.userEmailRow}>
 							<View>
-								<Icon name="office-building" source="MaterialCommunityIcons" style={styles.workIcon} />
+								<Icon name="email" source="MaterialIcons" style={styles.workIcon} />
 							</View>
-							<View style={styles.userWorkContent}>
-								<Text style={styles.userWorkText}>{work}</Text>
+							<View style={styles.userEmailContent}>
+								<Text style={styles.userEmailText}>{email}</Text>
 							</View>
 						</View>
 					</View>
@@ -63,14 +62,14 @@ const styles = StyleSheet.create({
 		color: "black",
 		fontSize: 26,
 	},
-	userWorkRow: {
+	userEmailRow: {
 		alignItems: "center",
 		flexDirection: "row",
 	},
-	userWorkContent: {
+	userEmailContent: {
 		backgroundColor: "transparent",
 	},
-	userWorkText: {
+	userEmailText: {
 		color: "#A5A5A5",
 		fontSize: 15,
 		fontWeight: "600",
