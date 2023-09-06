@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import React from "react";
 import CurrentWeatherForecast from "@/components/weather/CurrentWeatherForecast";
 import DailyWeatherForecast from "@/layouts/DailyWeatherForecast";
-import TrendNews from "@/layouts/TrendNews";
+import TrendNewsLayout from "@/layouts/TrendNewsLayout";
 import WeatherLayout from "@/layouts/WeatherLayout";
 
 export default function HomeScreen() {
@@ -12,7 +12,7 @@ export default function HomeScreen() {
 				<CurrentWeatherForecast />
 				<DailyWeatherForecast />
 			</WeatherLayout>
-			<TrendNews />
+			<TrendNewsLayout />
 		</ScrollView>
 	);
 }
