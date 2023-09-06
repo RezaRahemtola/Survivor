@@ -14,7 +14,7 @@ export class EmployeesController {
     @Body() options: EmployeesListOptionsDto,
     @Headers('Authorization') accessToken: string,
   ) {
-    return this.employeesService.getEmployees(options, accessToken.split(' ')[1])
+    return this.employeesService.getEmployeesShort(options, accessToken.split(' ')[1])
   }
 
   @UseInterceptors(CacheInterceptor)
