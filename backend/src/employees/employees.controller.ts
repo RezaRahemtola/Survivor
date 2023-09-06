@@ -1,14 +1,5 @@
-import {
-  Controller,
-  Get,
-  Inject,
-  Param,
-  Req,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Controller, Get, Param, Req, UseInterceptors } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import { Cache } from 'cache-manager';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import JwtValidatorInterceptor, {
   RequestWithToken,
 } from '../jwt-validator.interceptor';
@@ -16,11 +7,7 @@ import TokenAwareCacheInterceptor from '../token-aware-cache.interceptor';
 
 @Controller('employees')
 export class EmployeesController {
-  constructor(
-    private readonly employeesService: EmployeesService,
-    @Inject(CACHE_MANAGER)
-    private readonly cacheManager: Cache,
-  ) {}
+  constructor(private readonly employeesService: EmployeesService) {}
 
   @UseInterceptors(JwtValidatorInterceptor, TokenAwareCacheInterceptor)
   @Get()
