@@ -23,9 +23,11 @@
 - Continuous Integration (launching ESLint tests both in the backend and app before allowing merges)
 - Continuous Deployment (on a dedicated server via SSH)
 - Requests optimized ⚡
+  - All the pictures are cached on their first load
   - Coworkers gallery
     - Minimal data fetched for everyone, with additional content fetched when opening the profile modal
     - Pictures lazy-loading (fetched only when they need to be displayed)
+  - User profile fetched only when necessary
 
 ## Credits 🙏
 - The weather widgets are heavily inspired from [this weather application](https://github.com/stefanylaforest/react-native-weather-app)
