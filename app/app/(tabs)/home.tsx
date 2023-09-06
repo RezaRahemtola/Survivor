@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
 import CurrentWeatherForecast from "@/components/weather/CurrentWeatherForecast";
@@ -29,11 +29,11 @@ export default function HomeScreen() {
 	}, []);
 
 	return (
-		<View style={styles.container}>
+		<ScrollView style={styles.container}>
 			<CurrentWeatherForecast weather={weather} errorMsg={errorMsg} />
 			<DailyWeatherForecast weather={weather} errorMsg={errorMsg} />
 			<TrendNews />
-		</View>
+		</ScrollView>
 	);
 }
 
