@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet } from "react-native";
+import axios from "axios";
 
 import TopNewsCard from "@/components/TopNewsCard";
 import { Text } from "@/components/Themed";
-import axios from "axios";
 
 const TrendNews = () => {
 	const [isLoading, setLoading] = useState(true);
