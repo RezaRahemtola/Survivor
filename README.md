@@ -1,6 +1,10 @@
 # Survivor
 
+
+![Tech Stack](https://github-readme-tech-stack.vercel.app/api/cards?title=Tech+Stack&align=center&titleAlign=center&lineCount=2&line1=react%2CReact+Native%2C5a92ae%3Bnestjs%2CNest%2C921818%3Bpostgresql%2CPostgreSQL%2C16508f%3B&line2=docker%2CDocker%2C306487%3Bgithubactions%2CGitHub+Actions%2Ce0dfdf%3B)
+
 ## Features 🔥
+
 - Authentication as a company employee
 - User profile with your personal information
 - Dashboard with widgets (see below)
@@ -14,6 +18,7 @@
     - Latest trending news from various media sources
 
 ## Tech & Performance 💻
+
 - Easy usage with Docker Compose to deploy the Expo app, the backend and the database
 - Continuous Integration (launching ESLint tests both in the backend and app before allowing merges)
 - Continuous Deployment (on a dedicated server via SSH)
