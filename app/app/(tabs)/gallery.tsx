@@ -1,5 +1,5 @@
-import { ScrollView, StyleSheet } from "react-native";
-import { useEffect, useState } from "react";
+import { FlatList, StyleSheet, ViewToken } from "react-native";
+import { useCallback, useEffect, useState } from "react";
 import { Searchbar } from "react-native-paper";
 
 import { View } from "@/components/Themed";
@@ -17,7 +17,6 @@ export default function GalleryScreen() {
 	useEffect(() => {
 		const fetchData = async () => {
 			const response = await axios.get<BaseUserWithPicture[]>("/employees", {
-				// data: { withPictures: "true" },
 				headers: { Authorization: `Bearer ${user?.access_token}` },
 			});
 			setUsers(response.data);
@@ -25,6 +24,12 @@ export default function GalleryScreen() {
 
 		fetchData();
 	}, []);
+
+	const handleViewableItemsChanged = useCallback(({ viewableItems }: { viewableItems: ViewToken[] }) => {
+		const users: BaseUserWithPicture[] = viewableItems.map((item) => item.item);
+		// TODO Reza: API call to fetch image
+	}, []);
+
 	return (
 		<View style={styles.container}>
 			<Searchbar
@@ -34,11 +39,12 @@ export default function GalleryScreen() {
 				value={search}
 				editable
 			/>
-			<ScrollView>
-				{users.map((user) => (
-					<GalleryCard key={user.id} {...user} />
-				))}
-			</ScrollView>
+			<FlatList
+				data={users}
+				onViewableItemsChanged={handleViewableItemsChanged}
+				keyExtractor={(user) => user.id.toString()}
+				renderItem={({ item }) => <GalleryCard {...item} />}
+			/>
 		</View>
 	);
 }
