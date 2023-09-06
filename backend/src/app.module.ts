@@ -1,7 +1,8 @@
-import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from './auth/auth.module'
+import { EmployeesModule } from './employees/employees.module'
+import { GlobalModule } from './global.module'
 
 @Module({
   imports: [
@@ -15,8 +16,9 @@ import { AuthModule } from './auth/auth.module'
       entities: [],
       synchronize: true,
     }),
-    CacheModule.register(),
+    GlobalModule,
     AuthModule,
+    EmployeesModule,
   ],
   controllers: [],
   providers: [],
