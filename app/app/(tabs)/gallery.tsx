@@ -26,7 +26,7 @@ export default function GalleryScreen() {
 	}, []);
 
 	const handleViewableItemsChanged = useCallback(({ viewableItems }: { viewableItems: ViewToken[] }) => {
-		const users: BaseUserWithPicture[] = viewableItems.map((item) => item.item);
+		const users: BaseUserWithPicture[] = viewableItems.map(({ item }) => item);
 		// TODO Reza: API call to fetch image
 	}, []);
 
