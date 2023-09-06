@@ -9,32 +9,19 @@ import {
   AUTHORIZED_HEADERS,
   runHttpRequest,
 } from '../http';
-import { EmployeesListOptionsDto } from './dto/requests-options.dto';
 
 @Injectable()
 export class EmployeesService {
   constructor(private readonly httpService: HttpService) {}
 
   async getEmployeesShort(
-    options: EmployeesListOptionsDto,
     accessToken: string,
-  ): Promise<
-    (MasuraoShortEmployeeDto & {
-      picture?: string;
-    })[]
-  > {
-    const shortEmployees = await runHttpRequest<MasuraoShortEmployeeDto[]>(
+  ): Promise<MasuraoShortEmployeeDto[]> {
+    return runHttpRequest<MasuraoShortEmployeeDto[]>(
       this.httpService.axiosRef,
       'get',
       '/employees',
       AUTHORIZED_AXIOS_CONFIGURATION(accessToken),
-    );
-    if (!options.withPictures) return shortEmployees;
-    return Promise.all(
-      shortEmployees.map(async (employee) => ({
-        ...employee,
-        picture: await this.getEmployeePicture(employee.id, accessToken),
-      })),
     );
   }
 
