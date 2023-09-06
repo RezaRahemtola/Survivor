@@ -47,6 +47,7 @@ export class EmployeesService {
   }
 
   getEmployeePicture(id: number, accessToken: string): Promise<string> {
+    console.log('Calling masurao API');
     return runHttpRequest<ArrayBuffer>(
       this.httpService.axiosRef,
       'get',
