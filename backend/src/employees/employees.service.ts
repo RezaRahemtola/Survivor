@@ -9,7 +9,7 @@ export class EmployeesService {
   constructor(private readonly httpService: HttpService) {
   }
 
-  async getEmployees(options: EmployeesListOptionsDto, accessToken: string): Promise<(MasuraoShortEmployeeDto & {
+  async getEmployeesShort(options: EmployeesListOptionsDto, accessToken: string): Promise<(MasuraoShortEmployeeDto & {
     picture?: string
   })[]> {
     const shortEmployees = await runHttpRequest<MasuraoShortEmployeeDto[]>(this.httpService.axiosRef, 'get', '/employees', AUTHORIZED_AXIOS_CONFIGURATION(accessToken))
