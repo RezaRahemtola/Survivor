@@ -2,13 +2,11 @@ import { ScrollView, StyleSheet } from "react-native";
 
 import DailyWeather from "@/components/weather/DailyWeatherForecast";
 import { Text } from "@/components/Themed";
+import { useAtom } from "jotai";
+import { weatherAtom } from "@/stores/widgets";
 
-const DailyWeatherForecast = ({ weather, errorMsg }: { weather: any; errorMsg: string | undefined }) => {
-	if (!weather && !errorMsg) {
-		return <Text>Daily weather forecast loading...</Text>;
-	} else if (!weather && errorMsg) {
-		return <Text>{errorMsg}</Text>;
-	}
+const DailyWeatherForecast = () => {
+	const [weather] = useAtom(weatherAtom);
 
 	return (
 		<ScrollView>

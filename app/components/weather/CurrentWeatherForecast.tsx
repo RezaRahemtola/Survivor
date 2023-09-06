@@ -3,13 +3,11 @@ import { StyleSheet } from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";
 import { Text } from "@/components/Themed";
+import { useAtom } from "jotai/index";
+import { weatherAtom } from "@/stores/widgets";
 
-const CurrentWeatherForecast = ({ weather, errorMsg }: { weather: any; errorMsg: string }) => {
-	if (!weather && !errorMsg) {
-		return <Text>Current weather loading...</Text>;
-	} else if (!weather && errorMsg) {
-		return <Text>{errorMsg}</Text>;
-	}
+const CurrentWeatherForecast = () => {
+	const [weather] = useAtom(weatherAtom);
 
 	return (
 		<CurrentView>
