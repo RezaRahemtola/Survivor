@@ -9,7 +9,7 @@ type UserPicture = {
 	picture: string;
 };
 
-export type BaseUserWithPicture = BaseUser & UserPicture;
+export type BaseUserWithPicture = BaseUser & Partial<UserPicture>;
 
 export type User = BaseUser &
 	UserPicture & {
