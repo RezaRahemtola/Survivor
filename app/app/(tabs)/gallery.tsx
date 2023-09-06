@@ -10,14 +10,15 @@ import { useAuthContext } from "@/context/auth";
 
 export default function GalleryScreen() {
 	const [search, setSearch] = useState("");
-	const { user } = useAuthContext();
+	const { user: authUser } = useAuthContext();
+	const accessToken = authUser!.access_token;
 
 	const [users, setUsers] = useState<BaseUserWithPicture[]>([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const response = await axios.get<BaseUserWithPicture[]>("/employees", {
-				headers: { Authorization: `Bearer ${user?.access_token}` },
+				headers: { Authorization: `Bearer ${accessToken}` },
 			});
 			setUsers(response.data);
 		};
@@ -27,7 +28,16 @@ export default function GalleryScreen() {
 
 	const handleViewableItemsChanged = useCallback(({ viewableItems }: { viewableItems: ViewToken[] }) => {
 		const users: BaseUserWithPicture[] = viewableItems.map(({ item }) => item);
-		// TODO Reza: API call to fetch image
+		users.forEach((user) => {
+			if (user.picture) return;
+			axios
+				.get(`/employees/${user.id}/picture`, {
+					headers: { Authorization: `Bearer ${accessToken}` },
+				})
+				.then((response) => {
+					user.picture = response.data;
+				});
+		});
 	}, []);
 
 	return (
