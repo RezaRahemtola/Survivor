@@ -1,4 +1,3 @@
-import React from "react";
 import { Card } from "react-native-elements";
 import { Image, ImageBackground, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 

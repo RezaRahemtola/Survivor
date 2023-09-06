@@ -1,4 +1,3 @@
-import React from "react";
 import { StyleSheet } from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import UserLayout from "@/layouts/User";
 import axios from "@/config/axios";
 import { FullUser } from "@/types/user";
