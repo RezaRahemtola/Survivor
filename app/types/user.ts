@@ -5,13 +5,19 @@ export type BaseUser = {
 	surname: string;
 };
 
-export type User = BaseUser & {
-	birth_date: string;
-	gender: string;
-	work: string;
-	subordinates: number[];
+type UserPicture = {
 	picture: string;
 };
+
+export type BaseUserWithPicture = BaseUser & UserPicture;
+
+export type User = BaseUser &
+	UserPicture & {
+		birth_date: string;
+		gender: string;
+		work: string;
+		subordinates: number[];
+	};
 
 export type AuthUser = User & {
 	access_token: string;
