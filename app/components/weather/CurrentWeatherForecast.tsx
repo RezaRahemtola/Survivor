@@ -4,47 +4,53 @@ import { StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import { Text } from "@/components/Themed";
 
-const CurrentWeatherForecast = ({ currentWeather }: any) => {
+const CurrentWeatherForecast = ({ weather, errorMsg }: { weather: any; errorMsg: string }) => {
+	if (!weather && !errorMsg) {
+		return <Text>Current weather loading...</Text>;
+	} else if (!weather && errorMsg) {
+		return <Text>{errorMsg}</Text>;
+	}
+
 	return (
 		<CurrentView>
-			<Text style={styles.timezone}>{currentWeather.timezone}</Text>
+			<Text style={styles.timezone}>{weather.timezone}</Text>
 			<MainInfoContainer>
 				<CurrentTempView>
-					{currentWeather.current && (
+					{weather.current && (
 						<WeatherIcon
 							source={{
-								uri: `http://openweathermap.org/img/wn/${currentWeather.current.weather[0].icon}@2x.png`,
+								uri: `http://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`,
 							}}
 							resizeMode={"contain"}
 						/>
 					)}
 					<Text style={styles.currentDegrees}>
-						{Math.round(currentWeather.current && currentWeather.current?.temp)}
+						{Math.round(weather.current?.temp)}
 						°C
 					</Text>
 				</CurrentTempView>
-				<Text style={styles.details}>{currentWeather.current && currentWeather.current.weather[0].description}</Text>
+				<Text style={styles.details}>{weather.current?.weather[0].description}</Text>
 			</MainInfoContainer>
 			<SecondaryInfoContainer>
 				<Row>
 					<DetailsBox>
 						<Text style={styles.labels}>Feels</Text>
 						<Text style={styles.details}>
-							{currentWeather.current && Math.round(currentWeather.current.feels_like)}
+							{weather.current && Math.round(weather.current.feels_like)}
 							°C
 						</Text>
 					</DetailsBox>
 					<DetailsBox>
 						<Text style={styles.labels}>Low</Text>
 						<Text style={styles.details}>
-							{currentWeather.daily && Math.round(currentWeather.daily[0].temp.min)}
+							{weather.daily && Math.round(weather.daily[0].temp.min)}
 							°C
 						</Text>
 					</DetailsBox>
 					<DetailsBox>
 						<Text style={styles.labels}>High</Text>
 						<Text style={styles.details}>
-							{currentWeather.daily && Math.round(currentWeather.daily[0].temp.max)}
+							{weather.daily && Math.round(weather.daily[0].temp.max)}
 							°C
 						</Text>
 					</DetailsBox>
@@ -52,15 +58,15 @@ const CurrentWeatherForecast = ({ currentWeather }: any) => {
 				<Row>
 					<DetailsBox>
 						<Text style={styles.labels}>Wind</Text>
-						<Text style={styles.details}>{currentWeather.current && currentWeather.current.wind_speed} m/s</Text>
+						<Text style={styles.details}>{weather.current?.wind_speed} m/s</Text>
 					</DetailsBox>
 					<DetailsBox>
 						<Text style={styles.labels}>Humidity</Text>
-						<Text style={styles.details}>{currentWeather.current && currentWeather.current.humidity}%</Text>
+						<Text style={styles.details}>{weather.current?.humidity}%</Text>
 					</DetailsBox>
 					<DetailsBox>
 						<Text style={styles.labels}>Rain</Text>
-						<Text style={styles.details}>{currentWeather.daily > 0 ? currentWeather.daily[0].rain : "0"} MM</Text>
+						<Text style={styles.details}>{weather.daily > 0 ? weather.daily[0].rain : "0"} MM</Text>
 					</DetailsBox>
 				</Row>
 			</SecondaryInfoContainer>
