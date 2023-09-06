@@ -23,7 +23,7 @@ export default function SignIn() {
 				style={styles.input}
 			/>
 
-			<Button title={"Login"} onPress={() => signIn()} />
+			<Button title={"Login"} onPress={() => signIn(username, password)} />
 		</View>
 	);
 }

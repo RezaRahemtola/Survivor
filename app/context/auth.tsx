@@ -2,10 +2,10 @@ import { router, useRootNavigationState, useSegments } from "expo-router";
 import React, { ComponentProps, createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import { AuthUser } from "@/types/user";
-import mockedUser from "@/mocks/user.json";
+import axios from "@/config/axios";
 
 type AuthContextType = {
-	signIn: () => void;
+	signIn: (email: string, password: string) => void;
 	signOut: () => void;
 	user: AuthUser | null;
 };
@@ -42,20 +42,27 @@ const useProtectedRoute = (user: AuthUser | null) => {
 };
 
 const Provider = (props: ComponentProps<any>) => {
-	const [user, setAuth] = useState<AuthUser | null>(null);
+	const [user, setUser] = useState<AuthUser | null>(null);
 
 	useProtectedRoute(user);
 
 	const authValue = useMemo(
 		() => ({
-			signIn: () => {
-				// TODO Reza: Remove hardcoded value
-				const user: AuthUser = mockedUser;
-				setAuth(user);
-				router.push("/(tabs)/home");
+			signIn: (email: string, password: string) => {
+				axios
+					.post<AuthUser>("/auth/login", { email, password })
+					.then((response) => {
+						const user = response.data;
+						setUser(user);
+						router.push("/(tabs)/home");
+					})
+					.catch((error) => {
+						console.log(error);
+						console.log(error.status);
+					});
 			},
 			signOut: () => {
-				setAuth(null);
+				setUser(null);
 				router.replace("/sign-in");
 			},
 			user,
