@@ -7,7 +7,7 @@ import GalleryCard from "@/components/gallery/GalleryCard";
 import { BaseUserWithPicture } from "@/types/user";
 import axios from "@/config/axios";
 import { useAuthContext } from "@/context/auth";
-import cache from "@/config/cache";
+import { getPicture } from "@/config/cache";
 
 export default function GalleryScreen() {
 	const [search, setSearch] = useState("");
@@ -31,20 +31,7 @@ export default function GalleryScreen() {
 		const users: BaseUserWithPicture[] = viewableItems.map(({ item }) => item);
 		users.forEach((user) => {
 			if (user.picture) return;
-			cache.get(user.id.toString()).then((data) => {
-				if (data) {
-					user.picture = data;
-					return;
-				}
-				axios
-					.get(`/employees/${user.id}/picture`, {
-						headers: { Authorization: `Bearer ${accessToken}` },
-					})
-					.then((response) => {
-						user.picture = response.data;
-						cache.set(user.id.toString(), response.data);
-					});
-			});
+			getPicture(user.id).then((picture) => (user.picture = picture));
 		});
 	}, []);
 
@@ -61,7 +48,7 @@ export default function GalleryScreen() {
 				data={users}
 				onViewableItemsChanged={handleViewableItemsChanged}
 				keyExtractor={(user) => user.id.toString()}
-				renderItem={({ item }) => <GalleryCard {...item} />}
+				renderItem={({ item }) => <GalleryCard user={item} />}
 			/>
 		</View>
 	);
