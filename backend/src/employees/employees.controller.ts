@@ -1,5 +1,4 @@
 import {
-  Body,
   Controller,
   Get,
   Headers,
@@ -7,7 +6,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import { EmployeesListOptionsDto } from './dto/requests-options.dto';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Controller('employees')
@@ -16,14 +14,8 @@ export class EmployeesController {
 
   @UseInterceptors(CacheInterceptor)
   @Get()
-  getEmployees(
-    @Body() options: EmployeesListOptionsDto,
-    @Headers('Authorization') accessToken: string,
-  ) {
-    return this.employeesService.getEmployeesShort(
-      options,
-      accessToken.split(' ')[1],
-    );
+  getEmployees(@Headers('Authorization') accessToken: string) {
+    return this.employeesService.getEmployeesShort(accessToken.split(' ')[1]);
   }
 
   @UseInterceptors(CacheInterceptor)
@@ -33,5 +25,17 @@ export class EmployeesController {
     @Headers('Authorization') accessToken: string,
   ) {
     return this.employeesService.getEmployeeLong(id, accessToken.split(' ')[1]);
+  }
+
+  @UseInterceptors(CacheInterceptor)
+  @Get('/:id/picture')
+  getEmployeePicture(
+    @Param('id') id: number,
+    @Headers('Authorization') accessToken: string,
+  ) {
+    return this.employeesService.getEmployeePicture(
+      id,
+      accessToken.split(' ')[1],
+    );
   }
 }
