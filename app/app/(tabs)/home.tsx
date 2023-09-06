@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
 import CurrentWeatherForecast from "@/components/weather/CurrentWeatherForecast";
 import DailyWeatherForecast from "@/layouts/DailyWeatherForecast";
+import TrendNews from "@/layouts/TrendNews";
 
 export default function HomeScreen() {
 	const [weather, setWeather] = useState<any>(undefined);
@@ -31,6 +32,7 @@ export default function HomeScreen() {
 		<View style={styles.container}>
 			<CurrentWeatherForecast weather={weather} errorMsg={errorMsg} />
 			<DailyWeatherForecast weather={weather} errorMsg={errorMsg} />
+			<TrendNews />
 		</View>
 	);
 }
