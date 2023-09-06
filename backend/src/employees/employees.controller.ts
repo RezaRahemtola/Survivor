@@ -42,4 +42,10 @@ export class EmployeesController {
   ) {
     return this.employeesService.getEmployeePicture(id, token);
   }
+
+  @UseInterceptors(JwtValidatorInterceptor, TokenAwareCacheInterceptor)
+  @Get('/me')
+  getSelfEmployee(@Req() { token }: RequestWithToken) {
+    return this.employeesService.getSelfEmployeeLong(token);
+  }
 }
