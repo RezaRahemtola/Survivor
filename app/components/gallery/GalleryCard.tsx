@@ -2,33 +2,46 @@ import { Image, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } fro
 import { Card } from "react-native-elements";
 
 import Icon from "@/components/Icon";
-import { BaseUserWithPicture } from "@/types/user";
+import { FullUser, isFullUser, User } from "@/types/user";
+import { router } from "expo-router";
+import axios from "@/config/axios";
+import { useAuthContext } from "@/context/auth";
 
+const GalleryCard = ({ user }: { user: User }) => {
+	const { user: authUser } = useAuthContext();
 
-const GalleryCard = ({ email, name, surname, picture }: BaseUserWithPicture) => {
 	return (
 		<View style={styles.container}>
 			<TouchableWithoutFeedback
-				onPress={
-					() => {}
-					// router.push({
-					// 	pathname: "/user/modal",
-					// 	params: { email, name, surname, birth_date, gender, work, picture },
-					// })
-				}
+				onPress={async () => {
+					if (isFullUser(user)) {
+						router.push({
+							pathname: "/user/modal",
+							params: { ...user },
+						});
+					}
+					const response = await axios.get<FullUser>(`/employees/${user.id}`, {
+						headers: { Authorization: `Bearer ${authUser?.access_token}` },
+					});
+
+					router.push({
+						pathname: "/user/modal",
+						params: { ...response.data, picture: user.picture! },
+					});
+				}}
 			>
 				<Card>
 					<View style={styles.headerColumn}>
-						<Image style={styles.userImage} source={{ uri: `data:image/png;base64,${picture}` }} />
+						<Image style={styles.userImage} source={{ uri: `data:image/png;base64,${user.picture}` }} />
 						<Text style={styles.userNameText}>
-							{name} {surname}
+							{user.name} {user.surname}
 						</Text>
 						<View style={styles.userEmailRow}>
 							<View>
 								<Icon name="email" source="MaterialIcons" style={styles.workIcon} />
 							</View>
 							<View style={styles.userEmailContent}>
-								<Text style={styles.userEmailText}>{email}</Text>
+								<Text style={styles.userEmailText}>{user.email}</Text>
 							</View>
 						</View>
 					</View>
