@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { AuthModule } from './auth/auth.module'
-import { EmployeesModule } from './employees/employees.module'
-import { GlobalModule } from './global.module'
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
+import { EmployeesModule } from './employees/employees.module';
+import { GlobalModule } from './global.module';
 
 @Module({
   imports: [
@@ -23,5 +23,4 @@ import { GlobalModule } from './global.module'
   controllers: [],
   providers: [],
 })
-export class AppModule {
-}
+export class AppModule {}

@@ -1,30 +1,39 @@
-import { IsDateString, IsEmail, IsInt, IsNotEmpty, IsNumber, IsString, Matches, Min } from 'class-validator'
+import {
+  IsDateString,
+  IsEmail,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Matches,
+  Min,
+} from 'class-validator';
 
 export class MasuraoShortEmployeeDto {
   @IsInt()
   @Min(1)
-  id!: number
+  id!: number;
 
   @IsEmail()
-  email!: string
+  email!: string;
 
   @IsString()
   @IsNotEmpty()
-  name!: string
+  name!: string;
 
   @IsString()
   @IsNotEmpty()
-  surname!: string
+  surname!: string;
 }
 
 export class MasuraoLongEmployeeDto extends MasuraoShortEmployeeDto {
   @IsDateString()
-  birth_date!: Date
+  birth_date!: Date;
 
   @Matches(/(?:Fem|M)ale/)
-  gender!: string
+  gender!: string;
 
-  @IsNumber({}, {each: true})
-  @Min(1, {each: true})
-  subordinates!: number[]
+  @IsNumber({}, { each: true })
+  @Min(1, { each: true })
+  subordinates!: number[];
 }

@@ -15,7 +15,7 @@
 
 ## Tech & Performance 💻
 - Easy usage with Docker Compose to deploy the Expo app, the backend and the database
-- Continuous Integration (launching ESLint tests before allowing merges)
+- Continuous Integration (launching ESLint tests both in the backend and app before allowing merges)
 - Continuous Deployment (on a dedicated server via SSH)
 - Requests optimized ⚡
   - Coworkers gallery

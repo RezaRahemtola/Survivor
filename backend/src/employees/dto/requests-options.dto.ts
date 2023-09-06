@@ -1,7 +1,7 @@
-import { IsBoolean, IsOptional } from 'class-validator'
+import { IsBoolean, IsOptional } from 'class-validator';
 
 export class EmployeesListOptionsDto {
   @IsOptional()
   @IsBoolean()
-  withPictures?: boolean
+  withPictures?: boolean;
 }
