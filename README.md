@@ -19,7 +19,7 @@
 - Continuous Deployment (on a dedicated server via SSH)
 - Requests optimized ⚡
   - Coworkers gallery
-    - Minimal data fetched for everyone, with additional content fetched when opening the profile modal (coming soon)
+    - Minimal data fetched for everyone, with additional content fetched when opening the profile modal
     - Pictures lazy-loading (fetched only when they need to be displayed)
 
 ## Credits 🙏
