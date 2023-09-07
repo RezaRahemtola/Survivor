@@ -13,7 +13,6 @@ axiosInstance.interceptors.response.use(
 		if (isAxiosError(error) && error.response?.status === 401) {
 			await removeAccessToken();
 			router.replace("/sign-in");
-			return;
 		}
 		throw error;
 	},

@@ -19,7 +19,7 @@ const UserScreen = () => {
 				user.picture = await getPicture(user.id);
 				setUser(user);
 			} catch (error) {
-				console.error(error);
+				console.log(error);
 			}
 		})();
 	}, []);

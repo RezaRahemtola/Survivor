@@ -18,15 +18,19 @@ const GalleryCard = ({ user }: { user: User }) => {
 							params: { ...user },
 						});
 					}
-					const accessToken = await getAccessToken();
-					const response = await axios.get<FullUser>(`/employees/${user.id}`, {
-						headers: { Authorization: `Bearer ${accessToken}` },
-					});
+					try {
+						const accessToken = await getAccessToken();
+						const response = await axios.get<FullUser>(`/employees/${user.id}`, {
+							headers: { Authorization: `Bearer ${accessToken}` },
+						});
 
-					router.push({
-						pathname: "/user/modal",
-						params: { ...response.data, picture: user.picture! },
-					});
+						router.push({
+							pathname: "/user/modal",
+							params: { ...response.data, picture: user.picture! },
+						});
+					} catch (error) {
+						console.log(error);
+					}
 				}}
 			>
 				<Card>

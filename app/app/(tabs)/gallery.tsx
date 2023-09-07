@@ -15,11 +15,15 @@ export default function GalleryScreen() {
 
 	useEffect(() => {
 		(async () => {
-			const accessToken = await getAccessToken();
-			const response = await axios.get<BaseUserWithPicture[]>("/employees", {
-				headers: { Authorization: `Bearer ${accessToken}` },
-			});
-			setUsers(response.data);
+			try {
+				const accessToken = await getAccessToken();
+				const response = await axios.get<BaseUserWithPicture[]>("/employees", {
+					headers: { Authorization: `Bearer ${accessToken}` },
+				});
+				setUsers(response.data);
+			} catch (error) {
+				console.log(error);
+			}
 		})();
 	}, []);
 
