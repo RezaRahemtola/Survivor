@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Post,
   Query,
   UseGuards,
   UseInterceptors,
@@ -23,7 +24,7 @@ export class ExternalApisController {
 
   @CacheTTL(1000 * 60 * 15) // 15 minutes
   @UseInterceptors(BodyAwareCacheInterceptor)
-  @Get('weather')
+  @Post('weather')
   getWeather(@Body() countryAndCity: CountryAndCityLocationDto) {
     return this.externalApisService.getWeather(countryAndCity);
   }
@@ -37,7 +38,7 @@ export class ExternalApisController {
 
   @CacheTTL(1000 * 60 * 60 * 24 * 30) // 1 month as cities and countries don't change location often
   @UseInterceptors(BodyAwareCacheInterceptor)
-  @Get('location')
+  @Post('location')
   async getLocationForCoordinates(@Body() location: CoordinatesLocationDto) {
     return this.externalApisService.getLocationForCoordinates(location);
   }
