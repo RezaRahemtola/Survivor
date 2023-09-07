@@ -23,6 +23,7 @@
 - Easy usage with Docker Compose to deploy the Expo app, the backend and the database
 - Continuous Integration (launching ESLint tests both in the backend and app before allowing merges)
 - Continuous Deployment (on a dedicated server via SSH)
+- Partial "offline" mode (while using only cached data the application can still be used even if the access token expires)
 - Requests optimized ⚡
   - All the pictures are cached on their first load
   - Coworkers gallery
