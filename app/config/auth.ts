@@ -19,5 +19,5 @@ export const signIn = async (email: string, password: string) => {
 
 export const signOut = async () => {
 	await removeAccessToken();
-	router.replace("/sign-in");
+	router.push("/sign-in");
 };
