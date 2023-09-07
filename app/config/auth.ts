@@ -12,8 +12,9 @@ export const signIn = async (email: string, password: string) => {
 		} else {
 			router.push("/(tabs)/home");
 		}
+		return true;
 	} catch (error) {
-		console.log(error);
+		return false;
 	}
 };
 
