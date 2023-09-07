@@ -5,5 +5,3 @@ export const locationAtom = atom<LocationObject | undefined>(undefined);
 export const locationErrorAtom = atom<string | undefined>(undefined);
 
 export const weatherAtom = atom<any>(undefined);
-
-export const newsAtom = atom<any>(undefined);
