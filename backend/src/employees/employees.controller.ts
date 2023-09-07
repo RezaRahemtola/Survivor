@@ -39,7 +39,6 @@ export class EmployeesController {
     @Req() { user: { masuraoToken } }: RequestWithToken,
     @Req() req: any,
   ) {
-    console.log('Request:', req);
     return this.employeesService.getEmployeePicture(id, masuraoToken);
   }
 

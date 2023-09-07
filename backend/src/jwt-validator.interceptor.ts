@@ -21,7 +21,6 @@ export default class JwtValidatorInterceptor {
       .switchToHttp()
       .getRequest().headers;
 
-    console.log(context.switchToHttp().getRequest());
     if (!accessToken)
       throw new UnauthorizedException('No access token provided');
     const validatedAccessToken = validateJWT(accessToken);
