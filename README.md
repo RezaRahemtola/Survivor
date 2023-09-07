@@ -6,11 +6,12 @@
 ## Features 🔥
 
 - Authentication as a company employee
-  - Access persisted when the app is closed for simplified experience 
+  - Access persisted when the app is closed for simplified experience
+  - Possibility to log out
 - User profile with your personal information
 - Dashboard with widgets (see below)
 - Coworkers gallery
-  - Search bar (coming soon)
+  - Search bar to filter by name
 - Widgets
   - Weather 🌥️ (using the current location of the user)
     - Current weather (temperature, wind, humidity...)

@@ -5,7 +5,7 @@ export const picturesCache = new Cache({
 	namespace: "survivor-pictures",
 	policy: {
 		maxEntries: 50000,
-		stdTTL: 60 * 10,
+		stdTTL: 60 * 60 * 24,
 	},
 	backend: AsyncStorage,
 });
@@ -14,7 +14,7 @@ export const accessTokenCache = new Cache({
 	namespace: "survivor-access-token",
 	policy: {
 		maxEntries: 1,
-		stdTTL: 60 * 10,
+		stdTTL: 60 * 60 * 24 * 2,
 	},
 	backend: AsyncStorage,
 });
