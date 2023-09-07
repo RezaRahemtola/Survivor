@@ -7,11 +7,11 @@ import WeatherLayout from "@/layouts/WeatherLayout";
 export default function HomeScreen() {
 	return (
 		<ScrollView style={styles.container}>
+			<TrendNewsLayout />
 			<WeatherLayout>
 				<CurrentWeatherForecast />
 				<DailyWeatherForecast />
 			</WeatherLayout>
-			<TrendNewsLayout />
 		</ScrollView>
 	);
 }
