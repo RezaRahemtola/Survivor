@@ -30,6 +30,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     GlobalModule,
     AuthModule,
     EmployeesModule,
+    ExternalApisModule,
   ],
   controllers: [],
   providers: [],
