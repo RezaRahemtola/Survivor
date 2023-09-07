@@ -1,13 +1,13 @@
 import { router, useRootNavigationState, useSegments } from "expo-router";
-import { ComponentProps, createContext, useContext, useEffect, useMemo, useState } from "react";
+import { ComponentProps, createContext, useContext, useEffect, useMemo } from "react";
 
 import axios from "@/config/axios";
 import { AuthRequest } from "@/types/auth";
+import { getAccessToken, removeAccessToken, setAccessToken } from "@/config/cache";
 
 type AuthContextType = {
 	signIn: (email: string, password: string) => void;
 	signOut: () => void;
-	accessToken: string | null;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -17,7 +17,8 @@ export const useAuthContext = (): AuthContextType => {
 	return context;
 };
 
-const useProtectedRoute = (accessToken: string | null) => {
+const useProtectedRoute = async () => {
+	const accessToken = await getAccessToken();
 	const segments = useSegments();
 	const navigationState = useRootNavigationState();
 
@@ -35,31 +36,25 @@ const useProtectedRoute = (accessToken: string | null) => {
 };
 
 const Provider = (props: ComponentProps<any>) => {
-	const [accessToken, setAccessToken] = useState<string | null>(null);
-
-	useProtectedRoute(accessToken);
+	useProtectedRoute();
 
 	const authValue = useMemo(
 		() => ({
-			signIn: (email: string, password: string) => {
-				axios
-					.post<AuthRequest>("/auth/login", { email, password })
-					.then((response) => {
-						setAccessToken(response.data.access_token);
-						router.push("/(tabs)/home");
-					})
-					.catch((error) => {
-						console.log(error);
-						console.log(error.status);
-					});
+			signIn: async (email: string, password: string) => {
+				try {
+					const response = await axios.post<AuthRequest>("/auth/login", { email, password });
+					await setAccessToken(response.data.access_token);
+					router.push("/(tabs)/home");
+				} catch (error) {
+					console.log(error);
+				}
 			},
-			signOut: () => {
-				setAccessToken(null);
+			signOut: async () => {
+				await removeAccessToken();
 				router.replace("/sign-in");
 			},
-			accessToken,
 		}),
-		[accessToken],
+		[],
 	);
 
 	return <AuthContext.Provider value={authValue}>{props.children}</AuthContext.Provider>;

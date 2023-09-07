@@ -5,11 +5,9 @@ import Icon from "@/components/Icon";
 import { FullUser, isFullUser, User } from "@/types/user";
 import { router } from "expo-router";
 import axios from "@/config/axios";
-import { useAuthContext } from "@/context/auth";
+import { getAccessToken } from "@/config/cache";
 
 const GalleryCard = ({ user }: { user: User }) => {
-	const { accessToken } = useAuthContext();
-
 	return (
 		<View style={styles.container}>
 			<TouchableWithoutFeedback
@@ -20,6 +18,7 @@ const GalleryCard = ({ user }: { user: User }) => {
 							params: { ...user },
 						});
 					}
+					const accessToken = await getAccessToken();
 					const response = await axios.get<FullUser>(`/employees/${user.id}`, {
 						headers: { Authorization: `Bearer ${accessToken}` },
 					});
