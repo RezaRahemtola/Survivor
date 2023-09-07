@@ -19,13 +19,15 @@ const WeatherLayout = ({ children }: WeatherLayoutProps) => {
 
 	useEffect(() => {
 		(async () => {
+			let position = undefined;
+
 			if (!location) {
 				const { status } = await Location.requestForegroundPermissionsAsync();
 				if (status !== "granted") {
 					setLocationError("Permission to access location was denied");
 					return;
 				}
-				const position = await Location.getCurrentPositionAsync();
+				position = await Location.getCurrentPositionAsync();
 				setLocation(position);
 			}
 
@@ -35,13 +37,13 @@ const WeatherLayout = ({ children }: WeatherLayoutProps) => {
 				const place = await axios.post<PlaceResponse>(
 					"/external/location",
 					{
-						latitude: location?.coords.latitude,
-						longitude: location?.coords.longitude,
+						latitude: location?.coords.latitude ?? position?.coords.latitude,
+						longitude: location?.coords.longitude ?? position?.coords.longitude,
 					},
 					{
 						headers: {
-							Authorization: `Bearer ${accessToken}`,
 							"Content-Type": "application/json",
+							Authorization: `Bearer ${accessToken}`,
 						},
 					},
 				);

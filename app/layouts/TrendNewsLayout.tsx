@@ -22,7 +22,7 @@ const TrendNewsLayout = () => {
 				});
 				setNews(response.data);
 			} catch (error) {
-				console.log("News error: ", error);
+				console.log(error);
 			}
 		})();
 	}, []);
