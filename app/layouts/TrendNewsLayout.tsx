@@ -35,7 +35,7 @@ const TrendNewsLayout = () => {
 	) : (
 		<>
 			<TrendNewsTitle />
-			<Text>Trend news loading...</Text>
+			<Text style={styles.loading}>Trend news loading...</Text>
 			<ActivityIndicator size="large" />
 		</>
 	);
@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 22,
 		fontWeight: "bold",
+	},
+	loading: {
+		textAlign: "center",
+		marginVertical: 5,
 	},
 });
 
