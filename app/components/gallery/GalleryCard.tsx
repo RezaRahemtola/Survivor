@@ -1,58 +1,56 @@
 import { Image, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import { Card } from "react-native-elements";
+import { router } from "expo-router";
 
 import Icon from "@/components/Icon";
 import { FullUser, isFullUser, User } from "@/types/user";
-import { router } from "expo-router";
 import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
 
-const GalleryCard = ({ user }: { user: User }) => {
-	return (
-		<View style={styles.container}>
-			<TouchableWithoutFeedback
-				onPress={async () => {
-					if (isFullUser(user)) {
-						router.push({
-							pathname: "/user/modal",
-							params: { ...user },
-						});
-					}
-					try {
-						const accessToken = await getAccessToken();
-						const response = await axios.get<FullUser>(`/employees/${user.id}`, {
-							headers: { Authorization: `Bearer ${accessToken}` },
-						});
+const GalleryCard = ({ user }: { user: User }) => (
+	<View style={styles.container}>
+		<TouchableWithoutFeedback
+			onPress={async () => {
+				if (isFullUser(user)) {
+					router.push({
+						pathname: "/user/modal",
+						params: { ...user },
+					});
+				}
+				try {
+					const accessToken = await getAccessToken();
+					const response = await axios.get<FullUser>(`/employees/${user.id}`, {
+						headers: { Authorization: `Bearer ${accessToken}` },
+					});
 
-						router.push({
-							pathname: "/user/modal",
-							params: { ...response.data, picture: user.picture! },
-						});
-					} catch (error) {
-						console.log(error);
-					}
-				}}
-			>
-				<Card>
-					<View style={styles.headerColumn}>
-						<Image style={styles.userImage} source={{ uri: `data:image/png;base64,${user.picture}` }} />
-						<Text style={styles.userNameText}>
-							{user.name} {user.surname}
-						</Text>
-						<View style={styles.userEmailRow}>
-							<View>
-								<Icon name="email" source="MaterialIcons" style={styles.workIcon} />
-							</View>
-							<View style={styles.userEmailContent}>
-								<Text style={styles.userEmailText}>{user.email}</Text>
-							</View>
+					router.push({
+						pathname: "/user/modal",
+						params: { ...response.data, picture: user.picture! },
+					});
+				} catch (error) {
+					console.log(error);
+				}
+			}}
+		>
+			<Card>
+				<View style={styles.headerColumn}>
+					<Image style={styles.userImage} source={{ uri: `data:image/png;base64,${user.picture}` }} />
+					<Text style={styles.userNameText}>
+						{user.name} {user.surname}
+					</Text>
+					<View style={styles.userEmailRow}>
+						<View>
+							<Icon name="email" source="MaterialIcons" style={styles.workIcon} />
+						</View>
+						<View style={styles.userEmailContent}>
+							<Text style={styles.userEmailText}>{user.email}</Text>
 						</View>
 					</View>
-				</Card>
-			</TouchableWithoutFeedback>
-		</View>
-	);
-};
+				</View>
+			</Card>
+		</TouchableWithoutFeedback>
+	</View>
+);
 
 export default GalleryCard;
 

@@ -1,41 +1,42 @@
 import { StyleSheet } from "react-native";
-import axios from "axios";
-import { useAtom } from "jotai";
 import { Text } from "@/components/Themed";
-
-import { newsAtom } from "@/stores/widgets";
 import NewsSlider from "@/components/news/NewsSlider";
+import { ActivityIndicator } from "react-native-paper";
+import axios from "@/config/axios";
+import { TrendingNewsResult } from "@/types/news";
+import { useEffect, useState } from "react";
+import { getAccessToken } from "@/cache/accessToken";
 
 const TrendNewsTitle = () => <Text style={styles.title}>Trending News</Text>;
 
 const TrendNewsLayout = () => {
-	const [news, setNews] = useAtom(newsAtom);
+	const [news, setNews] = useState<TrendingNewsResult | undefined>(undefined);
 
-	const fetchNews = () => {
-		axios
-			.get("https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=920deb9f754348c0bec4871fef36d971")
-			.then((response) => {
+	useEffect(() => {
+		(async () => {
+			try {
+				const accessToken = await getAccessToken();
+				if (!accessToken) return;
+				const response = await axios.get<TrendingNewsResult>("/external/news?country=us", {
+					headers: { Authorization: `Bearer ${accessToken}` },
+				});
 				setNews(response.data);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
+			} catch (error) {
+				console.log("News error: ", error);
+			}
+		})();
+	}, []);
 
-	if (!news) {
-		fetchNews();
-		return (
-			<>
-				<TrendNewsTitle />
-				<Text>Trend news loading...</Text>
-			</>
-		);
-	}
-
-	return (
+	return news ? (
 		<>
 			<TrendNewsTitle />
-			<NewsSlider />
+			<NewsSlider news={news} />
+		</>
+	) : (
+		<>
+			<TrendNewsTitle />
+			<Text style={styles.loading}>Trend news loading...</Text>
+			<ActivityIndicator size="large" />
 		</>
 	);
 };
@@ -44,6 +45,10 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 22,
 		fontWeight: "bold",
+	},
+	loading: {
+		textAlign: "center",
+		marginVertical: 5,
 	},
 });
 

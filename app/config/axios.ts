@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(
 	(response) => response,
 	async (error: Error | AxiosError) => {
-		if (isAxiosError(error) && error.response?.status === 401) {
+		if (isAxiosError(error) && error.response?.status === 401 && !error.request.responseURL.includes("/external")) {
 			await removeAccessToken();
 			router.push("/sign-in");
 		}
