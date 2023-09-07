@@ -26,13 +26,15 @@ export class WidgetsService {
   }
 
   async updateSelfUserWidgets(userEmail: string, newWidgetNames: WidgetName[]) {
-    console.log('data:', userEmail, newWidgetNames);
     const userWidgets = await this.userWidgetsRepository
       .findOneOrFail({
         where: { userEmail },
       })
+      .then(
+        (userWidgets) =>
+          ({ ...userWidgets, widgets: newWidgetNames }) as UserWidgets,
+      )
       .catch(() => ({ userEmail, widgets: newWidgetNames }) as UserWidgets);
-    console.log(userWidgets);
     return this.userWidgetsRepository.save(userWidgets);
   }
 
