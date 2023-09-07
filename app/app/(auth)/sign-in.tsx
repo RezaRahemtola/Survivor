@@ -1,11 +1,10 @@
 import { Button, StyleSheet, TextInput, View } from "react-native";
-import { useAuthContext } from "@/context/auth";
 import { useState } from "react";
+import { signIn } from "@/config/auth";
 
 export default function SignIn() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const { signIn } = useAuthContext();
 
 	return (
 		<View style={styles.container}>

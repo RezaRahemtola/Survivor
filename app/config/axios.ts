@@ -1,7 +1,7 @@
 import axios, { AxiosError, isAxiosError } from "axios";
 import { router } from "expo-router";
 
-import { removeAccessToken } from "@/config/cache";
+import { removeAccessToken } from "@/cache/accessToken";
 
 const axiosInstance = axios.create({
 	baseURL: process.env.EXPO_PUBLIC_API_URL,
