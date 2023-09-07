@@ -19,7 +19,10 @@ export class AuthService {
       MasuraoLoginResultDto,
       MasuraoCredentialsDto
     >(this.httpService.axiosRef, 'post', '/employees/login', credentials);
-    const access_token = this.jwtService.sign({ masuraoToken });
+    const access_token = this.jwtService.sign({
+      masuraoToken,
+      email: credentials.email,
+    });
     return {
       access_token,
     };

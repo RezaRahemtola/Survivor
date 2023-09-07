@@ -7,8 +7,9 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import { RequestWithToken } from '../jwt-validator.interceptor';
-import TokenAwareCacheInterceptor from '../token-aware-cache.interceptor';
+import TokenAwareCacheInterceptor, {
+  APIRequest,
+} from '../token-aware-cache.interceptor';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
