@@ -6,16 +6,15 @@ import { View } from "@/components/Themed";
 import GalleryCard from "@/components/gallery/GalleryCard";
 import { BaseUserWithPicture } from "@/types/user";
 import axios from "@/config/axios";
-import { getPicture } from "@/config/cache";
-import { useAuthContext } from "@/context/auth";
+import { getAccessToken, getPicture } from "@/config/cache";
 
 export default function GalleryScreen() {
-	const { accessToken } = useAuthContext();
 	const [search, setSearch] = useState("");
 	const [users, setUsers] = useState<BaseUserWithPicture[]>([]);
 
 	useEffect(() => {
 		(async () => {
+			const accessToken = await getAccessToken();
 			const response = await axios.get<BaseUserWithPicture[]>("/employees", {
 				headers: { Authorization: `Bearer ${accessToken}` },
 			});
@@ -27,7 +26,7 @@ export default function GalleryScreen() {
 		const users: BaseUserWithPicture[] = viewableItems.map(({ item }) => item);
 		users.forEach((user) => {
 			if (user.picture) return;
-			getPicture(user.id, accessToken).then((picture) => (user.picture = picture));
+			getPicture(user.id).then((picture) => (user.picture = picture));
 		});
 	}, []);
 
