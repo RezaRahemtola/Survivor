@@ -5,6 +5,7 @@ import { Text } from "@/components/Themed";
 
 import { newsAtom } from "@/stores/widgets";
 import NewsSlider from "@/components/news/NewsSlider";
+import { ActivityIndicator } from "react-native-paper";
 
 const TrendNewsTitle = () => <Text style={styles.title}>Trending News</Text>;
 
@@ -28,6 +29,7 @@ const TrendNewsLayout = () => {
 			<>
 				<TrendNewsTitle />
 				<Text>Trend news loading...</Text>
+				<ActivityIndicator size="large" />
 			</>
 		);
 	}

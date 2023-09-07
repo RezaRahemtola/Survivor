@@ -5,6 +5,8 @@ import { ReactNode } from "react";
 import axios from "axios";
 
 import { Text } from "@/components/Themed";
+import { ActivityIndicator } from "react-native-paper";
+import { StyleSheet } from "react-native";
 
 type WeatherLayoutProps = {
 	children: ReactNode;
@@ -37,15 +39,32 @@ const WeatherLayout = ({ children }: WeatherLayoutProps) => {
 
 	if (!location && !locationError) {
 		fetchLocation();
-		return <Text>Waiting for location access..</Text>;
+		return (
+			<>
+				<Text style={styles.text}>Waiting for location data..</Text>
+				<ActivityIndicator size="large" />
+			</>
+		);
 	} else if (!weather && !locationError) {
 		fetchWeather();
-		return <Text>Weather data loading...</Text>;
+		return (
+			<>
+				<Text style={styles.text}>Weather data loading...</Text>
+				<ActivityIndicator size="large" />
+			</>
+		);
 	} else if (locationError) {
 		return <Text>{locationError}</Text>;
 	}
 
 	return <>{children}</>;
 };
+
+const styles = StyleSheet.create({
+	text: {
+		textAlign: "center",
+		marginVertical: 5,
+	},
+});
 
 export default WeatherLayout;
