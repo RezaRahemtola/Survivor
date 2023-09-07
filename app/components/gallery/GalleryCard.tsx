@@ -5,7 +5,7 @@ import Icon from "@/components/Icon";
 import { FullUser, isFullUser, User } from "@/types/user";
 import { router } from "expo-router";
 import axios from "@/config/axios";
-import { getAccessToken } from "@/config/cache";
+import { getAccessToken } from "@/cache/accessToken";
 
 const GalleryCard = ({ user }: { user: User }) => {
 	return (

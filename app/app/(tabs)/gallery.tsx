@@ -6,7 +6,8 @@ import { View } from "@/components/Themed";
 import GalleryCard from "@/components/gallery/GalleryCard";
 import { BaseUserWithPicture } from "@/types/user";
 import axios from "@/config/axios";
-import { getAccessToken, getPicture } from "@/config/cache";
+import { getAccessToken } from "@/cache/accessToken";
+import { getPicture } from "@/cache/pictures";
 
 export default function GalleryScreen() {
 	const [search, setSearch] = useState("");
