@@ -37,7 +37,6 @@ export class EmployeesController {
   getEmployeePicture(
     @Param('id') id: number,
     @Req() { user: { masuraoToken } }: RequestWithToken,
-    @Req() req: any,
   ) {
     return this.employeesService.getEmployeePicture(id, masuraoToken);
   }
