@@ -5,6 +5,8 @@ import { EmployeesModule } from './employees/employees.module';
 import { GlobalModule } from './global.module';
 import { ExternalApisModule } from './external-apis/external-apis.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { WidgetsModule } from './widgets/widgets.module';
+import UserWidgets from './widgets/model/user-widgets.entity';
 
 @Module({
   imports: [
@@ -23,7 +25,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         username: config.getOrThrow<string>('POSTGRES_USERNAME'),
         password: config.getOrThrow<string>('POSTGRES_PASSWORD'),
         database: config.getOrThrow<string>('POSTGRES_DATABASE'),
-        entities: [],
+        entities: [UserWidgets],
         synchronize: true,
       }),
     }),
@@ -31,6 +33,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     AuthModule,
     EmployeesModule,
     ExternalApisModule,
+    WidgetsModule,
   ],
   controllers: [],
   providers: [],
