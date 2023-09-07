@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { EmployeesModule } from './employees/employees.module';
 import { GlobalModule } from './global.module';
+import { ExternalApisModule } from './external-apis/external-apis.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
@@ -10,6 +11,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ConfigModule.forRoot({
       cache: true,
       expandVariables: true,
+      isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
