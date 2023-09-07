@@ -1,9 +1,9 @@
 import { Image, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import { Card } from "react-native-elements";
+import { router } from "expo-router";
 
 import Icon from "@/components/Icon";
 import { FullUser, isFullUser, User } from "@/types/user";
-import { router } from "expo-router";
 import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
 
