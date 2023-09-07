@@ -60,7 +60,12 @@ export class ExternalApisService {
       'WEATHER_API_BASE_URL',
     );
     const url = `${baseUrl}/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${apiKey}`;
-    return await runHttpRequest<any>(this.httpService.axiosRef, 'get', url);
+    const [result] = await runHttpRequest<any>(
+      this.httpService.axiosRef,
+      'get',
+      url,
+    );
+    return result;
   }
 
   async getLocationForCountryAndCity({
