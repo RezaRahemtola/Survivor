@@ -18,7 +18,7 @@ export default function SignIn() {
 				value={password}
 				onChangeText={(value) => setPassword(value)}
 				placeholder={"Password"}
-				secureTextEntry={true}
+				secureTextEntry
 				style={styles.input}
 			/>
 

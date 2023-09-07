@@ -12,7 +12,7 @@ axiosInstance.interceptors.response.use(
 	async (error: Error | AxiosError) => {
 		if (isAxiosError(error) && error.response?.status === 401) {
 			await removeAccessToken();
-			router.replace("/sign-in");
+			router.push("/sign-in");
 		}
 		throw error;
 	},

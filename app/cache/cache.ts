@@ -11,7 +11,7 @@ export const picturesCache = new Cache({
 });
 
 export const accessTokenCache = new Cache({
-	namespace: "survivor-pictures",
+	namespace: "survivor-access-token",
 	policy: {
 		maxEntries: 1,
 		stdTTL: 60 * 10,
