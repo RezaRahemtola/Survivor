@@ -6,6 +6,7 @@
 ## Features 🔥
 
 - Authentication as a company employee
+  - Access persisted when the app is closed for simplified experience 
 - User profile with your personal information
 - Dashboard with widgets (see below)
 - Coworkers gallery
