@@ -3,18 +3,27 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { EmployeesModule } from './employees/employees.module';
 import { GlobalModule } from './global.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'survivor_db',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'survivor_app',
-      entities: [],
-      synchronize: true,
+    ConfigModule.forRoot({
+      cache: true,
+      expandVariables: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        type: 'postgres',
+        host: config.getOrThrow<string>('POSTGRES_HOST'),
+        port: config.getOrThrow<number>('POSTGRES_PORT'),
+        username: config.getOrThrow<string>('POSTGRES_USERNAME'),
+        password: config.getOrThrow<string>('POSTGRES_PASSWORD'),
+        database: config.getOrThrow<string>('POSTGRES_DATABASE'),
+        entities: [],
+        synchronize: true,
+      }),
     }),
     GlobalModule,
     AuthModule,
