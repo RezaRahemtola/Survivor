@@ -1,8 +1,9 @@
 import { Tabs } from "expo-router";
-import { useColorScheme } from "react-native";
+import { TouchableWithoutFeedback, useColorScheme } from "react-native";
 
 import Colors from "@/constants/Colors";
 import Icon, { IconProps } from "@/components/Icon";
+import { signOut } from "@/config/auth";
 
 const TabBarIcon = (props: IconProps) => <Icon size={28} style={{ marginBottom: -3 }} {...props} />;
 
@@ -41,6 +42,11 @@ export default function TabLayout() {
 				options={{
 					title: "User",
 					tabBarIcon: ({ color }) => <TabBarIcon name="user" source="FontAwesome" color={color} />,
+					headerRight: () => (
+						<TouchableWithoutFeedback onPress={() => signOut()}>
+							<Icon name="logout" source="MaterialIcons" size={25} style={{ marginRight: 15 }} />
+						</TouchableWithoutFeedback>
+					),
 				}}
 			/>
 		</Tabs>

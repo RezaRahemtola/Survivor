@@ -46,6 +46,10 @@ export default function GalleryScreen() {
 			/>
 			<FlatList
 				data={users}
+				viewabilityConfig={{
+					itemVisiblePercentThreshold: 1,
+					minimumViewTime: 1,
+				}}
 				onViewableItemsChanged={handleViewableItemsChanged}
 				keyExtractor={(user) => user.id.toString()}
 				renderItem={({ item }) => <GalleryCard user={item} />}
