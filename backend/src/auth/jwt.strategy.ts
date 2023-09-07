@@ -13,8 +13,15 @@ export default class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate({ masuraoToken }: { masuraoToken: string }) {
-    if (!masuraoToken) throw new UnauthorizedException('Malformed token');
-    return { masuraoToken };
+  async validate({
+    masuraoToken,
+    email,
+  }: {
+    masuraoToken: string;
+    email: string;
+  }) {
+    if (!masuraoToken || !email)
+      throw new UnauthorizedException('Malformed token');
+    return { masuraoToken, email };
   }
 }

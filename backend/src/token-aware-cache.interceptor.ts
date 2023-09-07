@@ -1,11 +1,14 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { CacheInterceptor } from '@nestjs/cache-manager';
-import { RequestWithToken } from './jwt-validator.interceptor';
+
+export type APIRequest = Request & {
+  user: { masuraoToken: string; email: string };
+};
 
 @Injectable()
 export default class TokenAwareCacheInterceptor extends CacheInterceptor {
   protected trackBy(context: ExecutionContext): string | undefined {
-    const request: RequestWithToken = context.switchToHttp().getRequest();
+    const request: APIRequest = context.switchToHttp().getRequest();
     const {
       user: { masuraoToken },
     } = request;
