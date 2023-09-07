@@ -12,7 +12,7 @@ export function validateJWT(accessToken: string): string | null {
   return matches && matches.length === 2 ? matches[1] : null;
 }
 
-export type RequestWithToken = Request & { token: string };
+export type RequestWithToken = Request & { user: { masuraoToken: string } };
 
 @Injectable()
 export default class JwtValidatorInterceptor {
@@ -21,6 +21,7 @@ export default class JwtValidatorInterceptor {
       .switchToHttp()
       .getRequest().headers;
 
+    console.log(context.switchToHttp().getRequest());
     if (!accessToken)
       throw new UnauthorizedException('No access token provided');
     const validatedAccessToken = validateJWT(accessToken);
