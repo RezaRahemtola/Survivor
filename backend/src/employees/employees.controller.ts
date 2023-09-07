@@ -20,7 +20,7 @@ export class EmployeesController {
 
   @UseInterceptors(CacheInterceptor)
   @Get()
-  getEmployees(@Req() { user: { masuraoToken } }: RequestWithToken) {
+  getEmployees(@Req() { user: { masuraoToken } }: APIRequest) {
     return this.employeesService.getEmployeesShort(masuraoToken);
   }
 
@@ -28,7 +28,7 @@ export class EmployeesController {
   @Get('/:id')
   getEmployee(
     @Param('id') id: number,
-    @Req() { user: { masuraoToken } }: RequestWithToken,
+    @Req() { user: { masuraoToken } }: APIRequest,
   ) {
     return this.employeesService.getEmployeeLong(id, masuraoToken);
   }
@@ -37,14 +37,14 @@ export class EmployeesController {
   @Get('/:id/picture')
   getEmployeePicture(
     @Param('id') id: number,
-    @Req() { user: { masuraoToken } }: RequestWithToken,
+    @Req() { user: { masuraoToken } }: APIRequest,
   ) {
     return this.employeesService.getEmployeePicture(id, masuraoToken);
   }
 
   @UseInterceptors(TokenAwareCacheInterceptor)
   @Get('/me')
-  getSelfEmployee(@Req() { user: { masuraoToken } }: RequestWithToken) {
+  getSelfEmployee(@Req() { user: { masuraoToken } }: APIRequest) {
     return this.employeesService.getSelfEmployeeLong(masuraoToken);
   }
 }
