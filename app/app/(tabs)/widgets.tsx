@@ -9,6 +9,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { userSettingsAtom } from "@/stores/widgets";
+import { useTranslation } from "react-i18next";
 
 const widgets = [
 	{ title: "Trending news", value: "trendingNews" },
@@ -42,6 +43,7 @@ const WidgetSelector = ({
 export default function WidgetsScreen() {
 	const [userSettings, setUserSettings] = useAtom(userSettingsAtom);
 	const [widgets, setWidgets] = useState<(WidgetType | undefined)[]>(userSettings?.widgets ?? []);
+	const { t } = useTranslation();
 
 	const saveWidgets = async () => {
 		const accessToken = await getAccessToken();
@@ -75,10 +77,10 @@ export default function WidgetsScreen() {
 				/>
 			))}
 			<Button style={styles.addWidget} icon="plus" mode="contained" onPress={() => setWidgets([...widgets, undefined])}>
-				Add a widget
+				{t("widgets.actions.add")}
 			</Button>
 			<Button style={styles.save} buttonColor={"grey"} mode="contained" onPress={saveWidgets}>
-				Save
+				{t("widgets.actions.save")}
 			</Button>
 		</View>
 	);

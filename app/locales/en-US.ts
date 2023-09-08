@@ -13,6 +13,10 @@ const translations = {
 	},
 	widgets: {
 		noWidgets: "No widgets yet",
+		actions: {
+			add: "Add a widget",
+			save: "Save",
+		},
 		weather: {
 			feels: "Feels",
 			low: "Low",
