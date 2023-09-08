@@ -17,6 +17,11 @@ const translations = {
 			add: "Add a widget",
 			save: "Save",
 		},
+		title: {
+			trendingNews: "Trending news",
+			currentWeather: "Current weather",
+			weatherWeekForecast: "Weather forecast",
+		},
 		weather: {
 			feels: "Feels",
 			low: "Low",
