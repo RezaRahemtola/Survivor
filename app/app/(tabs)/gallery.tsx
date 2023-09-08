@@ -1,6 +1,7 @@
 import { FlatList, StyleSheet, ViewToken } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { Searchbar } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 
 import { View } from "@/components/Themed";
 import GalleryCard from "@/components/gallery/GalleryCard";
@@ -9,9 +10,10 @@ import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
 import { getPicture } from "@/cache/pictures";
 
-export default function GalleryScreen() {
+const GalleryScreen = () => {
 	const [search, setSearch] = useState("");
 	const [users, setUsers] = useState<BaseUserWithPicture[]>([]);
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		(async () => {
@@ -39,7 +41,7 @@ export default function GalleryScreen() {
 		<View style={styles.container}>
 			<Searchbar
 				style={styles.searchBar}
-				placeholder="Search"
+				placeholder={t("gallery.search")}
 				onChangeText={(value) => setSearch(value)}
 				value={search}
 				editable
@@ -56,7 +58,9 @@ export default function GalleryScreen() {
 			/>
 		</View>
 	);
-}
+};
+
+export default GalleryScreen;
 
 const styles = StyleSheet.create({
 	container: {

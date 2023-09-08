@@ -1,15 +1,19 @@
 import { Dimensions, Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
+
 import { Text } from "@/components/Themed";
 import Icon from "@/components/Icon";
+import { TrendingNewsArticle } from "@/types/news";
 
 const { width } = Dimensions.get("window");
 
-function Card({ item }: { item: any }) {
+const TopNewsCard = ({ item }: { item: TrendingNewsArticle }) => {
 	const handleShare = () => {
 		const { url, title } = item;
 		const message = `${title} \n\n Read more at ${url}`;
 		return Share.share({ title, message, url: url }, { dialogTitle: `Share ${title}` });
 	};
+	const { t } = useTranslation();
 
 	return (
 		<View
@@ -22,7 +26,7 @@ function Card({ item }: { item: any }) {
 				elevation: 3,
 			}}
 		>
-			<Image source={{ uri: item.urlToImage }} style={styles.image} />
+			<Image source={{ uri: item.urlToImage! }} style={styles.image} />
 			<Text
 				style={{
 					width: width,
@@ -34,9 +38,9 @@ function Card({ item }: { item: any }) {
 				}}
 				numberOfLines={2}
 			>
-				{item.title ?? "Not Available"}
+				{item.title ?? t("widgets.news.notAvailable")}
 			</Text>
-			<Text style={styles.author}> {item.author ?? "Not Available"}</Text>
+			<Text style={styles.author}> {item.author ?? t("widgets.news.notAvailable")}</Text>
 			<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
 				<View
 					style={{
@@ -70,7 +74,7 @@ function Card({ item }: { item: any }) {
 			</View>
 		</View>
 	);
-}
+};
 
 const styles = StyleSheet.create({
 	image: {
@@ -86,4 +90,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default Card;
+export default TopNewsCard;
