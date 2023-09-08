@@ -24,22 +24,20 @@ const WidgetSelector = ({
 	widget: WidgetType | undefined;
 	onValueChange: (value: WidgetType) => void;
 	onRemove: () => void;
-}) => {
-	return (
-		<View style={{ flexDirection: "row" }}>
-			<SelectDropdown
-				data={widgets}
-				buttonTextAfterSelection={(selectedItem) => selectedItem.title}
-				rowTextForSelection={(item, index) => item.title}
-				defaultValue={widget}
-				onSelect={(item) => onValueChange(item.value)}
-			/>
-			<Button icon="delete" onPress={onRemove}>
-				<></>
-			</Button>
-		</View>
-	);
-};
+}) => (
+	<View style={{ flexDirection: "row" }}>
+		<SelectDropdown
+			data={widgets}
+			buttonTextAfterSelection={(selectedItem) => selectedItem.title}
+			rowTextForSelection={(item, index) => item.title}
+			defaultValue={widget}
+			onSelect={(item) => onValueChange(item.value)}
+		/>
+		<Button icon="delete" onPress={onRemove}>
+			<></>
+		</Button>
+	</View>
+);
 
 export default function WidgetsScreen() {
 	const [, setWidgetsAtom] = useAtom(widgetsAtom);
