@@ -4,18 +4,12 @@ import { useState } from "react";
 import { useAtom } from "jotai";
 
 import { View } from "@/components/Themed";
-import { WidgetType } from "@/types/settings";
+import { WidgetType, widgetTypes } from "@/types/settings";
 import SelectDropdown from "react-native-select-dropdown";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { userSettingsAtom } from "@/stores/widgets";
 import { useTranslation } from "react-i18next";
-
-const widgets = [
-	{ title: "Trending news", value: "trendingNews" },
-	{ title: "Current weather", value: "currentWeather" },
-	{ title: "Weather forecast", value: "weatherWeekForecast" },
-];
 
 const WidgetSelector = ({
 	widget,
@@ -25,20 +19,28 @@ const WidgetSelector = ({
 	widget: WidgetType | undefined;
 	onValueChange: (value: WidgetType) => void;
 	onRemove: () => void;
-}) => (
-	<View style={{ flexDirection: "row" }}>
-		<SelectDropdown
-			data={widgets}
-			buttonTextAfterSelection={(selectedItem) => selectedItem.title}
-			rowTextForSelection={(item, index) => item.title}
-			defaultValue={widget}
-			onSelect={(item) => onValueChange(item.value)}
-		/>
-		<Button icon="delete" onPress={onRemove}>
-			<></>
-		</Button>
-	</View>
-);
+}) => {
+	const { t } = useTranslation();
+	const widgets = widgetTypes.map((widgetType) => ({
+		title: t(`widgets.title.${widgetType}`),
+		value: widgetType,
+	}));
+
+	return (
+		<View style={{ flexDirection: "row" }}>
+			<SelectDropdown
+				data={widgets}
+				buttonTextAfterSelection={(selectedItem) => selectedItem.title}
+				rowTextForSelection={(item, index) => item.title}
+				defaultValue={widgets.find((item) => item.value === widget)}
+				onSelect={(item) => onValueChange(item.value)}
+			/>
+			<Button icon="delete" onPress={onRemove}>
+				<></>
+			</Button>
+		</View>
+	);
+};
 
 export default function WidgetsScreen() {
 	const [userSettings, setUserSettings] = useAtom(userSettingsAtom);

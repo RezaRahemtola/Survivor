@@ -17,6 +17,11 @@ const translations = {
 			add: "Agregar un widget",
 			save: "Ahorrar",
 		},
+		title: {
+			trendingNews: "Noticias",
+			currentWeather: "Clima actual",
+			weatherWeekForecast: "Previsión meteorológica",
+		},
 		weather: {
 			feels: "Siente",
 			low: "Mín",
