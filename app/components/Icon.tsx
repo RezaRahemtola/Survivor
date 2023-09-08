@@ -1,5 +1,6 @@
 import { ComponentProps } from "react";
 import { AntDesign, FontAwesome, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { useThemeColor } from "@/components/Themed";
 
 type FontAwesomeIconProps = {
 	name: ComponentProps<typeof FontAwesome>["name"];
@@ -27,15 +28,17 @@ export type IconProps =
 	| MaterialIconsIconProps
 	| MaterialCommunityIconsIconProps;
 
-const Icon = ({ name, source, color, ...props }: IconProps) => {
+const Icon = ({ name, source, ...props }: IconProps) => {
+	const color = useThemeColor({}, "text");
+
 	if (source === "FontAwesome") {
-		return <FontAwesome name={name} {...props} />;
+		return <FontAwesome name={name} color={color} {...props} />;
 	} else if (source === "AntDesign") {
-		return <AntDesign name={name} {...props} />;
+		return <AntDesign name={name} color={color} {...props} />;
 	} else if (source === "MaterialIcons") {
-		return <MaterialIcons name={name} {...props} />;
+		return <MaterialIcons name={name} color={color} {...props} />;
 	} else if (source === "MaterialCommunityIcons") {
-		return <MaterialCommunityIcons name={name} {...props} />;
+		return <MaterialCommunityIcons name={name} color={color} {...props} />;
 	}
 };
 

@@ -6,6 +6,7 @@ import Icon from "@/components/Icon";
 import { FullUser, isFullUser, User } from "@/types/user";
 import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
+import { useThemeColor } from "@/components/Themed";
 
 const GalleryCard = ({ user }: { user: User }) => (
 	<View style={styles.container}>
@@ -32,7 +33,7 @@ const GalleryCard = ({ user }: { user: User }) => (
 				}
 			}}
 		>
-			<Card>
+			<Card containerStyle={{ backgroundColor: useThemeColor({}, "background") }}>
 				<View style={styles.headerColumn}>
 					<Image style={styles.userImage} source={{ uri: `data:image/png;base64,${user.picture}` }} />
 					<Text style={styles.userNameText}>
@@ -40,7 +41,7 @@ const GalleryCard = ({ user }: { user: User }) => (
 					</Text>
 					<View style={styles.userEmailRow}>
 						<View>
-							<Icon name="email" source="MaterialIcons" style={styles.workIcon} />
+							<Icon name="email" source="MaterialIcons" size={26} />
 						</View>
 						<View style={styles.userEmailContent}>
 							<Text style={styles.userEmailText}>{user.email}</Text>
@@ -71,10 +72,6 @@ const styles = StyleSheet.create({
 				alignItems: "center",
 			},
 		}),
-	},
-	workIcon: {
-		color: "black",
-		fontSize: 26,
 	},
 	userEmailRow: {
 		alignItems: "center",

@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import Icon, { IconProps } from "@/components/Icon";
+import { Text } from "@/components/Themed";
 
 type ValueLineProps = {
 	value: string;

@@ -30,7 +30,9 @@ const TrendNewsLayout = () => {
 	return news ? (
 		<>
 			<TrendNewsTitle />
-			<NewsSlider news={news} />
+			<NewsSlider
+				articles={news.articles.filter((article) => article.urlToImage !== null && article.author !== null)}
+			/>
 		</>
 	) : (
 		<>

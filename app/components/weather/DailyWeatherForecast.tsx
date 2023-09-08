@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
 const DayContainer = styled.View`
 	padding: 10px;
-	background-color: rgba(255, 255, 255, 0.6);
+	border: rgba(255, 255, 255, 0.6) 1px;
 	border-radius: 10px;
 	margin: 10px;
 	display: flex;

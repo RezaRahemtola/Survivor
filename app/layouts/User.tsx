@@ -4,6 +4,7 @@ import { Image, ImageBackground, Platform, ScrollView, StyleSheet, Text, View } 
 import ValueLine from "@/components/user/ValueLine";
 import Icon from "@/components/Icon";
 import { ModalUser } from "@/types/user";
+import { useThemeColor } from "@/components/Themed";
 
 type HeadComponentProps = {
 	name: string;
@@ -36,21 +37,23 @@ const HeadComponent = ({ name, surname, work, picture }: HeadComponentProps) => 
 	</View>
 );
 
-const UserLayout = ({ user }: { user: ModalUser }) => (
-	<ScrollView style={styles.scroll}>
-		<View style={styles.container}>
-			<Card>
-				<HeadComponent name={user.name} surname={user.surname} work={user.work} picture={user.picture!} />
-				<ValueLine value={user.email} icon={{ name: "email", source: "MaterialIcons" }} />
-				<ValueLine
-					value={user.gender}
-					icon={{ source: "MaterialCommunityIcons", name: user.gender === "Male" ? "gender-male" : "gender-female" }}
-				/>
-				<ValueLine value={user.birth_date} icon={{ source: "FontAwesome", name: "birthday-cake" }} />
-			</Card>
-		</View>
-	</ScrollView>
-);
+const UserLayout = ({ user }: { user: ModalUser }) => {
+	return (
+		<ScrollView>
+			<View style={{ ...styles.container, backgroundColor: useThemeColor({}, "background") }}>
+				<Card containerStyle={{ backgroundColor: useThemeColor({}, "background") }}>
+					<HeadComponent name={user.name} surname={user.surname} work={user.work} picture={user.picture!} />
+					<ValueLine value={user.email} icon={{ name: "email", source: "MaterialIcons" }} />
+					<ValueLine
+						value={user.gender}
+						icon={{ source: "MaterialCommunityIcons", name: user.gender === "Male" ? "gender-male" : "gender-female" }}
+					/>
+					<ValueLine value={user.birth_date} icon={{ source: "FontAwesome", name: "birthday-cake" }} />
+				</Card>
+			</View>
+		</ScrollView>
+	);
+};
 
 export default UserLayout;
 
@@ -81,9 +84,6 @@ const styles = StyleSheet.create({
 	workIcon: {
 		color: "white",
 		fontSize: 26,
-	},
-	scroll: {
-		backgroundColor: "#FFF",
 	},
 	userWorkRow: {
 		alignItems: "center",
