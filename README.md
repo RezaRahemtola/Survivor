@@ -10,6 +10,7 @@
   - Possibility to log out
 - User profile with your personal information
 - Dashboard with widgets (see below)
+  - Widget selection with preferences persisted in a database 
 - Coworkers gallery
   - Search bar to filter by name
 - Widgets
