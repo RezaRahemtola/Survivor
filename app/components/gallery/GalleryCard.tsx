@@ -1,4 +1,4 @@
-import { Image, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { Image, Linking, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import { Card } from "react-native-elements";
 import { router } from "expo-router";
 
@@ -8,50 +8,56 @@ import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
 import { useThemeColor } from "@/components/Themed";
 
-const GalleryCard = ({ user }: { user: User }) => (
-	<View style={styles.container}>
-		<TouchableWithoutFeedback
-			onPress={async () => {
-				if (isFullUser(user)) {
-					router.push({
-						pathname: "/user/modal",
-						params: { ...user },
-					});
-				}
-				try {
-					const accessToken = await getAccessToken();
-					const response = await axios.get<FullUser>(`/employees/${user.id}`, {
-						headers: { Authorization: `Bearer ${accessToken}` },
-					});
+const GalleryCard = ({ user }: { user: User }) => {
+	const onPressEmail = (email: string) => Linking.openURL(`mailto:${email}`).catch((err) => console.log("Error:", err));
 
-					router.push({
-						pathname: "/user/modal",
-						params: { ...response.data, picture: user.picture! },
-					});
-				} catch (error) {
-					console.log(error);
-				}
-			}}
-		>
-			<Card containerStyle={{ backgroundColor: useThemeColor({}, "background") }}>
-				<View style={styles.headerColumn}>
-					<Image style={styles.userImage} source={{ uri: `data:image/png;base64,${user.picture}` }} />
-					<Text style={styles.userNameText}>
-						{user.name} {user.surname}
-					</Text>
-					<View style={styles.userEmailRow}>
-						<View>
-							<Icon name="email" source="MaterialIcons" size={26} />
-						</View>
-						<View style={styles.userEmailContent}>
-							<Text style={styles.userEmailText}>{user.email}</Text>
+	return (
+		<View style={styles.container}>
+			<TouchableWithoutFeedback
+				onPress={async () => {
+					if (isFullUser(user)) {
+						router.push({
+							pathname: "/user/modal",
+							params: { ...user },
+						});
+					}
+					try {
+						const accessToken = await getAccessToken();
+						const response = await axios.get<FullUser>(`/employees/${user.id}`, {
+							headers: { Authorization: `Bearer ${accessToken}` },
+						});
+
+						router.push({
+							pathname: "/user/modal",
+							params: { ...response.data, picture: user.picture! },
+						});
+					} catch (error) {
+						console.log(error);
+					}
+				}}
+			>
+				<Card containerStyle={{ backgroundColor: useThemeColor({}, "background") }}>
+					<View style={styles.headerColumn}>
+						<Image style={styles.userImage} source={{ uri: `data:image/png;base64,${user.picture}` }} />
+						<Text style={styles.userNameText}>
+							{user.name} {user.surname}
+						</Text>
+						<View style={styles.userEmailRow}>
+							<View>
+								<Icon name="email" source="MaterialIcons" size={26} />
+							</View>
+							<View style={styles.userEmailContent}>
+								<Text style={styles.userEmailText} onPress={() => onPressEmail(user.email)}>
+									{user.email}
+								</Text>
+							</View>
 						</View>
 					</View>
-				</View>
-			</Card>
-		</TouchableWithoutFeedback>
-	</View>
-);
+				</Card>
+			</TouchableWithoutFeedback>
+		</View>
+	);
+};
 
 export default GalleryCard;
 
