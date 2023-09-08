@@ -9,6 +9,8 @@
   - Access persisted when the app is closed for simplified experience
   - Possibility to log out
 - User profile with your personal information
+  - Settings customization
+    - Language (🇺🇸, 🇫🇷 or 🇪🇸)
 - Dashboard with widgets (see below)
   - Widget selection with preferences persisted in a database 
 - Coworkers gallery
