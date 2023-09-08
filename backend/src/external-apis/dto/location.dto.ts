@@ -7,7 +7,6 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { OmitType } from '@nestjs/mapped-types';
 
 export const COUNTRY_CODES = [
   'af',
@@ -306,8 +305,3 @@ export class GeocodingFromCityAndCountryResultDto {
   @IsString()
   state!: string;
 }
-
-export class GeocodingFromCoordinatesResultDto extends OmitType(
-  GeocodingFromCityAndCountryResultDto,
-  ['state'] as const,
-) {}
