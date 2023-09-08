@@ -1,24 +1,24 @@
 import { IsArray, IsEnum, IsOptional } from 'class-validator';
 import {
+  INTERFACE_SCHEMES,
   InterfaceScheme,
-  interfaceSchemes,
   Language,
-  languages,
+  LANGUAGES,
   Widget,
-  widgets,
+  WIDGETS,
 } from '../entities/user-settings.entity';
 
 export class UserSettingsUpdateDto {
   @IsOptional()
   @IsArray()
-  @IsEnum(widgets, { each: true })
+  @IsEnum(WIDGETS, { each: true })
   widgets?: Widget[];
 
   @IsOptional()
-  @IsEnum(languages)
+  @IsEnum(LANGUAGES)
   language?: Language;
 
   @IsOptional()
-  @IsEnum(interfaceSchemes)
+  @IsEnum(INTERFACE_SCHEMES)
   interfaceScheme?: InterfaceScheme;
 }

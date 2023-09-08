@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { OmitType } from '@nestjs/mapped-types';
 
-export const countryCodes = [
+export const COUNTRY_CODES = [
   'af',
   'al',
   'dz',
@@ -261,10 +261,12 @@ export const countryCodes = [
   'ax',
 ] as const;
 
-export const countryCodeUpper = countryCodes.map((code) => code.toUpperCase());
+export const COUNTRY_CODES_UPPER = COUNTRY_CODES.map((code) =>
+  code.toUpperCase(),
+);
 
-export type CountryCode = (typeof countryCodes)[number];
-export type CountryCodeUpper = (typeof countryCodeUpper)[number];
+export type CountryCode = (typeof COUNTRY_CODES)[number];
+export type CountryCodeUpper = (typeof COUNTRY_CODES_UPPER)[number];
 
 export class CoordinatesLocationDto {
   @IsLongitude()
@@ -275,7 +277,7 @@ export class CoordinatesLocationDto {
 }
 
 export class CountryAndCityLocationDto {
-  @IsEnum(countryCodes)
+  @IsEnum(COUNTRY_CODES)
   country!: CountryCode;
 
   @IsString()
@@ -298,7 +300,7 @@ export class GeocodingFromCityAndCountryResultDto {
   @IsOptional()
   local_names?: Record<string, string>;
 
-  @IsEnum(countryCodeUpper)
+  @IsEnum(COUNTRY_CODES_UPPER)
   country!: CountryCodeUpper;
 
   @IsString()
