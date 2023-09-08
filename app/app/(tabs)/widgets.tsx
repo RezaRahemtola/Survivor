@@ -75,7 +75,7 @@ export default function WidgetsScreen() {
 					}}
 					onRemove={() => {
 						const dupWidgets = [...widgets];
-						dupWidgets.splice(index, 1);
+						dupWidgets.splice(index - 1, 1);
 						setWidgets(dupWidgets);
 					}}
 				/>

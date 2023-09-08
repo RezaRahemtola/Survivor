@@ -53,7 +53,13 @@ export default function HomeScreen() {
 			{widgets.map((widget, index) => (
 				<WidgetComponent name={widget} key={index} />
 			))}
-			{widgets.length === 0 ? <Text>No widgets yet.</Text> : <></>}
+			{widgets.length === 0 ? (
+				<ScrollView contentContainerStyle={styles.contentContainer}>
+					<Text style={styles.noWidget}>No widgets yet</Text>
+				</ScrollView>
+			) : (
+				<></>
+			)}
 		</ScrollView>
 	);
 }
@@ -62,5 +68,12 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		padding: 20,
+	},
+	contentContainer: {
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	noWidget: {
+		fontSize: 25,
 	},
 });
