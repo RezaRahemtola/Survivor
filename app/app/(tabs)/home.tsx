@@ -11,6 +11,7 @@ import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { Text } from "@/components/Themed";
 import { widgetsAtom } from "@/stores/widgets";
+import { useTranslation } from "react-i18next";
 
 const WidgetComponent = ({ name }: { name: WidgetType }) => {
 	switch (name) {
@@ -33,6 +34,7 @@ const WidgetComponent = ({ name }: { name: WidgetType }) => {
 
 export default function HomeScreen() {
 	const [widgets, setWidgets] = useAtom(widgetsAtom);
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		(async () => {
@@ -55,7 +57,7 @@ export default function HomeScreen() {
 			))}
 			{widgets.length === 0 ? (
 				<ScrollView contentContainerStyle={styles.contentContainer}>
-					<Text style={styles.noWidget}>No widgets yet</Text>
+					<Text style={styles.noWidget}>{t("widgets.noWidgets")}</Text>
 				</ScrollView>
 			) : (
 				<></>
