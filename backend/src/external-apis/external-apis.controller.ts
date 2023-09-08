@@ -12,8 +12,8 @@ import { ExternalApisService } from './external-apis.service';
 import {
   CoordinatesLocationDto,
   COUNTRY_CODES,
-  CountryAndCityLocationDto,
   CountryCode,
+  WeatherDataDto,
 } from './dto/location.dto';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
@@ -27,8 +27,8 @@ export class ExternalApisController {
   @CacheTTL(1000 * 60 * 15) // 15 minutes
   @UseInterceptors(BodyAwareCacheInterceptor)
   @Post('weather')
-  getWeather(@Body() countryAndCity: CountryAndCityLocationDto) {
-    return this.externalApisService.getWeather(countryAndCity);
+  getWeather(@Body() data: WeatherDataDto) {
+    return this.externalApisService.getWeather(data);
   }
 
   @CacheTTL(1000 * 60 * 5) // 5 minutes

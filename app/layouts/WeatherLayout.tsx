@@ -9,6 +9,7 @@ import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { PlaceResponse } from "@/types/weather";
 import { useTranslation } from "react-i18next";
+import i18n from "@/config/i18n";
 
 type WeatherLayoutProps = {
 	children: ReactNode;
@@ -53,7 +54,7 @@ const WeatherLayout = ({ children }: WeatherLayoutProps) => {
 
 				const weather = await axios.post(
 					"/external/weather",
-					{ city: place.data.name, country: place.data.country.toLowerCase() },
+					{ city: place.data.name, country: place.data.country.toLowerCase(), language: i18n.language },
 					{ headers: { Authorization: `Bearer ${accessToken}` } },
 				);
 
