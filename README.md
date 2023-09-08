@@ -36,6 +36,7 @@
 ## Credits 🙏
 - The weather widgets are heavily inspired from [this weather application](https://github.com/stefanylaforest/react-native-weather-app)
 - The news widgets is also inspired from [this news application](https://github.com/tarunsinghofficial/News-App-React-Native)
+- The user profile card was recreated [from this template](https://github.com/nattatorn-dev/react-native-user-profile)
 
 ## Authors
 
