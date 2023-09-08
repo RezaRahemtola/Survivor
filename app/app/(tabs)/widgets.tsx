@@ -1,14 +1,14 @@
 import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAtom } from "jotai";
 
 import { View } from "@/components/Themed";
-import { WidgetType } from "@/types/widgets";
+import { WidgetType } from "@/types/settings";
 import SelectDropdown from "react-native-select-dropdown";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
-import { widgetsAtom } from "@/stores/widgets";
+import { userSettingsAtom } from "@/stores/widgets";
 
 const widgets = [
 	{ title: "Trending news", value: "trendingNews" },
@@ -40,34 +40,20 @@ const WidgetSelector = ({
 );
 
 export default function WidgetsScreen() {
-	const [, setWidgetsAtom] = useAtom(widgetsAtom);
-	const [widgets, setWidgets] = useState<(WidgetType | undefined)[]>([]);
-
-	useEffect(() => {
-		(async () => {
-			try {
-				const accessToken = await getAccessToken();
-				const response = await axios.get<WidgetType[]>(`/widgets`, {
-					headers: { Authorization: `Bearer ${accessToken}` },
-				});
-				setWidgets(response.data);
-			} catch (error) {
-				console.log(error);
-			}
-		})();
-	}, []);
+	const [userSettings, setUserSettings] = useAtom(userSettingsAtom);
+	const [widgets, setWidgets] = useState<(WidgetType | undefined)[]>(userSettings?.widgets ?? []);
 
 	const saveWidgets = async () => {
 		const accessToken = await getAccessToken();
 		const newWidgets = widgets.filter((widget) => widget !== undefined) as WidgetType[];
 		await axios.patch(
-			"/widgets",
+			"/user-settings",
 			{
-				newWidgetNames: newWidgets,
+				widgets: newWidgets,
 			},
 			{ headers: { Authorization: `Bearer ${accessToken}` } },
 		);
-		setWidgetsAtom(newWidgets);
+		setUserSettings({ ...userSettings!, widgets: newWidgets });
 	};
 
 	return (
