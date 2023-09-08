@@ -5,6 +5,7 @@ import ValueLine from "@/components/user/ValueLine";
 import Icon from "@/components/Icon";
 import { ModalUser } from "@/types/user";
 import { useThemeColor } from "@/components/Themed";
+import { useTranslation } from "react-i18next";
 
 type HeadComponentProps = {
 	name: string;
@@ -38,13 +39,14 @@ const HeadComponent = ({ name, surname, work, picture }: HeadComponentProps) => 
 );
 
 const UserLayout = ({ user }: { user: ModalUser }) => {
+	const { t } = useTranslation();
 	return (
 		<View style={{ ...styles.container, backgroundColor: useThemeColor({}, "background") }}>
 			<Card containerStyle={{ backgroundColor: useThemeColor({}, "background") }}>
 				<HeadComponent name={user.name} surname={user.surname} work={user.work} picture={user.picture!} />
 				<ValueLine value={user.email} icon={{ name: "email", source: "MaterialIcons" }} />
 				<ValueLine
-					value={user.gender}
+					value={t(`user.gender.${user.gender.toLowerCase()}`)}
 					icon={{ source: "MaterialCommunityIcons", name: user.gender === "Male" ? "gender-male" : "gender-female" }}
 				/>
 				<ValueLine value={user.birth_date} icon={{ source: "FontAwesome", name: "birthday-cake" }} />

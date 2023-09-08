@@ -7,6 +7,10 @@ const translations = {
 			action: "Acceso",
 			wrongCredentials: "Correo electrónico y/o contraseña no válidos, inténtalo de nuevo.",
 		},
+		gender: {
+			male: "Hombre",
+			female: "Mujer",
+		},
 	},
 	gallery: {
 		search: "Buscar",
