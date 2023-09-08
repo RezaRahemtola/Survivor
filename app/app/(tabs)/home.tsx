@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet } from "react-native";
 import { useEffect } from "react";
+import { useAtom } from "jotai";
 
 import TrendNewsLayout from "@/layouts/TrendNewsLayout";
 import WeatherLayout from "@/layouts/WeatherLayout";
@@ -9,26 +10,25 @@ import { WidgetType } from "@/types/widgets";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { Text } from "@/components/Themed";
-import { useAtom } from "jotai/index";
 import { widgetsAtom } from "@/stores/widgets";
 
 const WidgetComponent = ({ name }: { name: WidgetType }) => {
-	if (name === "trendingNews") {
-		return <TrendNewsLayout />;
-	} else if (name === "currentWeather") {
-		return (
-			<WeatherLayout>
-				<CurrentWeatherForecast />
-			</WeatherLayout>
-		);
-	} else if (name === "weatherWeekForecast") {
-		return (
-			<WeatherLayout>
-				<DailyWeatherForecast />
-			</WeatherLayout>
-		);
+	switch (name) {
+		case "trendingNews":
+			return <TrendNewsLayout />;
+		case "currentWeather":
+			return (
+				<WeatherLayout>
+					<CurrentWeatherForecast />
+				</WeatherLayout>
+			);
+		case "weatherWeekForecast":
+			return (
+				<WeatherLayout>
+					<DailyWeatherForecast />
+				</WeatherLayout>
+			);
 	}
-	return <></>;
 };
 
 export default function HomeScreen() {
