@@ -1,6 +1,6 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Dimensions, Image, Share, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "@/components/Themed";
+import Icon from "@/components/Icon";
 
 const { width } = Dimensions.get("window");
 
@@ -65,7 +65,7 @@ function Card({ item }: { item: any }) {
 					}}
 					onPress={handleShare}
 				>
-					<Ionicons name="share-social" size={20} />
+					<Icon name="sharealt" source="AntDesign" size={20} />
 				</TouchableOpacity>
 			</View>
 		</View>

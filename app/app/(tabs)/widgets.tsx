@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
 
 import { View } from "@/components/Themed";
 import { WidgetType } from "@/types/widgets";
 import SelectDropdown from "react-native-select-dropdown";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
-import { useAtom } from "jotai/index";
 import { widgetsAtom } from "@/stores/widgets";
 
 const WidgetSelector = ({

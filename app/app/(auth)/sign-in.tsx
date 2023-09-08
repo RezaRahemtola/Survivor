@@ -1,12 +1,14 @@
 import { Button, StyleSheet, TextInput, View } from "react-native";
 import { useState } from "react";
 import { signIn } from "@/config/auth";
-import { Text } from "@/components/Themed";
+import { Text, useThemeColor } from "@/components/Themed";
 
 export default function SignIn() {
-	const [username, setUsername] = useState("");
+	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
+	const borderColor = useThemeColor({ light: "black", dark: "white" }, "background");
+	const textColor = useThemeColor({}, "text");
 
 	return (
 		<View style={styles.container}>
@@ -19,23 +21,23 @@ export default function SignIn() {
 			)}
 
 			<TextInput
-				value={username}
-				onChangeText={(value) => setUsername(value)}
-				placeholder={"Username"}
-				style={styles.input}
+				value={email}
+				onChangeText={(value) => setEmail(value)}
+				placeholder={"Email"}
+				style={{ ...styles.input, borderColor, color: textColor }}
 			/>
 			<TextInput
 				value={password}
 				onChangeText={(value) => setPassword(value)}
 				placeholder={"Password"}
 				secureTextEntry
-				style={styles.input}
+				style={{ ...styles.input, borderColor, color: textColor }}
 			/>
 
 			<Button
 				title={"Login"}
 				onPress={async () => {
-					const signedIn = await signIn(username, password);
+					const signedIn = await signIn(email, password);
 					setError(signedIn ? "" : "Invalid email and/or password, please try again.");
 				}}
 			/>
@@ -54,7 +56,6 @@ const styles = StyleSheet.create({
 		height: 44,
 		padding: 10,
 		borderWidth: 1,
-		borderColor: "black",
 		marginBottom: 10,
 	},
 	errorMessage: {

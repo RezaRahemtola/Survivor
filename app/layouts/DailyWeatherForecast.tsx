@@ -11,8 +11,10 @@ const DailyWeatherForecast = () => {
 	return (
 		<ScrollView>
 			{weather.daily ? (
-				weather.daily.map((day: any) => {
-					return <DailyWeather key={day.dt} day={day} />;
+				weather.daily.map((day: any, index: number) => {
+					if (index !== 0) {
+						return <DailyWeather key={day.dt} day={day} />;
+					}
 				})
 			) : (
 				<Text style={styles.noWeather}>No Weather to show</Text>

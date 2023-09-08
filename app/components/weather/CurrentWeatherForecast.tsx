@@ -113,7 +113,7 @@ const MainInfoContainer = styled.View`
 `;
 
 const SecondaryInfoContainer = styled.View`
-	background-color: rgba(255, 255, 255, 0.8);
+	border: rgba(255, 255, 255, 0.8) 1px;
 	border-radius: 20px;
 	display: flex;
 	align-items: center;

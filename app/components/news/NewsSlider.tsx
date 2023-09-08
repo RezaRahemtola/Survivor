@@ -1,13 +1,13 @@
 import { FlatList, ScrollView } from "react-native";
 import TopNewsCard from "@/components/news/TopNewsCard";
-import { TrendingNewsResult } from "@/types/news";
+import { TrendingNewsArticle } from "@/types/news";
 
-const NewsSlider = ({ news }: { news: TrendingNewsResult }) => (
+const NewsSlider = ({ articles }: { articles: TrendingNewsArticle }) => (
 	<ScrollView>
 		<FlatList
 			horizontal={true}
 			showsHorizontalScrollIndicator={false}
-			data={news.articles}
+			data={articles}
 			keyExtractor={(_, index) => "key" + index}
 			renderItem={({ item }) => <TopNewsCard item={item} />}
 		/>
