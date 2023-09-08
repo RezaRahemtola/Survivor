@@ -6,12 +6,13 @@ import TrendNewsLayout from "@/layouts/TrendNewsLayout";
 import WeatherLayout from "@/layouts/WeatherLayout";
 import CurrentWeatherForecast from "@/components/weather/CurrentWeatherForecast";
 import DailyWeatherForecast from "@/layouts/DailyWeatherForecast";
-import { WidgetType } from "@/types/widgets";
+import { UserSettings, WidgetType } from "@/types/settings";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { Text } from "@/components/Themed";
-import { widgetsAtom } from "@/stores/widgets";
+import { userSettingsAtom } from "@/stores/widgets";
 import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 const WidgetComponent = ({ name }: { name: WidgetType }) => {
 	switch (name) {
@@ -33,17 +34,18 @@ const WidgetComponent = ({ name }: { name: WidgetType }) => {
 };
 
 export default function HomeScreen() {
-	const [widgets, setWidgets] = useAtom(widgetsAtom);
+	const [userSettings, setUserSettings] = useAtom(userSettingsAtom);
 	const { t } = useTranslation();
 
 	useEffect(() => {
 		(async () => {
 			try {
 				const accessToken = await getAccessToken();
-				const response = await axios.get<WidgetType[]>(`/widgets`, {
+				const response = await axios.get<UserSettings>(`/user-settings`, {
 					headers: { Authorization: `Bearer ${accessToken}` },
 				});
-				setWidgets(response.data);
+				setUserSettings(response.data);
+				i18next.changeLanguage(response.data.language);
 			} catch (error) {
 				console.log(error);
 			}
@@ -52,10 +54,8 @@ export default function HomeScreen() {
 
 	return (
 		<ScrollView style={styles.container}>
-			{widgets.map((widget, index) => (
-				<WidgetComponent name={widget} key={index} />
-			))}
-			{widgets.length === 0 ? (
+			{userSettings?.widgets.map((widget, index) => <WidgetComponent name={widget} key={index} />)}
+			{userSettings?.widgets.length === 0 ? (
 				<ScrollView contentContainerStyle={styles.contentContainer}>
 					<Text style={styles.noWidget}>{t("widgets.noWidgets")}</Text>
 				</ScrollView>
