@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -10,6 +11,7 @@ import {
 import { ExternalApisService } from './external-apis.service';
 import {
   CoordinatesLocationDto,
+  COUNTRY_CODES,
   CountryAndCityLocationDto,
   CountryCode,
 } from './dto/location.dto';
@@ -33,6 +35,13 @@ export class ExternalApisController {
   @UseInterceptors(CacheInterceptor)
   @Get('news')
   async getNews(@Query('country') countryCode: CountryCode) {
+    if (!COUNTRY_CODES.includes(countryCode)) {
+      throw new BadRequestException({
+        message: ['Invalid country code'],
+        error: 'Bad Request',
+        statusCode: 400,
+      });
+    }
     return this.externalApisService.getNews(countryCode);
   }
 
