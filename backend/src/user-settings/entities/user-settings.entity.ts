@@ -6,13 +6,13 @@ export const WIDGETS = [
   'trendingNews',
 ] as const;
 export type Widget = (typeof WIDGETS)[number];
-export const LANGUAGES = ['fr-fr', 'en-us', 'en-gb'] as const;
+export const LANGUAGES = ['fr', 'en', 'es', 'zh', 'gu'] as const;
 export type Language = (typeof LANGUAGES)[number];
 export const INTERFACE_SCHEMES = ['auto', 'dark', 'light'] as const;
 export type InterfaceScheme = (typeof INTERFACE_SCHEMES)[number];
 export const DEFAULT_USER_SETTINGS: Omit<UserSettings, 'email'> = {
   widgets: [],
-  language: 'en-us',
+  language: 'en',
   interfaceScheme: 'auto',
 };
 
@@ -24,7 +24,7 @@ export default class UserSettings {
   @Column({ type: 'enum', enum: WIDGETS, array: true, default: [] })
   widgets!: Widget[];
 
-  @Column({ type: 'enum', enum: LANGUAGES, default: 'en-us' })
+  @Column({ type: 'enum', enum: LANGUAGES, default: 'en' })
   language!: Language;
 
   @Column({ type: 'enum', enum: INTERFACE_SCHEMES, default: 'auto' })
