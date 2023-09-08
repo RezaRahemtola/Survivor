@@ -10,6 +10,12 @@ import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { widgetsAtom } from "@/stores/widgets";
 
+const widgets = [
+	{ title: "Trending news", value: "trendingNews" },
+	{ title: "Current weather", value: "currentWeather" },
+	{ title: "Weather forecast", value: "weatherWeekForecast" },
+];
+
 const WidgetSelector = ({
 	widget,
 	onValueChange,
@@ -22,9 +28,11 @@ const WidgetSelector = ({
 	return (
 		<View style={{ flexDirection: "row" }}>
 			<SelectDropdown
-				data={["trendingNews", "currentWeather", "weatherWeekForecast"]}
+				data={widgets}
+				buttonTextAfterSelection={(selectedItem) => selectedItem.title}
+				rowTextForSelection={(item, index) => item.title}
 				defaultValue={widget}
-				onSelect={(item) => onValueChange(item)}
+				onSelect={(item) => onValueChange(item.value)}
 			/>
 			<Button icon="delete" onPress={onRemove}></Button>
 		</View>
