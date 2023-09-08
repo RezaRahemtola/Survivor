@@ -34,7 +34,9 @@ const WidgetSelector = ({
 				defaultValue={widget}
 				onSelect={(item) => onValueChange(item.value)}
 			/>
-			<Button icon="delete" onPress={onRemove}></Button>
+			<Button icon="delete" onPress={onRemove}>
+				<></>
+			</Button>
 		</View>
 	);
 };
