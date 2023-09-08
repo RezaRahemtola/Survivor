@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import UserSettings, {
-  defaultUserSettings,
+  DEFAULT_USER_SETTINGS,
 } from './entities/user-settings.entity';
 import { Repository } from 'typeorm';
 import { UserSettingsUpdateDto } from './dto/user-settings-update.dto';
@@ -27,6 +27,9 @@ export class UserSettingsService {
   }
 
   async resetUserSettings(email: string) {
-    return this.userSettingsRepository.save({ email, ...defaultUserSettings });
+    return this.userSettingsRepository.save({
+      email,
+      ...DEFAULT_USER_SETTINGS,
+    });
   }
 }
