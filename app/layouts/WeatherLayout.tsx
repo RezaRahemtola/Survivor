@@ -19,6 +19,7 @@ const WeatherLayout = ({ children }: WeatherLayoutProps) => {
 
 	useEffect(() => {
 		(async () => {
+			if (weather) return;
 			let position = undefined;
 
 			if (!location) {
@@ -61,7 +62,7 @@ const WeatherLayout = ({ children }: WeatherLayoutProps) => {
 		})();
 	}, []);
 
-	if (!location && !locationError) {
+	if (!location && !weather && !locationError) {
 		return (
 			<>
 				<Text style={styles.text}>Waiting for location data..</Text>
