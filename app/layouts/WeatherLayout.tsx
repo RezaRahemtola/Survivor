@@ -8,6 +8,7 @@ import { locationErrorAtom, weatherAtom } from "@/stores/widgets";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { PlaceResponse } from "@/types/weather";
+import { useTranslation } from "react-i18next";
 
 type WeatherLayoutProps = {
 	children: ReactNode;
@@ -16,6 +17,7 @@ const WeatherLayout = ({ children }: WeatherLayoutProps) => {
 	const [weather, setWeather] = useAtom(weatherAtom);
 	const [locationError, setLocationError] = useAtom(locationErrorAtom);
 	const [location, setLocation] = useState<Location.LocationObject | undefined>(undefined);
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		(async () => {
@@ -65,14 +67,14 @@ const WeatherLayout = ({ children }: WeatherLayoutProps) => {
 	if (!location && !weather && !locationError) {
 		return (
 			<>
-				<Text style={styles.text}>Waiting for location data..</Text>
+				<Text style={styles.text}>{t("widgets.weather.loading.location")}</Text>
 				<ActivityIndicator size="large" />
 			</>
 		);
 	} else if (!weather && !locationError) {
 		return (
 			<>
-				<Text style={styles.text}>Weather data loading...</Text>
+				<Text style={styles.text}>{t("widgets.weather.loading.data")}</Text>
 				<ActivityIndicator size="large" />
 			</>
 		);

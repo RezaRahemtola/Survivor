@@ -4,8 +4,10 @@ import styled from "styled-components/native";
 
 import dayjs from "@/config/dayjs";
 import { Text } from "@/components/Themed";
+import { useTranslation } from "react-i18next";
 
 const DailyWeatherForecast = ({ day }: { day: any }) => {
+	const { t } = useTranslation();
 	return (
 		<DayContainer>
 			<DateContainer>
@@ -19,7 +21,7 @@ const DailyWeatherForecast = ({ day }: { day: any }) => {
 				<Image
 					style={styles.weatherIcon}
 					source={{
-						uri: `http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`,
+						uri: `https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`,
 					}}
 					resizeMode={"contain"} // cover or contain its upto you view look
 				/>
@@ -27,7 +29,9 @@ const DailyWeatherForecast = ({ day }: { day: any }) => {
 			</IconTempView>
 			<DegreeView>
 				<Text style={styles.degree}>{Math.round(day.temp.max)}°C</Text>
-				<Text style={styles.feelsLike}>Feels {Math.round(day.feels_like.day)}°C</Text>
+				<Text style={styles.feelsLike}>
+					{t("widgets.weather.feels")} {Math.round(day.feels_like.day)}°C
+				</Text>
 			</DegreeView>
 		</DayContainer>
 	);

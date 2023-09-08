@@ -4,9 +4,11 @@ import styled from "styled-components/native";
 import { Text } from "@/components/Themed";
 import { useAtom } from "jotai/index";
 import { weatherAtom } from "@/stores/widgets";
+import { useTranslation } from "react-i18next";
 
 const CurrentWeatherForecast = () => {
 	const [weather] = useAtom(weatherAtom);
+	const { t } = useTranslation();
 
 	return (
 		<CurrentView>
@@ -31,21 +33,21 @@ const CurrentWeatherForecast = () => {
 			<SecondaryInfoContainer>
 				<Row>
 					<DetailsBox>
-						<Text style={styles.labels}>Feels</Text>
+						<Text style={styles.labels}>{t("widgets.weather.feels")}</Text>
 						<Text style={styles.details}>
 							{weather.current && Math.round(weather.current.feels_like)}
 							°C
 						</Text>
 					</DetailsBox>
 					<DetailsBox>
-						<Text style={styles.labels}>Low</Text>
+						<Text style={styles.labels}>{t("widgets.weather.low")}</Text>
 						<Text style={styles.details}>
 							{weather.daily && Math.round(weather.daily[0].temp.min)}
 							°C
 						</Text>
 					</DetailsBox>
 					<DetailsBox>
-						<Text style={styles.labels}>High</Text>
+						<Text style={styles.labels}>{t("widgets.weather.high")}</Text>
 						<Text style={styles.details}>
 							{weather.daily && Math.round(weather.daily[0].temp.max)}
 							°C
@@ -54,15 +56,15 @@ const CurrentWeatherForecast = () => {
 				</Row>
 				<Row>
 					<DetailsBox>
-						<Text style={styles.labels}>Wind</Text>
+						<Text style={styles.labels}>{t("widgets.weather.wind")}</Text>
 						<Text style={styles.details}>{weather.current?.wind_speed} m/s</Text>
 					</DetailsBox>
 					<DetailsBox>
-						<Text style={styles.labels}>Humidity</Text>
+						<Text style={styles.labels}>{t("widgets.weather.humidity")}</Text>
 						<Text style={styles.details}>{weather.current?.humidity}%</Text>
 					</DetailsBox>
 					<DetailsBox>
-						<Text style={styles.labels}>Rain</Text>
+						<Text style={styles.labels}>{t("widgets.weather.rain")}</Text>
 						<Text style={styles.details}>{weather.daily > 0 ? weather.daily[0].rain : "0"} MM</Text>
 					</DetailsBox>
 				</Row>
