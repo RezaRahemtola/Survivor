@@ -1,5 +1,5 @@
 import { Card } from "react-native-elements";
-import { Image, ImageBackground, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ImageBackground, Platform, StyleSheet, Text, View } from "react-native";
 
 import ValueLine from "@/components/user/ValueLine";
 import Icon from "@/components/Icon";
@@ -39,19 +39,17 @@ const HeadComponent = ({ name, surname, work, picture }: HeadComponentProps) => 
 
 const UserLayout = ({ user }: { user: ModalUser }) => {
 	return (
-		<ScrollView>
-			<View style={{ ...styles.container, backgroundColor: useThemeColor({}, "background") }}>
-				<Card containerStyle={{ backgroundColor: useThemeColor({}, "background") }}>
-					<HeadComponent name={user.name} surname={user.surname} work={user.work} picture={user.picture!} />
-					<ValueLine value={user.email} icon={{ name: "email", source: "MaterialIcons" }} />
-					<ValueLine
-						value={user.gender}
-						icon={{ source: "MaterialCommunityIcons", name: user.gender === "Male" ? "gender-male" : "gender-female" }}
-					/>
-					<ValueLine value={user.birth_date} icon={{ source: "FontAwesome", name: "birthday-cake" }} />
-				</Card>
-			</View>
-		</ScrollView>
+		<View style={{ ...styles.container, backgroundColor: useThemeColor({}, "background") }}>
+			<Card containerStyle={{ backgroundColor: useThemeColor({}, "background") }}>
+				<HeadComponent name={user.name} surname={user.surname} work={user.work} picture={user.picture!} />
+				<ValueLine value={user.email} icon={{ name: "email", source: "MaterialIcons" }} />
+				<ValueLine
+					value={user.gender}
+					icon={{ source: "MaterialCommunityIcons", name: user.gender === "Male" ? "gender-male" : "gender-female" }}
+				/>
+				<ValueLine value={user.birth_date} icon={{ source: "FontAwesome", name: "birthday-cake" }} />
+			</Card>
+		</View>
 	);
 };
 
