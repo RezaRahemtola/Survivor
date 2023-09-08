@@ -19,6 +19,7 @@ type Language = {
 const languages: Language[] = [
 	{ icon: "🇺🇸", name: "English", locale: "en" },
 	{ icon: "🇫🇷", name: "Francais", locale: "fr" },
+	{ icon: "🇪🇸", name: "Español", locale: "es" },
 ];
 
 const UserSettings = () => {
