@@ -13,6 +13,10 @@ const translations = {
 	},
 	widgets: {
 		noWidgets: "Aucun widgets défini",
+		actions: {
+			add: "Ajouter un widget",
+			save: "Sauvegarder",
+		},
 		weather: {
 			feels: "Ressenti",
 			low: "Min",
@@ -24,6 +28,9 @@ const translations = {
 				location: "Récupération de la localisation..",
 				data: "Récupération des données météo...",
 			},
+		},
+		news: {
+			notAvailable: "Non disponible",
 		},
 	},
 	tabs: {
