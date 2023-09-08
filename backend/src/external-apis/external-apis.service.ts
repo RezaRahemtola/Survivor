@@ -5,9 +5,9 @@ import { ConfigService } from '@nestjs/config';
 import TrendingNewsResultDto from './dto/trending-news-result.dto';
 import {
   CoordinatesLocationDto,
-  CountryAndCityLocationDto,
   CountryCode,
   GeocodingFromCityAndCountryResultDto,
+  WeatherDataDto,
 } from './dto/location.dto';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class ExternalApisService {
     private readonly configService: ConfigService,
   ) {}
 
-  async getWeather({ country, city }: CountryAndCityLocationDto) {
+  async getWeather({ country, city, language }: WeatherDataDto) {
     const apiKey = this.configService.getOrThrow<string>('WEATHER_API_KEY');
     const baseUrl = this.configService.getOrThrow<string>(
       'WEATHER_API_BASE_URL',
@@ -29,9 +29,9 @@ export class ExternalApisService {
     const { latitude, longitude } = await this.getLocationForCountryAndCity({
       country,
       city,
+      language,
     });
-    const lang = this.configService.get<string>('WEATHER_API_LANG', 'fr');
-    const url = `${baseUrl}/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=${unitSystem}&lang=${lang}&appid=${apiKey}`;
+    const url = `${baseUrl}/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=${unitSystem}&lang=${language}&appid=${apiKey}`;
 
     return await runHttpRequest<any>(this.httpService.axiosRef, 'get', url);
   }
@@ -54,7 +54,7 @@ export class ExternalApisService {
   async getLocationForCoordinates({
     latitude,
     longitude,
-  }: CoordinatesLocationDto): Promise<CountryAndCityLocationDto> {
+  }: CoordinatesLocationDto): Promise<WeatherDataDto> {
     const apiKey = this.configService.getOrThrow<string>('WEATHER_API_KEY');
     const baseUrl = this.configService.getOrThrow<string>(
       'WEATHER_API_BASE_URL',
@@ -71,7 +71,7 @@ export class ExternalApisService {
   async getLocationForCountryAndCity({
     country,
     city,
-  }: CountryAndCityLocationDto): Promise<CoordinatesLocationDto> {
+  }: WeatherDataDto): Promise<CoordinatesLocationDto> {
     const apiKey = this.configService.getOrThrow<string>('WEATHER_API_KEY');
     const baseUrl = this.configService.getOrThrow<string>(
       'WEATHER_API_BASE_URL',

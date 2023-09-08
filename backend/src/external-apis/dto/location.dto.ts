@@ -7,6 +7,10 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import {
+  Language,
+  LANGUAGES,
+} from '../../user-settings/entities/user-settings.entity';
 
 export const COUNTRY_CODES = [
   'af',
@@ -275,13 +279,16 @@ export class CoordinatesLocationDto {
   latitude: number;
 }
 
-export class CountryAndCityLocationDto {
+export class WeatherDataDto {
   @IsEnum(COUNTRY_CODES)
   country!: CountryCode;
 
   @IsString()
   @IsNotEmpty()
   city!: string;
+
+  @IsEnum(LANGUAGES)
+  language!: Language;
 }
 
 export class GeocodingFromCityAndCountryResultDto {
