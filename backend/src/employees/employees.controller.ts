@@ -12,18 +12,47 @@ import TokenAwareCacheInterceptor, {
 } from '../token-aware-cache.interceptor';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
 import { CacheInterceptor } from '@nestjs/cache-manager';
+import {
+  ApiBearerAuth,
+  ApiForbiddenResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import {
+  MasuraoLongEmployeeDto,
+  MasuraoShortEmployeeDto,
+} from './dto/masurao-results.dto';
+import MasuraoErrorDto from '../error.dto';
 
+@ApiBearerAuth()
+@ApiTags('Employees')
 @UseGuards(JwtAuthGuard)
 @Controller('employees')
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
 
+  @ApiForbiddenResponse({
+    description: 'Invalid access token',
+  })
+  @ApiOkResponse({
+    description: 'List of the employees',
+    type: MasuraoShortEmployeeDto,
+    isArray: true,
+  })
   @UseInterceptors(CacheInterceptor)
   @Get()
   getEmployees(@Req() { user: { masuraoToken } }: APIRequest) {
     return this.employeesService.getEmployeesShort(masuraoToken);
   }
 
+  @ApiForbiddenResponse({
+    description: 'Invalid access token',
+    type: MasuraoErrorDto,
+  })
+  @ApiOkResponse({
+    description: 'Employee details',
+    type: MasuraoLongEmployeeDto,
+  })
   @UseInterceptors(CacheInterceptor)
   @Get('/:id')
   getEmployee(
@@ -33,6 +62,14 @@ export class EmployeesController {
     return this.employeesService.getEmployeeLong(id, masuraoToken);
   }
 
+  @ApiForbiddenResponse({
+    description: 'Invalid access token',
+    type: MasuraoErrorDto,
+  })
+  @ApiOkResponse({
+    description: 'Employee picture encoded in base64',
+    type: String,
+  })
   @UseInterceptors(CacheInterceptor)
   @Get('/:id/picture')
   getEmployeePicture(
@@ -42,6 +79,14 @@ export class EmployeesController {
     return this.employeesService.getEmployeePicture(id, masuraoToken);
   }
 
+  @ApiForbiddenResponse({
+    description: 'Invalid access token',
+    type: MasuraoErrorDto,
+  })
+  @ApiOkResponse({
+    description: 'Employee details',
+    type: MasuraoLongEmployeeDto,
+  })
   @UseInterceptors(TokenAwareCacheInterceptor)
   @Get('/me')
   getSelfEmployee(@Req() { user: { masuraoToken } }: APIRequest) {
