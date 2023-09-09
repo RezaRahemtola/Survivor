@@ -25,6 +25,7 @@ const translations = {
 			trendingNews: "Trending news",
 			currentWeather: "Current weather",
 			weatherWeekForecast: "Weather forecast",
+			icelandCarpooling: "Iceland Carpooling",
 		},
 		weather: {
 			feels: "Feels",

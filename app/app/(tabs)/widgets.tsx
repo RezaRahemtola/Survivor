@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAtom } from "jotai";
 
 import { View } from "@/components/Themed";
-import { WidgetType, widgetTypes } from "@/types/settings";
+import { WidgetType, widgetTypes } from "@/types/widgets";
 import SelectDropdown from "react-native-select-dropdown";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";

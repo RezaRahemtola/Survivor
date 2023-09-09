@@ -1,5 +1,6 @@
 import { atom } from "jotai";
-import { UserSettings, WidgetType } from "@/types/settings";
+import { WidgetType } from "@/types/widgets";
+import { UserSettings } from "@/types/settings";
 
 export const locationErrorAtom = atom<string | undefined>(undefined);
 

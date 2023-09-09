@@ -3,7 +3,7 @@ import { Text } from "@/components/Themed";
 import NewsSlider from "@/components/news/NewsSlider";
 import { ActivityIndicator } from "react-native-paper";
 import axios from "@/config/axios";
-import { TrendingNewsResult } from "@/types/news";
+import { TrendingNewsResult } from "@/types/widgets/news";
 import { useEffect, useState } from "react";
 import { getAccessToken } from "@/cache/accessToken";
 

@@ -1,5 +1,4 @@
-export const widgetTypes = ["currentWeather", "weatherWeekForecast", "trendingNews"] as const;
-export type WidgetType = (typeof widgetTypes)[number];
+import { WidgetType } from "@/types/widgets";
 
 export type LanguageType = "fr" | "en" | "es";
 

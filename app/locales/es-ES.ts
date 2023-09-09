@@ -25,6 +25,7 @@ const translations = {
 			trendingNews: "Noticias",
 			currentWeather: "Clima actual",
 			weatherWeekForecast: "Previsión meteorológica",
+			icelandCarpooling: "Islandia coche compartido",
 		},
 		weather: {
 			feels: "Siente",
