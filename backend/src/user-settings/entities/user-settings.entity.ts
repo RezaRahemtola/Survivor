@@ -5,6 +5,7 @@ export const WIDGETS = [
   'weatherWeekForecast',
   'trendingNews',
   'icelandCarpooling',
+  'nbaGames',
 ] as const;
 export type Widget = (typeof WIDGETS)[number];
 export const LANGUAGES = ['fr', 'en', 'es', 'zh', 'gu'] as const;

@@ -15,6 +15,7 @@ import { userSettingsAtom } from "@/stores/widgets";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import IcelandCarpoolingLayout from "@/layouts/IcelandCarpoolingLayout";
+import NBARandomGamesLayout from "@/layouts/NBARandomGamesLayout";
 
 const WidgetComponent = ({ name }: { name: WidgetType }) => {
 	switch (name) {
@@ -34,6 +35,8 @@ const WidgetComponent = ({ name }: { name: WidgetType }) => {
 			);
 		case "icelandCarpooling":
 			return <IcelandCarpoolingLayout />;
+		case "nbaGames":
+			return <NBARandomGamesLayout />;
 	}
 };
 
