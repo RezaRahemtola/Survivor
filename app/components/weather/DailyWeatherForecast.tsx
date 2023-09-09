@@ -5,15 +5,21 @@ import styled from "styled-components/native";
 import dayjs from "@/config/dayjs";
 import { Text } from "@/components/Themed";
 import { useTranslation } from "react-i18next";
+import { useAtom } from "jotai";
+import { userSettingsAtom } from "@/stores/widgets";
+import i18n from "@/config/i18n";
 
 const DailyWeatherForecast = ({ day }: { day: any }) => {
 	const { t } = useTranslation();
+	const [userSettings] = useAtom(userSettingsAtom);
+
 	return (
 		<DayContainer>
 			<DateContainer>
 				<Text style={styles.weekday}>
 					{dayjs()
 						.weekday(dayjs(day.dt * 1000).day())
+						.locale(userSettings?.language ?? i18n.language)
 						.format("ddd")}
 				</Text>
 			</DateContainer>
