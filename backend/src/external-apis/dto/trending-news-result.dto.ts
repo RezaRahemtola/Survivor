@@ -15,6 +15,16 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
+export class ArticleSourceDto {
+  @IsString()
+  @IsNotEmpty()
+  id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+}
+
 export default class TrendingNewsResultDto {
   @IsEnum(['ok', 'error'])
   status: 'ok' | 'error';
@@ -61,14 +71,4 @@ export class ArticleDto {
   @IsString()
   @IsNotEmpty()
   content: string;
-}
-
-export class ArticleSourceDto {
-  @IsString()
-  @IsNotEmpty()
-  id: string;
-
-  @IsString()
-  @IsNotEmpty()
-  name: string;
 }
