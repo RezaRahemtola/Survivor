@@ -38,7 +38,7 @@ const TopNewsCard = ({ item }: { item: TrendingNewsArticle }) => {
 				}}
 				numberOfLines={2}
 			>
-				{item.title ?? t("widgets.news.notAvailable")}
+				{item.title ?? t("widgets.notAvailable")}
 			</Text>
 			<Text style={styles.author}> {item.author ?? t("widgets.news.notAvailable")}</Text>
 			<View style={{ flexDirection: "row", justifyContent: "space-between" }}>

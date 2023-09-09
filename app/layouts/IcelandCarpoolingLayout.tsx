@@ -5,11 +5,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { IcelandCarpoolingData, IcelandCarpoolingResponse } from "@/types/widgets/iceland-carpooling";
 import IcelandCarpoolingSlider from "@/components/iceland-carpooling/IcelandCarpoolingSlider";
+import { useTranslation } from "react-i18next";
 
-const IcelandCarpoolingTitle = () => <Text style={styles.title}>Next Iceland carpooling rides</Text>;
+const IcelandCarpoolingTitle = () => {
+	const { t } = useTranslation();
+
+	return <Text style={styles.title}>{t("widgets.icelandCarpooling.title")}</Text>;
+};
 
 const IcelandCarpoolingLayout = () => {
 	const [rides, setRides] = useState<IcelandCarpoolingData[]>([]);
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		(async () => {
@@ -30,7 +36,7 @@ const IcelandCarpoolingLayout = () => {
 	) : (
 		<>
 			<IcelandCarpoolingTitle />
-			<Text style={styles.loading}>Iceland carpooling rides loading...</Text>
+			<Text style={styles.loading}>{t("widgets.icelandCarpooling.loading")}</Text>
 			<ActivityIndicator size="large" />
 		</>
 	);

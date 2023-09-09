@@ -4,9 +4,11 @@ import DailyWeather from "@/components/weather/DailyWeatherForecast";
 import { Text } from "@/components/Themed";
 import { useAtom } from "jotai";
 import { weatherAtom } from "@/stores/widgets";
+import { useTranslation } from "react-i18next";
 
 const DailyWeatherForecast = () => {
 	const [weather] = useAtom(weatherAtom);
+	const { t } = useTranslation();
 
 	return (
 		<ScrollView>
@@ -17,7 +19,7 @@ const DailyWeatherForecast = () => {
 					}
 				})
 			) : (
-				<Text style={styles.noWeather}>No Weather to show</Text>
+				<Text style={styles.noWeather}>{t("widgets.notAvailable")}</Text>
 			)}
 		</ScrollView>
 	);

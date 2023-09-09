@@ -17,11 +17,12 @@ const translations = {
 	},
 	widgets: {
 		noWidgets: "Aún no hay widgets",
+		notAvailable: "No disponible",
 		actions: {
 			add: "Agregar un widget",
 			save: "Ahorrar",
 		},
-		title: {
+		selector: {
 			trendingNews: "Noticias",
 			currentWeather: "Clima actual",
 			weatherWeekForecast: "Previsión meteorológica",
@@ -40,7 +41,11 @@ const translations = {
 			},
 		},
 		news: {
-			notAvailable: "No disponible",
+			loading: "Obteniendo datos de noticias...",
+		},
+		icelandCarpooling: {
+			loading: "Ir a buscar viajes compartidos en coche en Islandia...",
+			title: "Próximos viajes compartidos en Islandia",
 		},
 	},
 	tabs: {

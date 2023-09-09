@@ -6,11 +6,17 @@ import axios from "@/config/axios";
 import { TrendingNewsResult } from "@/types/widgets/news";
 import { useEffect, useState } from "react";
 import { getAccessToken } from "@/cache/accessToken";
+import { useTranslation } from "react-i18next";
 
-const TrendNewsTitle = () => <Text style={styles.title}>Trending News</Text>;
+const TrendNewsTitle = () => {
+	const { t } = useTranslation();
+
+	return <Text style={styles.title}>{t("widgets.selector.trendingNews")}</Text>;
+};
 
 const TrendNewsLayout = () => {
 	const [news, setNews] = useState<TrendingNewsResult | undefined>(undefined);
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		(async () => {
@@ -37,7 +43,7 @@ const TrendNewsLayout = () => {
 	) : (
 		<>
 			<TrendNewsTitle />
-			<Text style={styles.loading}>Trend news loading...</Text>
+			<Text style={styles.loading}>{t("widgets.news.loading")}</Text>
 			<ActivityIndicator size="large" />
 		</>
 	);
