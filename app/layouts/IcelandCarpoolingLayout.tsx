@@ -4,8 +4,9 @@ import { ActivityIndicator } from "react-native-paper";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IcelandCarpoolingData, IcelandCarpoolingResponse } from "@/types/widgets/iceland-carpooling";
-import IcelandCarpoolingSlider from "@/components/iceland-carpooling/IcelandCarpoolingSlider";
 import { useTranslation } from "react-i18next";
+import Slider from "@/components/Slider";
+import IcelandCarpoolingCard from "@/components/iceland-carpooling/IcelandCarpoolingCard";
 
 const IcelandCarpoolingTitle = () => {
 	const { t } = useTranslation();
@@ -31,7 +32,11 @@ const IcelandCarpoolingLayout = () => {
 	return rides ? (
 		<>
 			<IcelandCarpoolingTitle />
-			<IcelandCarpoolingSlider rides={rides} />
+			<Slider
+				items={rides}
+				keyExtractor={(_, index) => "key" + index}
+				renderItem={({ item }) => <IcelandCarpoolingCard item={item} />}
+			/>
 		</>
 	) : (
 		<>

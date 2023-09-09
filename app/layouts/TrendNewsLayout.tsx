@@ -1,12 +1,13 @@
 import { StyleSheet } from "react-native";
 import { Text } from "@/components/Themed";
-import NewsSlider from "@/components/news/NewsSlider";
 import { ActivityIndicator } from "react-native-paper";
 import axios from "@/config/axios";
 import { TrendingNewsResult } from "@/types/widgets/news";
 import { useEffect, useState } from "react";
 import { getAccessToken } from "@/cache/accessToken";
 import { useTranslation } from "react-i18next";
+import Slider from "@/components/Slider";
+import TopNewsCard from "@/components/news/TopNewsCard";
 
 const TrendNewsTitle = () => {
 	const { t } = useTranslation();
@@ -36,8 +37,10 @@ const TrendNewsLayout = () => {
 	return news ? (
 		<>
 			<TrendNewsTitle />
-			<NewsSlider
-				articles={news.articles.filter((article) => article.urlToImage !== null && article.author !== null)}
+			<Slider
+				items={news.articles.filter((article) => article.urlToImage !== null && article.author !== null)}
+				keyExtractor={(_, index) => "key" + index}
+				renderItem={({ item }) => <TopNewsCard item={item} />}
 			/>
 		</>
 	) : (
