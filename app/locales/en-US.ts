@@ -47,6 +47,10 @@ const translations = {
 		icelandCarpooling: {
 			loading: "Fetching Iceland carpooling rides...",
 			title: "Next Iceland carpooling rides",
+			from: "From:",
+			to: "To:",
+			date: "Date:",
+			at: "at",
 		},
 		nbaGames: {
 			loading: "NBA games loading...",
