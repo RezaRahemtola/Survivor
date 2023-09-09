@@ -21,6 +21,7 @@
     - Next week forecast day by day
   - News 🗞️
     - Latest trending news from various media sources
+  - Next carpooling rides in Iceland 🚗
 
 ## Tech & Performance 💻
 
