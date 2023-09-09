@@ -22,7 +22,7 @@ const translations = {
 			add: "Ajouter un widget",
 			save: "Sauvegarder",
 		},
-		title: {
+		selector: {
 			trendingNews: "Actualités",
 			currentWeather: "Météo actuelle",
 			weatherWeekForecast: "Prévisions météo",

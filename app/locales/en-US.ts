@@ -22,7 +22,7 @@ const translations = {
 			add: "Add a widget",
 			save: "Save",
 		},
-		title: {
+		selector: {
 			trendingNews: "Trending news",
 			currentWeather: "Current weather",
 			weatherWeekForecast: "Weather forecast",
