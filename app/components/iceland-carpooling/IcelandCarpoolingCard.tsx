@@ -2,17 +2,25 @@ import { Dimensions, StyleSheet, View } from "react-native";
 
 import { Text, useThemeColor } from "@/components/Themed";
 import { IcelandCarpoolingData } from "@/types/widgets/iceland-carpooling";
+import { useTranslation } from "react-i18next";
 
 const { width } = Dimensions.get("window");
 
 const IcelandCarpoolingCard = ({ item }: { item: IcelandCarpoolingData }) => {
 	const borderColor = useThemeColor({}, "text");
+	const { t } = useTranslation();
 
 	return (
 		<View style={{ ...styles.view, borderColor }}>
-			<Text style={styles.text}>From: {item.from}</Text>
-			<Text style={styles.text}>To: {item.to}</Text>
-			<Text style={styles.text}>Date: {item.date + " at " + item.time}</Text>
+			<Text style={styles.text}>
+				{t("widgets.icelandCarpooling.from")} {item.from}
+			</Text>
+			<Text style={styles.text}>
+				{t("widgets.icelandCarpooling.to")} {item.to}
+			</Text>
+			<Text style={styles.text}>
+				{t("widgets.icelandCarpooling.date")} {item.date + ` ${t("widgets.icelandCarpooling.at")} ` + item.time}
+			</Text>
 		</View>
 	);
 };

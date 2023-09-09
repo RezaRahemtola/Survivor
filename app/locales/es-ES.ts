@@ -47,6 +47,10 @@ const translations = {
 		icelandCarpooling: {
 			loading: "Ir a buscar viajes compartidos en coche en Islandia...",
 			title: "Próximos viajes compartidos en Islandia",
+			from: "De:",
+			to: "A:",
+			date: "Fecha:",
+			at: "en",
 		},
 		nbaGames: {
 			loading: "Cargando juegos de la NBA...",

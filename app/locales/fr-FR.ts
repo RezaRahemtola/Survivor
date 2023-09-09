@@ -51,6 +51,10 @@ const translations = {
 		nbaGames: {
 			loading: "Chargement des matchs de NBA...",
 			title: "Matchs de NBA aléatoires",
+			from: "De :",
+			to: "À :",
+			date: "Date :",
+			at: "à",
 		},
 	},
 	tabs: {
