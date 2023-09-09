@@ -27,6 +27,7 @@ const translations = {
 			currentWeather: "Current weather",
 			weatherWeekForecast: "Weather forecast",
 			icelandCarpooling: "Iceland Carpooling",
+			nbaGames: "NBA games",
 		},
 		weather: {
 			feels: "Feels",
@@ -46,6 +47,10 @@ const translations = {
 		icelandCarpooling: {
 			loading: "Fetching Iceland carpooling rides...",
 			title: "Next Iceland carpooling rides",
+		},
+		nbaGames: {
+			loading: "NBA games loading...",
+			title: "Random NBA games",
 		},
 	},
 	tabs: {

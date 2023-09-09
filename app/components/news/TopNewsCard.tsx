@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { Text } from "@/components/Themed";
 import Icon from "@/components/Icon";
-import { TrendingNewsArticle } from "@/types/news";
+import { TrendingNewsArticle } from "@/types/widgets/news";
 
 const { width } = Dimensions.get("window");
 

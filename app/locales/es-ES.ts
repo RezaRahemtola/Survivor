@@ -27,6 +27,7 @@ const translations = {
 			currentWeather: "Clima actual",
 			weatherWeekForecast: "Previsión meteorológica",
 			icelandCarpooling: "Islandia coche compartido",
+			nbaGames: "Juegos de la NBA",
 		},
 		weather: {
 			feels: "Siente",
@@ -46,6 +47,10 @@ const translations = {
 		icelandCarpooling: {
 			loading: "Ir a buscar viajes compartidos en coche en Islandia...",
 			title: "Próximos viajes compartidos en Islandia",
+		},
+		nbaGames: {
+			loading: "Cargando juegos de la NBA...",
+			title: "Juegos aleatorios de la NBA",
 		},
 	},
 	tabs: {
