@@ -27,7 +27,7 @@ export default class UserSettings {
   email!: string;
 
   @ApiProperty({
-    description: "Widgets displayed in the application",
+    description: 'Widgets displayed in the application',
     enum: WIDGETS,
     isArray: true,
   })
