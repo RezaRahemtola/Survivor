@@ -17,6 +17,7 @@ const translations = {
 	},
 	widgets: {
 		noWidgets: "Aucun widgets défini",
+		notAvailable: "Non disponible",
 		actions: {
 			add: "Ajouter un widget",
 			save: "Sauvegarder",
@@ -40,7 +41,11 @@ const translations = {
 			},
 		},
 		news: {
-			notAvailable: "Non disponible",
+			loading: "Récupération des actualités...",
+		},
+		icelandCarpooling: {
+			loading: "Récupération des covoiturage islandais...",
+			title: "Prochains covoiturages en Islande",
 		},
 	},
 	tabs: {

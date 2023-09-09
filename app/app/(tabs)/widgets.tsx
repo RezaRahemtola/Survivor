@@ -22,7 +22,7 @@ const WidgetSelector = ({
 }) => {
 	const { t } = useTranslation();
 	const widgets = widgetTypes.map((widgetType) => ({
-		title: t(`widgets.title.${widgetType}`),
+		title: t(`widgets.selector.${widgetType}`),
 		value: widgetType,
 	}));
 
