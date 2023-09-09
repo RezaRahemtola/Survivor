@@ -4,6 +4,7 @@ export const WIDGETS = [
   'currentWeather',
   'weatherWeekForecast',
   'trendingNews',
+  'icelandCarpooling',
 ] as const;
 export type Widget = (typeof WIDGETS)[number];
 export const LANGUAGES = ['fr', 'en', 'es', 'zh', 'gu'] as const;

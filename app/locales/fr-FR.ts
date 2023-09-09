@@ -25,6 +25,7 @@ const translations = {
 			trendingNews: "Actualités",
 			currentWeather: "Météo actuelle",
 			weatherWeekForecast: "Prévisions météo",
+			icelandCarpooling: "Covoiturage en Islande",
 		},
 		weather: {
 			feels: "Ressenti",

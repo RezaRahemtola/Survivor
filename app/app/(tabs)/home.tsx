@@ -6,13 +6,15 @@ import TrendNewsLayout from "@/layouts/TrendNewsLayout";
 import WeatherLayout from "@/layouts/WeatherLayout";
 import CurrentWeatherForecast from "@/components/weather/CurrentWeatherForecast";
 import DailyWeatherForecast from "@/layouts/DailyWeatherForecast";
-import { UserSettings, WidgetType } from "@/types/settings";
+import { WidgetType } from "@/types/widgets";
+import { UserSettings } from "@/types/settings";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { Text } from "@/components/Themed";
 import { userSettingsAtom } from "@/stores/widgets";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+import IcelandCarpoolingLayout from "@/layouts/IcelandCarpoolingLayout";
 
 const WidgetComponent = ({ name }: { name: WidgetType }) => {
 	switch (name) {
@@ -30,6 +32,8 @@ const WidgetComponent = ({ name }: { name: WidgetType }) => {
 					<DailyWeatherForecast />
 				</WeatherLayout>
 			);
+		case "icelandCarpooling":
+			return <IcelandCarpoolingLayout />;
 	}
 };
 
