@@ -8,6 +8,8 @@ import {
   ApiProduces,
   ApiTags,
 } from '@nestjs/swagger';
+import { MasuraoLoginResultDto } from './dto/login-result.dto';
+import MasuraoErrorDto from '../error.dto';
 
 @ApiTags('Authentification')
 @ApiProduces('application/json')
@@ -21,9 +23,11 @@ export class AuthController {
   })
   @ApiForbiddenResponse({
     description: 'Invalid credentials',
+    type: MasuraoErrorDto,
   })
   @ApiCreatedResponse({
     description: 'User successfully authorized in',
+    type: MasuraoLoginResultDto,
   })
   @Post('login')
   logIn(@Body() credentials: MasuraoCredentialsDto) {
