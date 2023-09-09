@@ -22,6 +22,7 @@
   - News 🗞️
     - Latest trending news from various media sources
   - Next carpooling rides in Iceland 🚗
+  - Random NBA games scores 🏀
 
 ## Tech & Performance 💻
 
