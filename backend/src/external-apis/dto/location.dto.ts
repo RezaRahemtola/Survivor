@@ -11,6 +11,7 @@ import {
   Language,
   LANGUAGES,
 } from '../../user-settings/entities/user-settings.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export const COUNTRY_CODES = [
   'af',
@@ -272,43 +273,79 @@ export type CountryCode = (typeof COUNTRY_CODES)[number];
 export type CountryCodeUpper = (typeof COUNTRY_CODES_UPPER)[number];
 
 export class CoordinatesLocationDto {
+  @ApiProperty({
+    description: 'Longitude of the location',
+  })
   @IsLongitude()
   longitude: number;
 
+  @ApiProperty({
+    description: 'Latitude of the location',
+  })
   @IsLatitude()
   latitude: number;
 }
 
 export class WeatherDataDto {
+  @ApiProperty({
+    description: 'Country code of the location',
+    enum: COUNTRY_CODES,
+  })
   @IsEnum(COUNTRY_CODES)
   country!: CountryCode;
 
+  @ApiProperty({
+    description: 'City of the location',
+  })
   @IsString()
   @IsNotEmpty()
   city!: string;
 
+  @ApiProperty({
+    description: 'Language of the weather data to be returned',
+    enum: LANGUAGES,
+  })
   @IsEnum(LANGUAGES)
   language!: Language;
 }
 
-export class GeocodingFromCityAndCountryResultDto {
+export class CityLocationDto {
+  @ApiProperty({
+    description: 'Name of the city',
+  })
   @IsString()
   @IsNotEmpty()
   name!: string;
 
+  @ApiProperty({
+    description: 'latitude of the city',
+  })
   @IsLatitude()
   lat!: number;
 
+  @ApiProperty({
+    description: 'longitude of the city',
+  })
   @IsLongitude()
   lon!: number;
 
+  @ApiProperty({
+    description: 'Localized names of the city',
+    type: Object,
+  })
   @IsObject()
   @IsOptional()
   local_names?: Record<string, string>;
 
+  @ApiProperty({
+    description: 'Country code (uppercase) of the city',
+  })
   @IsEnum(COUNTRY_CODES_UPPER)
   country!: CountryCodeUpper;
 
+  @ApiProperty({
+    description: 'Country state of the city',
+  })
   @IsString()
   state!: string;
 }

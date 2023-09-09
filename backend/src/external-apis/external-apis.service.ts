@@ -4,9 +4,9 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import TrendingNewsResultDto from './dto/trending-news-result.dto';
 import {
+  CityLocationDto,
   CoordinatesLocationDto,
   CountryCode,
-  GeocodingFromCityAndCountryResultDto,
   WeatherDataDto,
 } from './dto/location.dto';
 
@@ -54,7 +54,7 @@ export class ExternalApisService {
   async getLocationForCoordinates({
     latitude,
     longitude,
-  }: CoordinatesLocationDto): Promise<WeatherDataDto> {
+  }: CoordinatesLocationDto): Promise<CityLocationDto> {
     const apiKey = this.configService.getOrThrow<string>('WEATHER_API_KEY');
     const baseUrl = this.configService.getOrThrow<string>(
       'WEATHER_API_BASE_URL',
@@ -78,7 +78,7 @@ export class ExternalApisService {
     );
     const url = `${baseUrl}/geo/1.0/direct?q=${city},${country}&limit=1&appid=${apiKey}`;
     const [{ lat: latitude, lon: longitude }] = await runHttpRequest<
-      GeocodingFromCityAndCountryResultDto[]
+      CityLocationDto[]
     >(this.httpService.axiosRef, 'get', url);
     return {
       latitude,
