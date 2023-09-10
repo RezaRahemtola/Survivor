@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import Location from "expo-location";
+import * as Location from "expo-location";
 import { ReactNode, useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native-paper";
 import { StyleSheet } from "react-native";
