@@ -19,6 +19,7 @@ const TopNewsCard = ({ item }: { item: TrendingNewsArticle }) => {
 		<View
 			style={{
 				margin: 20,
+				marginLeft: 0,
 				borderRadius: 15,
 				width: 200,
 				height: 200,
