@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import { TouchableWithoutFeedback, useColorScheme } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
@@ -40,7 +40,15 @@ const WidgetEditionSaveButton = () => {
 const WidgetEditionAddButton = () => {
 	const [isWidgetsEditionMode] = useAtom(isWidgetsEditionModeAtom);
 
-	return <>{isWidgetsEditionMode ? <IconButton icon="plus" mode="contained" /> : <></>}</>;
+	return (
+		<>
+			{isWidgetsEditionMode ? (
+				<IconButton icon="plus" mode="contained" onPress={() => router.push("/widgets/modal")} />
+			) : (
+				<></>
+			)}
+		</>
+	);
 };
 
 export default function TabLayout() {
