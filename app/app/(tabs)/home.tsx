@@ -1,19 +1,15 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Text } from "@/components/Themed";
 import { useEffect } from "react";
-import { useAtom } from "jotai";
-import { UserSettings } from "@/types/settings";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
-import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
+import { UserSettings } from "@/types/settings";
 import i18next from "i18next";
-import WidgetsLayout from "@/layouts/widgets/WidgetsLayout";
-import { Text } from "@/components/Themed";
-import { useTranslation } from "react-i18next";
+import { useAtom } from "jotai";
+import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
 
-export default function HomeScreen() {
-	const [userSettings, setUserSettings] = useAtom(userSettingsAtom);
-	const [editionWidgets, setEditionWidgets] = useAtom(editionWidgetsAtom);
-	const { t } = useTranslation();
+const HomeScreen = () => {
+	const [, setUserSettings] = useAtom(userSettingsAtom);
+	const [, setEditionWidgets] = useAtom(editionWidgetsAtom);
 
 	useEffect(() => {
 		(async () => {
@@ -31,28 +27,7 @@ export default function HomeScreen() {
 		})();
 	}, []);
 
-	return (
-		<View style={styles.container}>
-			{editionWidgets.length === 0 ? (
-				<ScrollView contentContainerStyle={styles.contentContainer}>
-					<Text style={styles.noWidget}>{t("widgets.noWidgets")}</Text>
-				</ScrollView>
-			) : (
-				<WidgetsLayout widgets={userSettings?.widgets ?? []} onSave={() => {}} />
-			)}
-		</View>
-	);
-}
+	return <Text>Blank home screen</Text>;
+};
 
-const styles = StyleSheet.create({
-	container: {
-		padding: 20,
-	},
-	contentContainer: {
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	noWidget: {
-		fontSize: 25,
-	},
-});
+export default HomeScreen;
