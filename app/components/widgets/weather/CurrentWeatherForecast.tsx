@@ -12,10 +12,10 @@ const CurrentWeatherForecast = () => {
 
 	return (
 		<CurrentView>
-			<Text style={styles.timezone}>{weather.timezone}</Text>
+			<Text style={styles.timezone}>{weather?.timezone}</Text>
 			<MainInfoContainer>
 				<CurrentTempView>
-					{weather.current && (
+					{weather?.current && (
 						<WeatherIcon
 							source={{
 								uri: `http://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`,
@@ -24,32 +24,32 @@ const CurrentWeatherForecast = () => {
 						/>
 					)}
 					<Text style={styles.currentDegrees}>
-						{Math.round(weather.current?.temp)}
+						{Math.round(weather!.current.temp)}
 						°C
 					</Text>
 				</CurrentTempView>
-				<Text style={styles.details}>{weather.current?.weather[0].description}</Text>
+				<Text style={styles.details}>{weather!.current.weather[0].description}</Text>
 			</MainInfoContainer>
 			<SecondaryInfoContainer>
 				<Row>
 					<DetailsBox>
 						<Text style={styles.labels}>{t("widgets.weather.feels")}</Text>
 						<Text style={styles.details}>
-							{weather.current && Math.round(weather.current.feels_like)}
+							{weather?.current && Math.round(weather.current.feels_like)}
 							°C
 						</Text>
 					</DetailsBox>
 					<DetailsBox>
 						<Text style={styles.labels}>{t("widgets.weather.low")}</Text>
 						<Text style={styles.details}>
-							{weather.daily && Math.round(weather.daily[0].temp.min)}
+							{weather?.daily && Math.round(weather.daily[0].temp.min)}
 							°C
 						</Text>
 					</DetailsBox>
 					<DetailsBox>
 						<Text style={styles.labels}>{t("widgets.weather.high")}</Text>
 						<Text style={styles.details}>
-							{weather.daily && Math.round(weather.daily[0].temp.max)}
+							{weather?.daily && Math.round(weather.daily[0].temp.max)}
 							°C
 						</Text>
 					</DetailsBox>
@@ -57,15 +57,15 @@ const CurrentWeatherForecast = () => {
 				<Row>
 					<DetailsBox>
 						<Text style={styles.labels}>{t("widgets.weather.wind")}</Text>
-						<Text style={styles.details}>{weather.current?.wind_speed} m/s</Text>
+						<Text style={styles.details}>{weather?.current.wind_speed} m/s</Text>
 					</DetailsBox>
 					<DetailsBox>
 						<Text style={styles.labels}>{t("widgets.weather.humidity")}</Text>
-						<Text style={styles.details}>{weather.current?.humidity}%</Text>
+						<Text style={styles.details}>{weather?.current.humidity}%</Text>
 					</DetailsBox>
 					<DetailsBox>
 						<Text style={styles.labels}>{t("widgets.weather.rain")}</Text>
-						<Text style={styles.details}>{weather.daily > 0 ? weather.daily[0].rain : "0"} MM</Text>
+						<Text style={styles.details}>{weather!.daily.length > 0 ? weather!.daily[0].rain : "0"} MM</Text>
 					</DetailsBox>
 				</Row>
 			</SecondaryInfoContainer>
