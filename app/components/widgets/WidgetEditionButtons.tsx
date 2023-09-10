@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
-import { IconButton } from "react-native-paper";
+import { Button, IconButton } from "react-native-paper";
 import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 import { editionWidgetsAtom, isWidgetsEditionModeAtom, userSettingsAtom } from "@/stores/widgets";
 import { applyUserSettings } from "@/utils/settings";
@@ -41,5 +42,16 @@ export const WidgetEditionAddButton = () => {
 				<></>
 			)}
 		</>
+	);
+};
+
+export const WidgetEditionEditButton = () => {
+	const [isEditionMode, setIsEditionMode] = useAtom(isWidgetsEditionModeAtom);
+	const { t } = useTranslation();
+
+	return (
+		<Button disabled={isEditionMode} icon="pencil" mode="contained-tonal" onPress={() => setIsEditionMode(true)}>
+			{t("widgets.edition.edit")}
+		</Button>
 	);
 };
