@@ -2,17 +2,17 @@ import { useEffect } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { RenderItemParams } from "react-native-draggable-flatlist/src/types";
-
-import TrendNewsLayout from "@/layouts/TrendNewsLayout";
-import WeatherLayout from "@/layouts/WeatherLayout";
-import CurrentWeatherForecast from "@/components/weather/CurrentWeatherForecast";
-import DailyWeatherForecast from "@/layouts/DailyWeatherForecast";
-import IcelandCarpoolingLayout from "@/layouts/IcelandCarpoolingLayout";
-import NBARandomGamesLayout from "@/layouts/NBARandomGamesLayout";
-import { WidgetType } from "@/types/widgets";
 import { useAtom } from "jotai";
-import { editionWidgetsAtom, isWidgetsEditionModeAtom } from "@/stores/widgets";
 import { Button, IconButton } from "react-native-paper";
+
+import TrendNewsLayout from "@/layouts/widgets/news/TrendNewsLayout";
+import WeatherLayout from "@/layouts/widgets/weather/WeatherLayout";
+import CurrentWeatherForecast from "@/components/widgets/weather/CurrentWeatherForecast";
+import DailyWeatherForecast from "@/layouts/widgets/weather/DailyWeatherForecast";
+import IcelandCarpoolingLayout from "@/layouts/widgets/iceland-carpooling/IcelandCarpoolingLayout";
+import NBARandomGamesLayout from "@/layouts/widgets/nba/NBARandomGamesLayout";
+import { WidgetType } from "@/types/widgets";
+import { editionWidgetsAtom, isWidgetsEditionModeAtom } from "@/stores/widgets";
 
 const WidgetComponent = ({ name }: { name: WidgetType }) => {
 	switch (name) {

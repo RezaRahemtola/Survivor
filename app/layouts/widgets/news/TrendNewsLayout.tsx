@@ -1,13 +1,14 @@
 import { StyleSheet } from "react-native";
-import { Text } from "@/components/Themed";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator } from "react-native-paper";
+import { useEffect, useState } from "react";
+
+import { Text } from "@/components/Themed";
 import axios from "@/config/axios";
 import { TrendingNewsResult } from "@/types/widgets/news";
-import { useEffect, useState } from "react";
 import { getAccessToken } from "@/cache/accessToken";
-import { useTranslation } from "react-i18next";
 import Slider from "@/components/Slider";
-import TopNewsCard from "@/components/news/TopNewsCard";
+import TopNewsCard from "@/components/widgets/news/TopNewsCard";
 
 const TrendNewsTitle = () => {
 	const { t } = useTranslation();
