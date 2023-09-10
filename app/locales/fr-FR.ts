@@ -18,9 +18,9 @@ const translations = {
 	widgets: {
 		noWidgets: "Aucun widgets défini",
 		notAvailable: "Non disponible",
-		actions: {
-			add: "Ajouter un widget",
-			save: "Sauvegarder",
+		edition: {
+			addTitle: "Ajouter un widget",
+			edit: "Modifier",
 		},
 		selector: {
 			trendingNews: "Actualités",

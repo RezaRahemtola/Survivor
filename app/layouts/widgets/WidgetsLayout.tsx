@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { RenderItemParams } from "react-native-draggable-flatlist/src/types";
 import { useAtom } from "jotai";
-import { Button, IconButton } from "react-native-paper";
+import { IconButton } from "react-native-paper";
 
 import TrendNewsLayout from "@/layouts/widgets/news/TrendNewsLayout";
 import WeatherLayout from "@/layouts/widgets/weather/WeatherLayout";
@@ -13,6 +13,7 @@ import IcelandCarpoolingLayout from "@/layouts/widgets/iceland-carpooling/Icelan
 import NBARandomGamesLayout from "@/layouts/widgets/nba/NBARandomGamesLayout";
 import { WidgetType } from "@/types/widgets";
 import { editionWidgetsAtom, isWidgetsEditionModeAtom } from "@/stores/widgets";
+import { WidgetEditionEditButton } from "@/components/widgets/WidgetEditionButtons";
 
 const WidgetComponent = ({ name }: { name: WidgetType }) => {
 	switch (name) {
@@ -78,24 +79,20 @@ type WidgetsLayoutProps = {
 };
 const WidgetsLayout = ({ widgets }: WidgetsLayoutProps) => {
 	const [editionWidgets, setEditionWidgets] = useAtom(editionWidgetsAtom);
-	const [isEditionMode, setIsEditionMode] = useAtom(isWidgetsEditionModeAtom);
+	const [isEditionMode] = useAtom(isWidgetsEditionModeAtom);
 
 	useEffect(() => {
 		setEditionWidgets(widgets);
 	}, []);
-	const renderDraggableItem = ({ item, drag }: RenderItemParams<WidgetType | "editButton">) => {
-		return (
-			<>
-				{item !== "editButton" ? (
-					<WidgetWrapper name={item} isEditionMode={isEditionMode} drag={drag} />
-				) : (
-					<Button disabled={isEditionMode} icon="pencil" mode="contained-tonal" onPress={() => setIsEditionMode(true)}>
-						Edit
-					</Button>
-				)}
-			</>
-		);
-	};
+	const renderDraggableItem = ({ item, drag }: RenderItemParams<WidgetType | "editButton">) => (
+		<>
+			{item !== "editButton" ? (
+				<WidgetWrapper name={item} isEditionMode={isEditionMode} drag={drag} />
+			) : (
+				<WidgetEditionEditButton />
+			)}
+		</>
+	);
 
 	return (
 		<>
