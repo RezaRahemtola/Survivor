@@ -55,7 +55,7 @@ export default function WidgetsScreen() {
 			},
 			{ headers: { Authorization: `Bearer ${accessToken}` } },
 		);
-		setUserSettings({ ...userSettings!, widgets: newWidgets });
+		setUserSettings((prev) => ({ ...prev!, widgets: newWidgets }));
 	};
 
 	return (
@@ -76,7 +76,12 @@ export default function WidgetsScreen() {
 					}}
 				/>
 			))}
-			<Button style={styles.addWidget} icon="plus" mode="contained" onPress={() => setWidgets([...widgets, undefined])}>
+			<Button
+				style={styles.addWidget}
+				icon="plus"
+				mode="contained"
+				onPress={() => setWidgets((prev) => [...prev, undefined])}
+			>
 				{t("widgets.actions.add")}
 			</Button>
 			<Button style={styles.save} buttonColor={"grey"} mode="contained" onPress={saveWidgets}>
