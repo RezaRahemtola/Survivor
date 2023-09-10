@@ -1,15 +1,16 @@
 import { Image, StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next";
+import { useAtom } from "jotai";
 // @ts-ignore
 import styled from "styled-components/native";
 
 import dayjs from "@/config/dayjs";
 import { Text } from "@/components/Themed";
-import { useTranslation } from "react-i18next";
-import { useAtom } from "jotai";
 import { userSettingsAtom } from "@/stores/widgets";
 import i18n from "@/config/i18n";
+import { WeatherDayData } from "@/types/widgets/weather";
 
-const DailyWeatherForecast = ({ day }: { day: any }) => {
+const DailyWeatherForecast = ({ day }: { day: WeatherDayData }) => {
 	const { t } = useTranslation();
 	const [userSettings] = useAtom(userSettingsAtom);
 

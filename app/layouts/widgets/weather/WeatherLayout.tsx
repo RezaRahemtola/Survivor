@@ -9,7 +9,7 @@ import { Text } from "@/components/Themed";
 import { locationErrorAtom, userSettingsAtom, weatherAtom } from "@/stores/widgets";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
-import { PlaceResponse } from "@/types/widgets/weather";
+import { PlaceResponse, WeatherData } from "@/types/widgets/weather";
 import i18n from "@/config/i18n";
 
 type WeatherLayoutProps = {
@@ -54,7 +54,7 @@ const WeatherLayout = ({ children }: WeatherLayoutProps) => {
 					},
 				);
 
-				const weather = await axios.post(
+				const weather = await axios.post<WeatherData>(
 					"/external/weather",
 					{
 						city: place.data.name,
