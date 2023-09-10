@@ -1,12 +1,47 @@
 import { Tabs } from "expo-router";
 import { TouchableWithoutFeedback, useColorScheme } from "react-native";
+import { useTranslation } from "react-i18next";
+import { useAtom } from "jotai";
 
 import Colors from "@/constants/Colors";
 import Icon, { IconProps } from "@/components/Icon";
 import { signOut } from "@/config/auth";
-import { useTranslation } from "react-i18next";
+import { editionWidgetsAtom, isWidgetsEditionModeAtom, userSettingsAtom } from "@/stores/widgets";
+import { IconButton } from "react-native-paper";
+import { applyUserSettings } from "@/utils/settings";
 
 const TabBarIcon = (props: IconProps) => <Icon size={28} style={{ marginBottom: -3 }} {...props} />;
+
+const WidgetEditionSaveButton = () => {
+	const [isWidgetsEditionMode, setIsWidgetsEditionMode] = useAtom(isWidgetsEditionModeAtom);
+	const [editionWidgets] = useAtom(editionWidgetsAtom);
+	const [, setUserSettings] = useAtom(userSettingsAtom);
+
+	return (
+		<>
+			{isWidgetsEditionMode ? (
+				<IconButton
+					icon="content-save"
+					mode="contained"
+					onPress={async () => {
+						const settings = { widgets: editionWidgets };
+						await applyUserSettings(settings);
+						setUserSettings((prev) => ({ ...prev!, ...settings }));
+						setIsWidgetsEditionMode(false);
+					}}
+				/>
+			) : (
+				<></>
+			)}
+		</>
+	);
+};
+
+const WidgetEditionAddButton = () => {
+	const [isWidgetsEditionMode] = useAtom(isWidgetsEditionModeAtom);
+
+	return <>{isWidgetsEditionMode ? <IconButton icon="plus" mode="contained" /> : <></>}</>;
+};
 
 export default function TabLayout() {
 	const colorScheme = useColorScheme();
@@ -23,6 +58,8 @@ export default function TabLayout() {
 				options={{
 					title: t("tabs.home"),
 					tabBarIcon: ({ color }) => <TabBarIcon name="home" source="FontAwesome" color={color} />,
+					headerRight: WidgetEditionSaveButton,
+					headerLeft: WidgetEditionAddButton,
 				}}
 			/>
 			<Tabs.Screen

@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 // @ts-ignore
 import styled from "styled-components/native";
 import { Text } from "@/components/Themed";
-import { useAtom } from "jotai/index";
+import { useAtom } from "jotai";
 import { weatherAtom } from "@/stores/widgets";
 import { useTranslation } from "react-i18next";
 

@@ -7,7 +7,7 @@ import { Text } from "@/components/Themed";
 import { locationErrorAtom, userSettingsAtom, weatherAtom } from "@/stores/widgets";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
-import { PlaceResponse } from "@/types/weather";
+import { PlaceResponse } from "@/types/widgets/weather";
 import { useTranslation } from "react-i18next";
 import i18n from "@/config/i18n";
 
