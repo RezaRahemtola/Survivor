@@ -66,8 +66,6 @@ export default function TabLayout() {
 				options={{
 					title: t("tabs.home"),
 					tabBarIcon: ({ color }) => <TabBarIcon name="home" source="FontAwesome" color={color} />,
-					headerRight: WidgetEditionSaveButton,
-					headerLeft: WidgetEditionAddButton,
 				}}
 			/>
 			<Tabs.Screen
@@ -82,6 +80,8 @@ export default function TabLayout() {
 				options={{
 					title: t("tabs.widgets"),
 					tabBarIcon: ({ color }) => <TabBarIcon name="widgets" source="MaterialIcons" color={color} />,
+					headerRight: WidgetEditionSaveButton,
+					headerLeft: WidgetEditionAddButton,
 				}}
 			/>
 			<Tabs.Screen
