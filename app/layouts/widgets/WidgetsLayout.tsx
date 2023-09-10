@@ -10,9 +10,9 @@ import DailyWeatherForecast from "@/layouts/DailyWeatherForecast";
 import IcelandCarpoolingLayout from "@/layouts/IcelandCarpoolingLayout";
 import NBARandomGamesLayout from "@/layouts/NBARandomGamesLayout";
 import { WidgetType } from "@/types/widgets";
-import { Button } from "react-native-paper";
 import { useAtom } from "jotai";
 import { editionWidgetsAtom, isWidgetsEditionModeAtom } from "@/stores/widgets";
+import { Button } from "react-native-paper";
 
 const WidgetComponent = ({ name }: { name: WidgetType }) => {
 	switch (name) {
@@ -48,31 +48,39 @@ const WidgetsLayout = ({ widgets, onSave }: WidgetsLayoutProps) => {
 	useEffect(() => {
 		setEditionWidgets(widgets);
 	}, []);
-	const renderDraggableItem = ({ item, drag }: RenderItemParams<WidgetType>) => {
+	const renderDraggableItem = ({ item, drag }: RenderItemParams<WidgetType | "editButton">) => {
 		return (
-			<TouchableOpacity
-				onLongPress={() => {
-					if (isEditionMode) {
-						drag();
-					}
-				}}
-			>
-				<WidgetComponent name={item} />
-			</TouchableOpacity>
+			<>
+				{item !== "editButton" ? (
+					<TouchableOpacity
+						onLongPress={() => {
+							if (isEditionMode) {
+								drag();
+							}
+						}}
+					>
+						<WidgetComponent name={item} />
+					</TouchableOpacity>
+				) : (
+					<Button disabled={isEditionMode} icon="pencil" mode="contained-tonal" onPress={() => setIsEditionMode(true)}>
+						Edit
+					</Button>
+				)}
+			</>
 		);
 	};
 
 	return (
 		<>
 			<DraggableFlatList
-				data={editionWidgets}
-				onDragEnd={({ data }) => setEditionWidgets(data)}
+				data={[...editionWidgets, "editButton"]}
+				onDragEnd={({ data }: { data: (WidgetType | "editButton")[] }) =>
+					setEditionWidgets(data.filter((item) => item !== "editButton") as WidgetType[])
+				}
 				keyExtractor={(item) => item}
 				renderItem={renderDraggableItem}
+				showsVerticalScrollIndicator={false}
 			/>
-			<Button disabled={isEditionMode} icon="pencil" mode="contained-tonal" onPress={() => setIsEditionMode(true)}>
-				Edit
-			</Button>
 		</>
 	);
 };
