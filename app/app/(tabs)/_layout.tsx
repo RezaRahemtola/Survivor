@@ -1,55 +1,19 @@
-import { router, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import { TouchableWithoutFeedback, useColorScheme } from "react-native";
 import { useTranslation } from "react-i18next";
-import { useAtom } from "jotai";
 
 import Colors from "@/constants/Colors";
 import Icon, { IconProps } from "@/components/Icon";
 import { signOut } from "@/config/auth";
-import { editionWidgetsAtom, isWidgetsEditionModeAtom, userSettingsAtom } from "@/stores/widgets";
-import { IconButton } from "react-native-paper";
-import { applyUserSettings } from "@/utils/settings";
+import { WidgetEditionAddButton, WidgetEditionSaveButton } from "@/components/widgets/WidgetEditionButtons";
 
 const TabBarIcon = (props: IconProps) => <Icon size={28} style={{ marginBottom: -3 }} {...props} />;
 
-const WidgetEditionSaveButton = () => {
-	const [isWidgetsEditionMode, setIsWidgetsEditionMode] = useAtom(isWidgetsEditionModeAtom);
-	const [editionWidgets] = useAtom(editionWidgetsAtom);
-	const [, setUserSettings] = useAtom(userSettingsAtom);
-
-	return (
-		<>
-			{isWidgetsEditionMode ? (
-				<IconButton
-					icon="content-save"
-					mode="contained"
-					onPress={async () => {
-						const settings = { widgets: editionWidgets };
-						await applyUserSettings(settings);
-						setUserSettings((prev) => ({ ...prev!, ...settings }));
-						setIsWidgetsEditionMode(false);
-					}}
-				/>
-			) : (
-				<></>
-			)}
-		</>
-	);
-};
-
-const WidgetEditionAddButton = () => {
-	const [isWidgetsEditionMode] = useAtom(isWidgetsEditionModeAtom);
-
-	return (
-		<>
-			{isWidgetsEditionMode ? (
-				<IconButton icon="plus" mode="contained" onPress={() => router.push("/widgets/modal")} />
-			) : (
-				<></>
-			)}
-		</>
-	);
-};
+const UserLogoutButton = () => (
+	<TouchableWithoutFeedback onPress={() => signOut()}>
+		<Icon name="logout" source="MaterialIcons" size={25} style={{ marginRight: 15 }} />
+	</TouchableWithoutFeedback>
+);
 
 export default function TabLayout() {
 	const colorScheme = useColorScheme();
@@ -89,11 +53,7 @@ export default function TabLayout() {
 				options={{
 					title: t("tabs.user"),
 					tabBarIcon: ({ color }) => <TabBarIcon name="user" source="FontAwesome" color={color} />,
-					headerRight: () => (
-						<TouchableWithoutFeedback onPress={() => signOut()}>
-							<Icon name="logout" source="MaterialIcons" size={25} style={{ marginRight: 15 }} />
-						</TouchableWithoutFeedback>
-					),
+					headerRight: UserLogoutButton,
 				}}
 			/>
 		</Tabs>

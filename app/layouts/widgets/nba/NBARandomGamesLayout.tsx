@@ -1,13 +1,14 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Text } from "@/components/Themed";
 import { ActivityIndicator } from "react-native-paper";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { NBAGameResponse } from "@/types/widgets/nba";
-import Slider from "@/components/Slider";
-import NBAGameCard from "@/components/nba/NBAGameCard";
-import Icon from "@/components/Icon";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+
+import { NBAGameResponse } from "@/types/widgets/nba";
+import { Text } from "@/components/Themed";
+import Slider from "@/components/Slider";
+import NBAGameCard from "@/components/widgets/nba/NBAGameCard";
+import Icon from "@/components/Icon";
 
 const NBARandomGamesTitle = () => {
 	const { t } = useTranslation();

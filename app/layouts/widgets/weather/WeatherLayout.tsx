@@ -1,14 +1,15 @@
 import { useAtom } from "jotai";
-import * as Location from "expo-location";
+import Location from "expo-location";
 import { ReactNode, useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native-paper";
 import { StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next";
+
 import { Text } from "@/components/Themed";
 import { locationErrorAtom, userSettingsAtom, weatherAtom } from "@/stores/widgets";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { PlaceResponse } from "@/types/widgets/weather";
-import { useTranslation } from "react-i18next";
 import i18n from "@/config/i18n";
 
 type WeatherLayoutProps = {

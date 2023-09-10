@@ -1,10 +1,10 @@
 import { ScrollView, StyleSheet } from "react-native";
-
-import DailyWeather from "@/components/weather/DailyWeatherForecast";
-import { Text } from "@/components/Themed";
 import { useAtom } from "jotai";
-import { weatherAtom } from "@/stores/widgets";
 import { useTranslation } from "react-i18next";
+
+import DailyWeather from "@/components/widgets/weather/DailyWeatherForecast";
+import { Text } from "@/components/Themed";
+import { weatherAtom } from "@/stores/widgets";
 
 const DailyWeatherForecast = () => {
 	const [weather] = useAtom(weatherAtom);

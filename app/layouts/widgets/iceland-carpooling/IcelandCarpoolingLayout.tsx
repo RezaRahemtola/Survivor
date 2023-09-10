@@ -1,12 +1,13 @@
 import { StyleSheet } from "react-native";
-import { Text } from "@/components/Themed";
 import { ActivityIndicator } from "react-native-paper";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { IcelandCarpoolingData, IcelandCarpoolingResponse } from "@/types/widgets/iceland-carpooling";
 import { useTranslation } from "react-i18next";
+
+import { Text } from "@/components/Themed";
+import { IcelandCarpoolingData, IcelandCarpoolingResponse } from "@/types/widgets/iceland-carpooling";
 import Slider from "@/components/Slider";
-import IcelandCarpoolingCard from "@/components/iceland-carpooling/IcelandCarpoolingCard";
+import IcelandCarpoolingCard from "@/components/widgets/iceland-carpooling/IcelandCarpoolingCard";
 
 const IcelandCarpoolingTitle = () => {
 	const { t } = useTranslation();

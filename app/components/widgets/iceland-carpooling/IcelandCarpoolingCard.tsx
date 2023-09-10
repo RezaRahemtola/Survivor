@@ -1,8 +1,8 @@
 import { Dimensions, StyleSheet, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { Text, useThemeColor } from "@/components/Themed";
 import { IcelandCarpoolingData } from "@/types/widgets/iceland-carpooling";
-import { useTranslation } from "react-i18next";
 
 const { width } = Dimensions.get("window");
 
