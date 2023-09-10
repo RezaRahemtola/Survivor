@@ -30,7 +30,7 @@ const IcelandCarpoolingLayout = () => {
 		})();
 	}, []);
 
-	return rides ? (
+	return rides.length > 0 ? (
 		<>
 			<IcelandCarpoolingTitle />
 			<Slider
