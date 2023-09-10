@@ -39,7 +39,7 @@ const TrendNewsLayout = () => {
 			<TrendNewsTitle />
 			<Slider
 				items={news.articles.filter((article) => article.urlToImage !== null && article.author !== null)}
-				keyExtractor={(_, index) => "key" + index}
+				keyExtractor={(article) => article.title}
 				renderItem={({ item }) => <TopNewsCard item={item} />}
 			/>
 		</>

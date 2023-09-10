@@ -7,4 +7,5 @@ export const locationErrorAtom = atom<string | undefined>(undefined);
 export const weatherAtom = atom<any>(undefined);
 
 export const userSettingsAtom = atom<UserSettings | undefined>(undefined);
-export const widgetsAtom = atom<WidgetType[]>([]);
+export const editionWidgetsAtom = atom<WidgetType[]>([]);
+export const isWidgetsEditionModeAtom = atom<boolean>(false);

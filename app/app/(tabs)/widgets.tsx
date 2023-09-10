@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, IconButton } from "react-native-paper";
 import { useState } from "react";
 import { useAtom } from "jotai";
 
@@ -35,9 +35,7 @@ const WidgetSelector = ({
 				defaultValue={widgets.find((item) => item.value === widget)}
 				onSelect={(item) => onValueChange(item.value)}
 			/>
-			<Button icon="delete" onPress={onRemove}>
-				<></>
-			</Button>
+			<IconButton icon="delete" onPress={onRemove} />
 		</View>
 	);
 };

@@ -34,7 +34,7 @@ const IcelandCarpoolingLayout = () => {
 			<IcelandCarpoolingTitle />
 			<Slider
 				items={rides}
-				keyExtractor={(_, index) => "key" + index}
+				keyExtractor={(ride) => ride.link}
 				renderItem={({ item }) => <IcelandCarpoolingCard item={item} />}
 			/>
 		</>
