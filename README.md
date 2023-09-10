@@ -11,8 +11,9 @@
 - User profile with your personal information
   - Settings customization
     - Language (🇺🇸, 🇫🇷 or 🇪🇸)
-- Dashboard with widgets (see below)
-  - Widget selection with preferences persisted in a database 
+- Widgets dashboard (see below)
+  - Widget selection with preferences persisted in a database
+  - Friendly UI to add, remove and reorder widgets (inspired from iPhones design)
 - Coworkers gallery
   - Search bar to filter by name
 - Widgets
