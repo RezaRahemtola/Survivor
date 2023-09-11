@@ -69,32 +69,6 @@ const translations = {
 			homeRedirection: "Ir a la pantalla de inicio!",
 		},
 	},
-
-	Dates: {
-		Days: {
-			Monday: "Lunes",
-			Tuesday: "Martes",
-			Wednesday: "miércoles",
-			Thursday: "Jueves",
-			Friday: "Viernes",
-			Saturday: "Sábado",
-			Sunday: "Domingo",
-		},
-		Months:{
-			January: "Enero",
-			February: "Febrero",
-			March: "Marzo",
-			April: "Abril",
-			May: "Mayo",
-			June: "Junio",
-			July: "Julio",
-			August: "Agosto",
-			September: "Septiembre",
-			October: "Octubre",
-			November: "noviembre",
-			December: "diciembre",
-		}
-	}
 };
 
 export default translations;
