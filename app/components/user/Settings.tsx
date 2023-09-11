@@ -9,7 +9,7 @@ import i18n from "@/config/i18n";
 import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
-import { LanguageType } from "@/types/settings";
+import { LanguageType, ResetSettingsResponse } from "@/types/settings";
 import { Button } from "react-native-paper";
 
 type Language = {
@@ -42,14 +42,14 @@ const UserSettings = () => {
 	const onSettingsReset = async () => {
 		try {
 			const accessToken = await getAccessToken();
-			const response = await axios.patch(
+			const response = await axios.patch<ResetSettingsResponse>(
 				"/user-settings/reset",
 				{},
 				{ headers: { Authorization: `Bearer ${accessToken}` } },
 			);
-			setUserSettings({ widgets: response.data["widgets"], language: response.data["language"]});
-			setCurrentWidgets(response.data["widgets"]);
-			await i18n.changeLanguage(response.data["language"]);
+			setUserSettings({ widgets: response.data.widgets, language: response.data.language});
+			setCurrentWidgets(response.data.widgets);
+			await i18n.changeLanguage(response.data.language);
 		} catch (error) {
 			console.log(error);
 		}
