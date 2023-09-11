@@ -13,13 +13,13 @@ export const LANGUAGES = ['fr', 'en', 'es', 'zh', 'gu'] as const;
 export type Language = (typeof LANGUAGES)[number];
 export const INTERFACE_SCHEMES = ['auto', 'dark', 'light'] as const;
 export type InterfaceScheme = (typeof INTERFACE_SCHEMES)[number];
-export const WORK_PRESENCE = [
+export const WORK_PRESENCES = [
   'remote',
   'office',
   'vacations',
   'client',
 ] as const;
-export type WorkPresence = (typeof WORK_PRESENCE)[number];
+export type WorkPresence = (typeof WORK_PRESENCES)[number];
 export const DEFAULT_USER_SETTINGS: Omit<UserSettings, 'email'> = {
   widgets: [],
   language: 'en',
@@ -59,8 +59,8 @@ export default class UserSettings {
 
   @ApiProperty({
     description: 'Work presence of the user',
-    enum: WORK_PRESENCE,
+    enum: WORK_PRESENCES,
   })
-  @Column({ type: 'enum', enum: WORK_PRESENCE, default: 'office' })
+  @Column({ type: 'enum', enum: WORK_PRESENCES, default: 'office' })
   workPresence!: WorkPresence;
 }
