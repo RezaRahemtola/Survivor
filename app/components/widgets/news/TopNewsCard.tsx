@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Text } from "@/components/Themed";
 import Icon from "@/components/Icon";
 import { TrendingNewsArticle } from "@/types/widgets/news";
+import { styles as cardStyles } from "@/components/widgets/cardStyles";
 
 const { width } = Dimensions.get("window");
 
@@ -18,24 +19,18 @@ const TopNewsCard = ({ item }: { item: TrendingNewsArticle }) => {
 	return (
 		<View
 			style={{
-				margin: 20,
-				marginLeft: 0,
-				borderRadius: 15,
+				...cardStyles.view,
+				borderWidth: 0,
 				width: 200,
 				height: 200,
-				overflow: "hidden",
 				elevation: 3,
 			}}
 		>
 			<Image source={{ uri: item.urlToImage! }} style={styles.image} />
 			<Text
 				style={{
+					...cardStyles.text,
 					width: width,
-					marginHorizontal: width * 0.03,
-					marginVertical: width * 0.03,
-					fontSize: 15,
-					fontWeight: "bold",
-					maxWidth: width * 0.45,
 				}}
 				numberOfLines={2}
 			>

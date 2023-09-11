@@ -4,6 +4,7 @@ import { Text, useThemeColor } from "@/components/Themed";
 import { NBAGameResponse } from "@/types/widgets/nba";
 import dayjs from "@/config/dayjs";
 import ImageWithFallback from "@/components/ImageWithFallback";
+import { styles as cardStyles } from "@/components/widgets/cardStyles";
 
 const { width } = Dimensions.get("window");
 const fallbackURI =
@@ -13,7 +14,7 @@ const NBAGameCard = ({ item }: { item: NBAGameResponse }) => {
 	const borderColor = useThemeColor({}, "text");
 
 	return (
-		<View style={{ ...styles.view, borderColor }}>
+		<View style={{ ...cardStyles.view, borderColor }}>
 			<View style={styles.lineView}>
 				<ImageWithFallback
 					source={{
@@ -35,12 +36,12 @@ const NBAGameCard = ({ item }: { item: NBAGameResponse }) => {
 				/>
 			</View>
 			<View style={styles.lineView}>
-				<Text style={styles.text}>{item.home_team_score}</Text>
-				<Text style={styles.text}>-</Text>
-				<Text style={styles.text}>{item.visitor_team_score}</Text>
+				<Text style={cardStyles.text}>{item.home_team_score}</Text>
+				<Text style={cardStyles.text}>-</Text>
+				<Text style={cardStyles.text}>{item.visitor_team_score}</Text>
 			</View>
 			<View style={styles.lineView}>
-				<Text style={styles.text}>{dayjs(item.date, "YYYY-MM-DD H:mm:ss").format("DD/MM/YYYY")}</Text>
+				<Text style={cardStyles.text}>{dayjs(item.date, "YYYY-MM-DD H:mm:ss").format("DD/MM/YYYY")}</Text>
 			</View>
 		</View>
 	);
@@ -51,23 +52,9 @@ const styles = StyleSheet.create({
 		width: 100,
 		height: 100,
 	},
-	view: {
-		margin: 20,
-		marginLeft: 0,
-		borderWidth: 1,
-		borderRadius: 15,
-		overflow: "hidden",
-	},
 	lineView: {
 		flexDirection: "row",
 		justifyContent: "center",
-	},
-	text: {
-		marginHorizontal: width * 0.03,
-		marginVertical: width * 0.03,
-		fontSize: 15,
-		fontWeight: "bold",
-		maxWidth: width * 0.45,
 	},
 });
 
