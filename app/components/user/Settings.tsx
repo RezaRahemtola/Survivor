@@ -47,7 +47,6 @@ const UserSettings = () => {
 				{},
 				{ headers: { Authorization: `Bearer ${accessToken}` } },
 			);
-			console.log(response.data);
 			setUserSettings({ widgets: response.data["widgets"], language: response.data["language"]});
 			setCurrentWidgets(response.data["widgets"]);
 			await i18n.changeLanguage(response.data["language"]);
