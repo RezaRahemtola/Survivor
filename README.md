@@ -28,6 +28,7 @@
 ## Tech & Performance 💻
 
 - Easy usage with Docker Compose to deploy the Expo app, the backend and the database
+- Complete backend OpenAPI v3 documentation
 - Continuous Integration (launching ESLint tests both in the backend and app before allowing merges)
 - Continuous Deployment (on a dedicated server via SSH)
 - Partial "offline" mode (while using only cached data the application can still be used even if the access token expires)
@@ -45,5 +46,5 @@
 
 ## Authors
 
-| [<img src="https://github.com/Croos3r.png?size=85" width=85><br><sub>Dorian MOY</sub>](https://github.com/Croos3r) | [<img src="https://github.com/RezaRahemtola.png?size=85" width=85><br><sub>Reza RAHEMTOLA</sub>](https://github.com/RezaRahemtola)
-| :---: | :---: |
+| [<img src="https://github.com/Croos3r.png?size=85" width=85><br><sub>Dorian MOY</sub>](https://github.com/Croos3r) | [<img src="https://github.com/RezaRahemtola.png?size=85" width=85><br><sub>Reza RAHEMTOLA</sub>](https://github.com/RezaRahemtola)| [<img src="https://github.com/Dwozy.png?size=85" width=85><br><sub>Léo SOIDIKI</sub>](https://github.com/Dwozy) | [<img src="https://github.com/MathieuMarques.png?size=85" width=85><br><sub>Mathieu MARQUES</sub>](https://github.com/MathieuMarques)
+| :---: | :---: | :---: | :---: |
