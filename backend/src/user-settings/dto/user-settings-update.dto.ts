@@ -6,6 +6,8 @@ import {
   LANGUAGES,
   Widget,
   WIDGETS,
+  WORK_PRESENCE,
+  WorkPresence,
 } from '../entities/user-settings.entity';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -35,4 +37,12 @@ export class UserSettingsUpdateDto {
   @IsOptional()
   @IsEnum(INTERFACE_SCHEMES)
   interfaceScheme?: InterfaceScheme;
+
+  @ApiPropertyOptional({
+    description: 'Work presence',
+    enum: WORK_PRESENCE,
+  })
+  @IsOptional()
+  @IsEnum(WORK_PRESENCE)
+  workPresence?: WorkPresence;
 }
