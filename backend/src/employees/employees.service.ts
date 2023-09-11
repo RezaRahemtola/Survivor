@@ -10,7 +10,7 @@ import {
   runHttpRequest,
 } from '../http';
 import { UserSettingsService } from '../user-settings/user-settings.service';
-import { EmployeeLongDto } from './dto/employee.dto';
+import { EmployeeLongDto, EmployeeShortDto } from './dto/employee.dto';
 
 @Injectable()
 export class EmployeesService {
@@ -19,14 +19,23 @@ export class EmployeesService {
     private readonly userSettingsService: UserSettingsService,
   ) {}
 
-  async getEmployeesShort(
-    accessToken: string,
-  ): Promise<MasuraoShortEmployeeDto[]> {
-    return runHttpRequest<MasuraoShortEmployeeDto[]>(
+  async getEmployeesShort(accessToken: string): Promise<EmployeeShortDto[]> {
+    const employees = await runHttpRequest<MasuraoShortEmployeeDto[]>(
       this.httpService.axiosRef,
       'get',
       '/employees',
       AUTHORIZED_AXIOS_CONFIGURATION(accessToken),
+    );
+    return Promise.all(
+      employees.map(async (employee) => {
+        const { workPresence } = await this.userSettingsService.getUserSettings(
+          employee.email,
+        );
+        return {
+          ...employee,
+          workPresence,
+        };
+      }),
     );
   }
 

@@ -18,9 +18,8 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { MasuraoShortEmployeeDto } from './dto/masurao-results.dto';
 import MasuraoErrorDto from '../error.dto';
-import { EmployeeLongDto } from './dto/employee.dto';
+import { EmployeeLongDto, EmployeeShortDto } from './dto/employee.dto';
 
 @ApiBearerAuth()
 @ApiTags('Employees')
@@ -34,9 +33,10 @@ export class EmployeesController {
   })
   @ApiOkResponse({
     description: 'List of the employees',
-    type: MasuraoShortEmployeeDto,
+    type: EmployeeShortDto,
     isArray: true,
   })
+  @CacheTTL(1000 * 60 * 15) // 15 minutes
   @UseInterceptors(CacheInterceptor)
   @Get()
   getEmployees(@Req() { user: { masuraoToken } }: APIRequest) {
