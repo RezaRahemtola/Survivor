@@ -47,7 +47,7 @@ const GalleryScreen = () => {
 				editable
 			/>
 			<FlatList
-				data={users.filter((user) => `${user.name} ${user.surname}`.includes(search))}
+				data={users.filter((user) => `${user.name} ${user.surname}`.toLowerCase().includes(search.toLowerCase()))}
 				viewabilityConfig={{
 					itemVisiblePercentThreshold: 1,
 					minimumViewTime: 1,
