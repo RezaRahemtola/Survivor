@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Patch,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { UserSettingsService } from './user-settings.service';
 import { APIRequest } from '../token-aware-cache.interceptor';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
@@ -6,9 +15,9 @@ import { UserSettingsUpdateDto } from './dto/user-settings-update.dto';
 import {
   ApiBearerAuth,
   ApiBody,
-  ApiForbiddenResponse,
-  ApiResponse,
+  ApiOkResponse,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import UserSettings from './entities/user-settings.entity';
 
@@ -19,14 +28,14 @@ import UserSettings from './entities/user-settings.entity';
 export class UserSettingsController {
   constructor(private readonly userSettingsService: UserSettingsService) {}
 
-  @ApiResponse({
-    status: '2XX',
+  @ApiOkResponse({
     description: 'Current user settings',
     type: UserSettings,
   })
-  @ApiForbiddenResponse({
+  @ApiUnauthorizedResponse({
     description: 'Invalid access token',
   })
+  @HttpCode(HttpStatus.OK)
   @Get()
   async getSelfUserSettings(@Req() { user: { email } }: APIRequest) {
     return this.userSettingsService.getUserSettings(email);
@@ -36,14 +45,14 @@ export class UserSettingsController {
     description: 'New user settings',
     type: UserSettingsUpdateDto,
   })
-  @ApiResponse({
-    status: '2XX',
+  @ApiOkResponse({
     description: 'Updated user settings',
     type: UserSettings,
   })
-  @ApiForbiddenResponse({
+  @ApiUnauthorizedResponse({
     description: 'Invalid access token',
   })
+  @HttpCode(HttpStatus.OK)
   @Patch()
   async updateSelfUserSettings(
     @Req() { user: { email } }: APIRequest,
@@ -52,14 +61,14 @@ export class UserSettingsController {
     return this.userSettingsService.updateUserSettings(email, newSettings);
   }
 
-  @ApiResponse({
-    status: '2XX',
+  @ApiOkResponse({
     description: 'Resetted user settings',
     type: UserSettings,
   })
-  @ApiForbiddenResponse({
+  @ApiUnauthorizedResponse({
     description: 'Invalid access token',
   })
+  @HttpCode(HttpStatus.OK)
   @Patch('reset')
   async resetUserSettings(@Req() { user: { email } }: APIRequest) {
     return this.userSettingsService.resetUserSettings(email);

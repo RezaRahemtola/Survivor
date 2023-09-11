@@ -3,6 +3,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   Post,
   Query,
   UseGuards,
@@ -22,11 +24,11 @@ import BodyAwareCacheInterceptor from '../body-aware-cache.interceptor';
 import {
   ApiBearerAuth,
   ApiBody,
-  ApiCreatedResponse,
-  ApiForbiddenResponse,
+  ApiOkResponse,
   ApiQuery,
   ApiTags,
   ApiTooManyRequestsResponse,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import TrendingNewsResultDto from './dto/trending-news-result.dto';
 
@@ -41,17 +43,18 @@ export class ExternalApisController {
     description: 'Weather API parameters',
     type: WeatherDataDto,
   })
-  @ApiForbiddenResponse({
+  @ApiOkResponse({
+    description: 'The weather data in the specified location and language',
+  })
+  @ApiUnauthorizedResponse({
     description: 'Invalid access token',
   })
   @ApiTooManyRequestsResponse({
     description: 'Too many requests to the external API',
   })
-  @ApiCreatedResponse({
-    description: 'The weather data in the specified location and language',
-  })
   @CacheTTL(1000 * 60 * 15) // 15 minutes
   @UseInterceptors(BodyAwareCacheInterceptor)
+  @HttpCode(HttpStatus.OK)
   @Post('weather')
   getWeather(@Body() data: WeatherDataDto) {
     return this.externalApisService.getWeather(data);
@@ -62,15 +65,16 @@ export class ExternalApisController {
     description: 'Country code',
     enum: COUNTRY_CODES,
   })
-  @ApiCreatedResponse({
+  @ApiOkResponse({
     description: 'The trending news in the specified country',
     type: TrendingNewsResultDto,
   })
-  @ApiForbiddenResponse({
+  @ApiUnauthorizedResponse({
     description: 'Invalid access token',
   })
   @CacheTTL(1000 * 60 * 5) // 5 minutes
   @UseInterceptors(CacheInterceptor)
+  @HttpCode(HttpStatus.OK)
   @Get('news')
   async getNews(@Query('country') countryCode: CountryCode) {
     if (!COUNTRY_CODES.includes(countryCode)) {
@@ -87,11 +91,11 @@ export class ExternalApisController {
     description: 'GPS Coordinates',
     type: CoordinatesLocationDto,
   })
-  @ApiCreatedResponse({
+  @ApiOkResponse({
     description: 'Location found',
     type: CityLocationDto,
   })
-  @ApiForbiddenResponse({
+  @ApiUnauthorizedResponse({
     description: 'Invalid access token',
   })
   @ApiTooManyRequestsResponse({
@@ -99,6 +103,7 @@ export class ExternalApisController {
   })
   @CacheTTL(1000 * 60 * 60 * 24 * 30) // 1 month as cities and countries don't change location often
   @UseInterceptors(BodyAwareCacheInterceptor)
+  @HttpCode(HttpStatus.OK)
   @Post('location')
   async getLocationForCoordinates(@Body() location: CoordinatesLocationDto) {
     return this.externalApisService.getLocationForCoordinates(location);

@@ -23,14 +23,12 @@ export class MasuraoShortEmployeeDto {
 
   @ApiProperty({
     description: 'Email of the employee',
-    example: 'name.surname@masurao.ext',
   })
   @IsEmail()
   email!: string;
 
   @ApiProperty({
     description: 'Name of the employee',
-    example: 'John',
   })
   @IsString()
   @IsNotEmpty()
@@ -38,7 +36,6 @@ export class MasuraoShortEmployeeDto {
 
   @ApiProperty({
     description: 'Surname of the employee',
-    example: 'Smith',
   })
   @IsString()
   @IsNotEmpty()
