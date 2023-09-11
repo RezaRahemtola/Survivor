@@ -56,7 +56,7 @@ const TopNewsCard = ({ item }: { item: TrendingNewsArticle }) => {
 							fontSize: 10,
 						}}
 					>
-						{item.publishedAt ? `🕘 ${dayjs(item.publishedAt, "YYYY-MM-DD H:mm:ss").format("DD/MM/YYYY")}` + " " + `${dayjs(item.publishedAt, "YYYY-MM-DD H:mm:ss").format("H:mm")}` : ""}
+						{item.publishedAt ? `🕘 ${dayjs(item.publishedAt, "YYYY-MM-DD H:mm:ss").format("DD/MM/YYYY")} ${dayjs(item.publishedAt, "YYYY-MM-DD H:mm:ss").format("H:mm")}` : ""}
 					</Text>
 				</View>
 				<TouchableOpacity
