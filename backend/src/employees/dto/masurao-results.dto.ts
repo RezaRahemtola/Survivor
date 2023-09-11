@@ -45,7 +45,6 @@ export class MasuraoShortEmployeeDto {
 export class MasuraoLongEmployeeDto extends MasuraoShortEmployeeDto {
   @ApiProperty({
     description: 'Birth date of the employee',
-    example: '1970-01-01',
   })
   @IsDateString()
   birth_date!: Date;
