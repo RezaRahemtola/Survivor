@@ -8,5 +8,6 @@ import UserSettings from './entities/user-settings.entity';
   imports: [TypeOrmModule.forFeature([UserSettings])],
   controllers: [UserSettingsController],
   providers: [UserSettingsService],
+  exports: [UserSettingsService],
 })
 export class UserSettingsModule {}

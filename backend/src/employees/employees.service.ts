@@ -9,10 +9,15 @@ import {
   AUTHORIZED_HEADERS,
   runHttpRequest,
 } from '../http';
+import { UserSettingsService } from '../user-settings/user-settings.service';
+import { EmployeeLongDto } from './dto/employee.dto';
 
 @Injectable()
 export class EmployeesService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly userSettingsService: UserSettingsService,
+  ) {}
 
   async getEmployeesShort(
     accessToken: string,
@@ -25,25 +30,39 @@ export class EmployeesService {
     );
   }
 
-  getSelfEmployeeLong(accessToken: string): Promise<MasuraoLongEmployeeDto> {
-    return runHttpRequest<MasuraoLongEmployeeDto>(
+  async getSelfEmployeeLong(accessToken: string): Promise<EmployeeLongDto> {
+    const employee = await runHttpRequest<MasuraoLongEmployeeDto>(
       this.httpService.axiosRef,
       'get',
       '/employees/me',
       AUTHORIZED_AXIOS_CONFIGURATION(accessToken),
     );
+    const { workPresence } = await this.userSettingsService.getUserSettings(
+      employee.email,
+    );
+    return {
+      ...employee,
+      workPresence,
+    };
   }
 
-  getEmployeeLong(
+  async getEmployeeLong(
     id: number,
     accessToken: string,
-  ): Promise<MasuraoLongEmployeeDto> {
-    return runHttpRequest<MasuraoLongEmployeeDto>(
+  ): Promise<EmployeeLongDto> {
+    const employee = await runHttpRequest<MasuraoLongEmployeeDto>(
       this.httpService.axiosRef,
       'get',
       `/employees/${id}`,
       AUTHORIZED_AXIOS_CONFIGURATION(accessToken),
     );
+    const { workPresence } = await this.userSettingsService.getUserSettings(
+      employee.email,
+    );
+    return {
+      ...employee,
+      workPresence,
+    };
   }
 
   getEmployeePicture(id: number, accessToken: string): Promise<string> {
