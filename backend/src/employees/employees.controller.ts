@@ -11,18 +11,16 @@ import TokenAwareCacheInterceptor, {
   APIRequest,
 } from '../token-aware-cache.interceptor';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import {
   ApiBearerAuth,
   ApiForbiddenResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import {
-  MasuraoLongEmployeeDto,
-  MasuraoShortEmployeeDto,
-} from './dto/masurao-results.dto';
+import { MasuraoShortEmployeeDto } from './dto/masurao-results.dto';
 import MasuraoErrorDto from '../error.dto';
+import { EmployeeLongDto } from './dto/employee.dto';
 
 @ApiBearerAuth()
 @ApiTags('Employees')
@@ -51,8 +49,9 @@ export class EmployeesController {
   })
   @ApiOkResponse({
     description: 'Employee details',
-    type: MasuraoLongEmployeeDto,
+    type: EmployeeLongDto,
   })
+  @CacheTTL(1000 * 60 * 15) // 15 minutes
   @UseInterceptors(CacheInterceptor)
   @Get('/:id')
   getEmployee(
@@ -85,8 +84,9 @@ export class EmployeesController {
   })
   @ApiOkResponse({
     description: 'Employee details',
-    type: MasuraoLongEmployeeDto,
+    type: EmployeeLongDto,
   })
+  @CacheTTL(1000 * 60 * 15) // 15 minutes
   @UseInterceptors(TokenAwareCacheInterceptor)
   @Get('/me')
   getSelfEmployee(@Req() { user: { masuraoToken } }: APIRequest) {
