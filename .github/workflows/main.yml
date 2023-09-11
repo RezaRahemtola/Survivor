@@ -3,7 +3,7 @@ name: Main workflow
 on: [ push ]
 
 env:
-  MIRROR_URL: "git@github.com:EpitechPromo2026/B-SVR-500-PAR-5-1-survivor-reza.rahemtola.git"
+  MIRROR_URL: "git@github.com:EpitechPromo2026/B-SVR-500-PAR-5-1-survivornext-reza.rahemtola.git"
 
 jobs:
   eslint-frontend:
