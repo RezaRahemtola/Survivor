@@ -6,6 +6,7 @@ import Icon from "@/components/Icon";
 import { ModalUser } from "@/types/user";
 import { useThemeColor } from "@/components/Themed";
 import { useTranslation } from "react-i18next";
+import dayjs from "@/config/dayjs";
 
 type HeadComponentProps = {
 	name: string;
@@ -49,7 +50,7 @@ const UserLayout = ({ user }: { user: ModalUser }) => {
 					value={t(`user.gender.${user.gender.toLowerCase()}`)}
 					icon={{ source: "MaterialCommunityIcons", name: user.gender === "Male" ? "gender-male" : "gender-female" }}
 				/>
-				<ValueLine value={user.birth_date} icon={{ source: "FontAwesome", name: "birthday-cake" }} />
+				<ValueLine value={dayjs(user.birth_date, "YYYY-MM-DD").format("DD/MM/YYYY")} icon={{ source: "FontAwesome", name: "birthday-cake" }} />
 			</Card>
 		</View>
 	);

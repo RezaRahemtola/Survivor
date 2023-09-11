@@ -5,6 +5,7 @@ import { Text } from "@/components/Themed";
 import Icon from "@/components/Icon";
 import { TrendingNewsArticle } from "@/types/widgets/news";
 import { styles as cardStyles } from "@/components/widgets/cardStyles";
+import dayjs from "@/config/dayjs";
 
 const { width } = Dimensions.get("window");
 
@@ -55,7 +56,7 @@ const TopNewsCard = ({ item }: { item: TrendingNewsArticle }) => {
 							fontSize: 10,
 						}}
 					>
-						{item.publishedAt ? `🕘 ${item.publishedAt}` : ""}
+						{item.publishedAt ? `🕘 ${dayjs(item.publishedAt, "YYYY-MM-DD H:mm:ss").format("DD/MM/YYYY")}` + " " + `${dayjs(item.publishedAt, "YYYY-MM-DD H:mm:ss").format("H:mm")}` : ""}
 					</Text>
 				</View>
 				<TouchableOpacity
