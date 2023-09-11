@@ -1,14 +1,17 @@
 import {
   IsDateString,
   IsEmail,
+  IsEnum,
   IsInt,
   IsNotEmpty,
   IsNumber,
   IsString,
-  Matches,
   Min,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+
+export const GENDERS = ['Male', 'Female'] as const;
+export type Gender = (typeof GENDERS)[number];
 
 export class MasuraoShortEmployeeDto {
   @ApiProperty({
@@ -52,9 +55,9 @@ export class MasuraoLongEmployeeDto extends MasuraoShortEmployeeDto {
 
   @ApiProperty({
     description: 'Gender of the employee',
-    example: 'Male',
+    enum: GENDERS,
   })
-  @Matches(/(?:Fem|M)ale/)
+  @IsEnum(GENDERS)
   gender!: string;
 
   @ApiProperty({
