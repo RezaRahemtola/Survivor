@@ -96,7 +96,7 @@ const WidgetsLayout = ({ widgets }: WidgetsLayoutProps) => {
 					onDragEnd={({ data }: { data: WidgetType[] }) => setEditionWidgets(data)}
 					keyExtractor={(item) => item}
 					renderItem={renderDraggableItem}
-					showsVerticalScrollIndicator={isEditionMode}
+					showsVerticalScrollIndicator
 				/>
 			) : (
 				<FlatList
@@ -111,7 +111,6 @@ const WidgetsLayout = ({ widgets }: WidgetsLayoutProps) => {
 							)}
 						</>
 					)}
-					showsVerticalScrollIndicator={false}
 				/>
 			)}
 		</>
