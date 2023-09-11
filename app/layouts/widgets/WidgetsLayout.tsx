@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { RenderItemParams } from "react-native-draggable-flatlist/src/types";
 import { useAtom } from "jotai";
@@ -45,7 +45,7 @@ const WidgetWrapper = ({
 }: {
 	name: WidgetType;
 	isEditionMode: boolean;
-	drag: () => void;
+	drag?: () => void;
 }) => {
 	const [, setEditionWidgets] = useAtom(editionWidgetsAtom);
 	return (
@@ -63,7 +63,7 @@ const WidgetWrapper = ({
 			<TouchableOpacity
 				disabled={!isEditionMode}
 				onLongPress={() => {
-					if (isEditionMode) {
+					if (isEditionMode && drag) {
 						drag();
 					}
 				}}
@@ -84,27 +84,35 @@ const WidgetsLayout = ({ widgets }: WidgetsLayoutProps) => {
 	useEffect(() => {
 		setEditionWidgets(widgets);
 	}, []);
-	const renderDraggableItem = ({ item, drag }: RenderItemParams<WidgetType | "editButton">) => (
-		<>
-			{item !== "editButton" ? (
-				<WidgetWrapper name={item} isEditionMode={isEditionMode} drag={drag} />
-			) : (
-				<WidgetEditionEditButton />
-			)}
-		</>
+	const renderDraggableItem = ({ item, drag }: RenderItemParams<WidgetType>) => (
+		<WidgetWrapper name={item} isEditionMode={isEditionMode} drag={drag} />
 	);
 
 	return (
 		<>
-			<DraggableFlatList
-				data={[...editionWidgets, "editButton"]}
-				onDragEnd={({ data }: { data: (WidgetType | "editButton")[] }) =>
-					setEditionWidgets(data.filter((item) => item !== "editButton") as WidgetType[])
-				}
-				keyExtractor={(item) => item}
-				renderItem={renderDraggableItem}
-				showsVerticalScrollIndicator={isEditionMode}
-			/>
+			{isEditionMode ? (
+				<DraggableFlatList
+					data={editionWidgets}
+					onDragEnd={({ data }: { data: WidgetType[] }) => setEditionWidgets(data)}
+					keyExtractor={(item) => item}
+					renderItem={renderDraggableItem}
+					showsVerticalScrollIndicator
+				/>
+			) : (
+				<FlatList
+					data={[...editionWidgets, "editButton"]}
+					keyExtractor={(item) => item}
+					renderItem={({ item }: { item: WidgetType | "editButton" }) => (
+						<>
+							{item !== "editButton" ? (
+								<WidgetWrapper name={item} isEditionMode={isEditionMode} />
+							) : (
+								<WidgetEditionEditButton />
+							)}
+						</>
+					)}
+				/>
+			)}
 		</>
 	);
 };
