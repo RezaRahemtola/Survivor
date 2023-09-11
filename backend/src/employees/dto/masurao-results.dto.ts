@@ -58,7 +58,7 @@ export class MasuraoLongEmployeeDto extends MasuraoShortEmployeeDto {
     enum: GENDERS,
   })
   @IsEnum(GENDERS)
-  gender!: string;
+  gender!: Gender;
 
   @ApiProperty({
     description: 'IDs of the suboordinates of the employee',
