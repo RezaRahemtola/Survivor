@@ -29,7 +29,7 @@ export class UserSettingsController {
   })
   @Get()
   async getSelfUserSettings(@Req() { user: { email } }: APIRequest) {
-    return this.userSettingsService.getSelfUserSettings(email);
+    return this.userSettingsService.getUserSettings(email);
   }
 
   @ApiBody({
@@ -49,7 +49,7 @@ export class UserSettingsController {
     @Req() { user: { email } }: APIRequest,
     @Body() newSettings: UserSettingsUpdateDto,
   ) {
-    return this.userSettingsService.updateSelfUserSettings(email, newSettings);
+    return this.userSettingsService.updateUserSettings(email, newSettings);
   }
 
   @ApiResponse({

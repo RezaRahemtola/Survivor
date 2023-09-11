@@ -13,13 +13,13 @@ export class UserSettingsService {
     private readonly userSettingsRepository: Repository<UserSettings>,
   ) {}
 
-  async getSelfUserSettings(email: string): Promise<UserSettings> {
+  async getUserSettings(email: string): Promise<UserSettings> {
     return this.userSettingsRepository
       .findOneOrFail({ where: { email } })
       .catch(() => this.userSettingsRepository.save({ email }));
   }
 
-  async updateSelfUserSettings(
+  async updateUserSettings(
     email: string,
     newSettings: UserSettingsUpdateDto,
   ): Promise<UserSettings> {
