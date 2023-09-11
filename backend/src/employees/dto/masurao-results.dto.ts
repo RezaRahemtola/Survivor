@@ -58,7 +58,6 @@ export class MasuraoLongEmployeeDto extends MasuraoShortEmployeeDto {
 
   @ApiProperty({
     description: 'IDs of the suboordinates of the employee',
-    example: [2, 3],
   })
   @IsNumber({}, { each: true })
   @Min(1, { each: true })
