@@ -1,6 +1,8 @@
 import {
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Req,
   UseGuards,
@@ -14,9 +16,9 @@ import JwtAuthGuard from '../auth/jwt-auth.guard';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import {
   ApiBearerAuth,
-  ApiForbiddenResponse,
   ApiOkResponse,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import MasuraoErrorDto from '../error.dto';
 import { EmployeeLongDto, EmployeeShortDto } from './dto/employee.dto';
@@ -28,31 +30,33 @@ import { EmployeeLongDto, EmployeeShortDto } from './dto/employee.dto';
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
 
-  @ApiForbiddenResponse({
-    description: 'Invalid access token',
-  })
   @ApiOkResponse({
     description: 'List of the employees',
     type: EmployeeShortDto,
     isArray: true,
   })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid access token',
+  })
   @CacheTTL(1000 * 60 * 15) // 15 minutes
   @UseInterceptors(CacheInterceptor)
+  @HttpCode(HttpStatus.OK)
   @Get()
   getEmployees(@Req() { user: { masuraoToken } }: APIRequest) {
     return this.employeesService.getEmployeesShort(masuraoToken);
   }
 
-  @ApiForbiddenResponse({
-    description: 'Invalid access token',
-    type: MasuraoErrorDto,
-  })
   @ApiOkResponse({
     description: 'Employee details',
     type: EmployeeLongDto,
   })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid access token',
+    type: MasuraoErrorDto,
+  })
   @CacheTTL(1000 * 60 * 15) // 15 minutes
   @UseInterceptors(CacheInterceptor)
+  @HttpCode(HttpStatus.OK)
   @Get('/:id')
   getEmployee(
     @Param('id') id: number,
@@ -61,15 +65,16 @@ export class EmployeesController {
     return this.employeesService.getEmployeeLong(id, masuraoToken);
   }
 
-  @ApiForbiddenResponse({
-    description: 'Invalid access token',
-    type: MasuraoErrorDto,
-  })
   @ApiOkResponse({
     description: 'Employee picture encoded in base64',
     type: String,
   })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid access token',
+    type: MasuraoErrorDto,
+  })
   @UseInterceptors(CacheInterceptor)
+  @HttpCode(HttpStatus.OK)
   @Get('/:id/picture')
   getEmployeePicture(
     @Param('id') id: number,
@@ -78,16 +83,17 @@ export class EmployeesController {
     return this.employeesService.getEmployeePicture(id, masuraoToken);
   }
 
-  @ApiForbiddenResponse({
-    description: 'Invalid access token',
-    type: MasuraoErrorDto,
-  })
   @ApiOkResponse({
     description: 'Employee details',
     type: EmployeeLongDto,
   })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid access token',
+    type: MasuraoErrorDto,
+  })
   @CacheTTL(1000 * 60 * 15) // 15 minutes
   @UseInterceptors(TokenAwareCacheInterceptor)
+  @HttpCode(HttpStatus.OK)
   @Get('/me')
   getSelfEmployee(@Req() { user: { masuraoToken } }: APIRequest) {
     return this.employeesService.getSelfEmployeeLong(masuraoToken);

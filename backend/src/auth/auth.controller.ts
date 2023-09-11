@@ -1,12 +1,12 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import MasuraoCredentialsDto from './dto/credentials.dto';
 import {
   ApiBody,
-  ApiCreatedResponse,
-  ApiForbiddenResponse,
+  ApiOkResponse,
   ApiProduces,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { MasuraoLoginResultDto } from './dto/login-result.dto';
 import MasuraoErrorDto from '../error.dto';
@@ -21,14 +21,15 @@ export class AuthController {
     description: 'Masurao credentials of the user',
     type: MasuraoCredentialsDto,
   })
-  @ApiForbiddenResponse({
+  @ApiUnauthorizedResponse({
     description: 'Invalid credentials',
     type: MasuraoErrorDto,
   })
-  @ApiCreatedResponse({
+  @ApiOkResponse({
     description: 'User successfully authorized in',
     type: MasuraoLoginResultDto,
   })
+  @HttpCode(HttpStatus.OK)
   @Post('login')
   logIn(@Body() credentials: MasuraoCredentialsDto) {
     return this.authService.logIn(credentials);
