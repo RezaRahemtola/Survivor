@@ -1,5 +1,5 @@
 import { Card } from "react-native-elements";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import SelectDropdown from "react-native-select-dropdown";
 import { useAtom } from "jotai";
@@ -11,7 +11,6 @@ import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
 import { interfaceThemes, LanguageType, ThemeType, UserSettings } from "@/types/settings";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
-
 
 type Language = {
 	icon: string;
@@ -68,23 +67,29 @@ const UserSettingsCard = () => {
 
 	return (
 		<Card containerStyle={{ backgroundColor: useThemeColor({}, "background") }}>
-			<Text style={styles.title}>{t("user.settings")}</Text>
-			<SelectDropdown
-				data={languages}
-				defaultValue={languages.find((language) => language.locale === userSettings?.language)}
-				buttonTextAfterSelection={(item: Language) => `${item.icon} ${item.name}`}
-				rowTextForSelection={(item: Language) => `${item.icon} ${item.name}`}
-				onSelect={onLanguageChange}
-			/>
-			<SelectDropdown
-				data={[...interfaceThemes]}
-				defaultValue={interfaceThemes.find((theme) => theme === userSettings?.interfaceTheme) ?? "auto"}
-				buttonTextAfterSelection={(item: ThemeType) => t(`user.theme.${item}`)}
-				rowTextForSelection={(item: ThemeType) => t(`user.theme.${item}`)}
-				onSelect={onThemeChange}
-			/>
-			<Button mode="contained-tonal" onPress={onSettingsReset} style={{ marginTop: 5 }}>
-				{t("user.reset")}
+			<Text style={styles.title}>{t("user.settings.title")}</Text>
+			<View style={styles.settingsView}>
+				<Text style={styles.settingsText}>{t("user.settings.language")}</Text>
+				<SelectDropdown
+					data={languages}
+					defaultValue={languages.find((language) => language.locale === userSettings?.language)}
+					buttonTextAfterSelection={(item: Language) => `${item.icon} ${item.name}`}
+					rowTextForSelection={(item: Language) => `${item.icon} ${item.name}`}
+					onSelect={onLanguageChange}
+				/>
+			</View>
+			<View style={styles.settingsView}>
+				<Text style={styles.settingsText}>{t("user.settings.theme")}</Text>
+				<SelectDropdown
+					data={[...interfaceThemes]}
+					defaultValue={interfaceThemes.find((theme) => theme === userSettings?.interfaceTheme) ?? "auto"}
+					buttonTextAfterSelection={(item: ThemeType) => t(`user.theme.${item}`)}
+					rowTextForSelection={(item: ThemeType) => t(`user.theme.${item}`)}
+					onSelect={onThemeChange}
+				/>
+			</View>
+			<Button icon="restore" mode="contained-tonal" onPress={onSettingsReset} style={{ marginTop: 5 }}>
+				{t("user.settings.reset")}
 			</Button>
 		</Card>
 	);
@@ -94,6 +99,16 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 20,
 		marginBottom: 20,
+	},
+	settingsView: {
+		flexDirection: "row",
+		alignItems: "center",
+		marginBottom: 10,
+	},
+	settingsText: {
+		fontSize: 18,
+		marginHorizontal: 10,
+		width: 80,
 	},
 });
 
