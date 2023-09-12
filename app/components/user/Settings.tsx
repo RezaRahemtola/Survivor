@@ -26,7 +26,7 @@ const languages: Language[] = [
 const UserSettingsCard = () => {
 	const { t } = useTranslation();
 	const [userSettings, setUserSettings] = useAtom(userSettingsAtom);
-	const [currentWidgets, setCurrentWidgets] = useAtom(editionWidgetsAtom);
+	const [, setCurrentWidgets] = useAtom(editionWidgetsAtom);
 
 	const onLanguageChange = async (item: Language) => {
 		await i18n.changeLanguage(item.locale);
