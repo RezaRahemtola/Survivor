@@ -23,12 +23,13 @@ const languages: Language[] = [
 	{ icon: "🇪🇸", name: "Español", locale: "es" },
 	{ icon: "🇨🇳", name: "中国人", locale: "zh" },
 	{ icon: "🇮🇳", name: "हिंदी", locale: "hi" },
+	{ icon: "🇵🇹", name: "Português", locale: "pt" },
 ];
 
 const UserSettingsCard = () => {
 	const { t } = useTranslation();
 	const [userSettings, setUserSettings] = useAtom(userSettingsAtom);
-	const [currentWidgets, setCurrentWidgets] = useAtom(editionWidgetsAtom);
+	const [, setCurrentWidgets] = useAtom(editionWidgetsAtom);
 
 	const onLanguageChange = async (item: Language) => {
 		await i18n.changeLanguage(item.locale);
