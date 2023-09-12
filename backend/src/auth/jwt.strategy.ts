@@ -3,6 +3,11 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 
+export type JwtPayload = {
+  masuraoToken: string;
+  email: string;
+};
+
 @Injectable()
 export default class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(configService: ConfigService) {
@@ -13,15 +18,9 @@ export default class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate({
-    masuraoToken,
-    email,
-  }: {
-    masuraoToken: string;
-    email: string;
-  }) {
-    if (!masuraoToken || !email)
+  async validate(payload: JwtPayload) {
+    if (!payload.masuraoToken || !payload.email)
       throw new UnauthorizedException('Malformed token');
-    return { masuraoToken, email };
+    return payload;
   }
 }
