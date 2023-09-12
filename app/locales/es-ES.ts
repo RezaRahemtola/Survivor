@@ -11,6 +11,11 @@ const translations = {
 			male: "Hombre",
 			female: "Mujer",
 		},
+		theme: {
+			auto: "Automático",
+			dark: "Oscuro",
+			light: "Ligero",
+		},
 		reset: "Reiniciar",
 	},
 	gallery: {

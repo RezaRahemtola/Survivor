@@ -3,14 +3,15 @@ import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import SelectDropdown from "react-native-select-dropdown";
 import { useAtom } from "jotai";
+import { Button } from "react-native-paper";
 
 import { Text, useThemeColor } from "@/components/Themed";
 import i18n from "@/config/i18n";
 import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
+import { interfaceThemes, LanguageType, ThemeType, UserSettings } from "@/types/settings";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
-import { LanguageType, UserSettings } from "@/types/settings";
-import { Button } from "react-native-paper";
+
 
 type Language = {
 	icon: string;
@@ -39,6 +40,16 @@ const UserSettingsCard = () => {
 		setUserSettings({ ...userSettings!, language: item.locale });
 	};
 
+	const onThemeChange = async (item: ThemeType) => {
+		const accessToken = await getAccessToken();
+		await axios.patch(
+			"/user-settings",
+			{ interfaceTheme: item },
+			{ headers: { Authorization: `Bearer ${accessToken}` } },
+		);
+		setUserSettings({ ...userSettings!, interfaceTheme: item });
+	};
+
 	const onSettingsReset = async () => {
 		try {
 			const accessToken = await getAccessToken();
@@ -64,6 +75,13 @@ const UserSettingsCard = () => {
 				buttonTextAfterSelection={(item: Language) => `${item.icon} ${item.name}`}
 				rowTextForSelection={(item: Language) => `${item.icon} ${item.name}`}
 				onSelect={onLanguageChange}
+			/>
+			<SelectDropdown
+				data={[...interfaceThemes]}
+				defaultValue={interfaceThemes.find((theme) => theme === userSettings?.interfaceTheme) ?? "auto"}
+				buttonTextAfterSelection={(item: ThemeType) => t(`user.theme.${item}`)}
+				rowTextForSelection={(item: ThemeType) => t(`user.theme.${item}`)}
+				onSelect={onThemeChange}
 			/>
 			<Button mode="contained-tonal" onPress={onSettingsReset} style={{ marginTop: 5 }}>
 				{t("user.reset")}

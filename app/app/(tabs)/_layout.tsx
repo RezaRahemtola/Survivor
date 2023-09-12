@@ -1,11 +1,12 @@
 import { Tabs } from "expo-router";
-import { TouchableWithoutFeedback, useColorScheme } from "react-native";
+import { TouchableWithoutFeedback } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import Colors from "@/constants/Colors";
 import Icon, { IconProps } from "@/components/Icon";
 import { signOut } from "@/config/auth";
 import { WidgetEditionAddButton, WidgetEditionSaveButton } from "@/components/widgets/WidgetEditionButtons";
+import { useColorScheme } from "@/components/Themed";
 
 const TabBarIcon = (props: IconProps) => <Icon size={28} style={{ marginBottom: -3 }} {...props} />;
 
