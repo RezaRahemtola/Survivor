@@ -6,6 +6,7 @@ import { GlobalModule } from './global.module';
 import { ExternalApisModule } from './external-apis/external-apis.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserSettingsModule } from './user-settings/user-settings.module';
+import { ChatModule } from './chat/chat.module';
 import UserSettings from './user-settings/entities/user-settings.entity';
 
 @Module({
@@ -34,8 +35,8 @@ import UserSettings from './user-settings/entities/user-settings.entity';
     EmployeesModule,
     ExternalApisModule,
     UserSettingsModule,
+    ChatModule,
   ],
   controllers: [],
-  providers: [],
 })
 export class AppModule {}
