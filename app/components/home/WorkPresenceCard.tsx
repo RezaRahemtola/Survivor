@@ -8,11 +8,12 @@ import { userSettingsAtom } from "@/stores/widgets";
 import { WorkPresence, workPresenceIcons, workPresences } from "@/types/settings";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
-import { Text } from "@/components/Themed";
+import { Text, useThemeColor } from "@/components/Themed";
 
 const WorkPresenceCard = () => {
 	const [userSettings, setUserSettings] = useAtom(userSettingsAtom);
 	const { t } = useTranslation();
+	const backgroundColor = useThemeColor({}, "background");
 
 	const onWorkPresenceChange = async (item: WorkPresence) => {
 		const accessToken = await getAccessToken();
@@ -31,7 +32,7 @@ const WorkPresenceCard = () => {
 	};
 
 	return (
-		<Card containerStyle={styles.container}>
+		<Card containerStyle={{ ...styles.container, backgroundColor }}>
 			<Text style={styles.title}>{t("user.workPresence.title")}</Text>
 			<SelectDropdown
 				data={[...workPresences]}
