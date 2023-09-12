@@ -10,7 +10,7 @@
   - Possibility to log out
 - User profile with your personal information
   - Settings customization
-    - Language (🇺🇸, 🇫🇷 or 🇪🇸)
+    - Language (🇺🇸, 🇫🇷, 🇪🇸 or 🇨🇳)
     - Theme (device-based 📱, dark ⚫ or light ⚪)
     - Option to reset to default settings
 - Widgets dashboard (see below)
