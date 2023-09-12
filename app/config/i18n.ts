@@ -4,6 +4,7 @@ import en from "@/locales/en-US";
 import fr from "@/locales/fr-FR";
 import es from "@/locales/es-ES";
 import zh from "@/locales/zh-CN";
+import hi from "@/locales/hi-IN";
 
 i18n.use(initReactI18next).init({
 	compatibilityJSON: "v3",
@@ -19,6 +20,9 @@ i18n.use(initReactI18next).init({
 		},
 		zh: {
 			translation: zh,
+		},
+		hi: {
+			translation: hi,
 		},
 	},
 	fallbackLng: "en",

@@ -22,6 +22,7 @@ const languages: Language[] = [
 	{ icon: "🇫🇷", name: "Francais", locale: "fr" },
 	{ icon: "🇪🇸", name: "Español", locale: "es" },
 	{ icon: "🇨🇳", name: "中国人", locale: "zh" },
+	{ icon: "🇮🇳", name: "हिंदी", locale: "hi" },
 ];
 
 const UserSettingsCard = () => {
