@@ -9,7 +9,7 @@ import i18n from "@/config/i18n";
 import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
-import { LanguageType, ResetSettingsResponse } from "@/types/settings";
+import { LanguageType, UserSettings } from "@/types/settings";
 import { Button } from "react-native-paper";
 
 type Language = {
@@ -23,7 +23,7 @@ const languages: Language[] = [
 	{ icon: "🇪🇸", name: "Español", locale: "es" },
 ];
 
-const UserSettings = () => {
+const UserSettingsCard = () => {
 	const { t } = useTranslation();
 	const [userSettings, setUserSettings] = useAtom(userSettingsAtom);
 	const [currentWidgets, setCurrentWidgets] = useAtom(editionWidgetsAtom);
@@ -42,12 +42,12 @@ const UserSettings = () => {
 	const onSettingsReset = async () => {
 		try {
 			const accessToken = await getAccessToken();
-			const response = await axios.patch<ResetSettingsResponse>(
+			const response = await axios.patch<UserSettings>(
 				"/user-settings/reset",
 				{},
 				{ headers: { Authorization: `Bearer ${accessToken}` } },
 			);
-			setUserSettings({ widgets: response.data.widgets, language: response.data.language});
+			setUserSettings(response.data);
 			setCurrentWidgets(response.data.widgets);
 			await i18n.changeLanguage(response.data.language);
 		} catch (error) {
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default UserSettings;
+export default UserSettingsCard;
