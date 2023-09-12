@@ -21,6 +21,13 @@ const translations = {
 			dark: "Dark",
 			light: "Light",
 		},
+		workPresence: {
+			title: "Work status",
+			office: "Office",
+			remote: "Remote",
+			vacations: "Vacationing",
+			client: "Meeting a client",
+		},
 	},
 	gallery: {
 		search: "Search",
