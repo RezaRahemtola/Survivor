@@ -1,6 +1,12 @@
-import { IsArray, IsBase64, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsBase64,
+  IsEmail,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
-export default class MessageSendDto {
+export class GlobalMessageSendDto {
   @IsString()
   message!: string;
 
@@ -8,4 +14,9 @@ export default class MessageSendDto {
   @IsArray()
   @IsBase64({ each: true })
   pictures?: string[];
+}
+
+export class DirectMessageSendDto extends GlobalMessageSendDto {
+  @IsEmail()
+  receiver!: string;
 }
