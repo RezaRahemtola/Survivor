@@ -6,9 +6,3 @@ export type UserSettings = {
 	widgets: WidgetType[];
 	language: LanguageType;
 };
-
-export type ResetSettingsResponse = {
-	email: string;
-	userSettings: UserSettings;
-	interfaceScheme: string;
-};
