@@ -11,6 +11,8 @@
 - User profile with your personal information
   - Settings customization
     - Language (🇺🇸, 🇫🇷 or 🇪🇸)
+    - Theme (device-based 📱, dark ⚫ or light ⚪)
+    - Option to reset to default settings
 - Widgets dashboard (see below)
   - Widget selection with preferences persisted in a database
   - Friendly UI to add, remove and reorder widgets (inspired from iPhones design)
