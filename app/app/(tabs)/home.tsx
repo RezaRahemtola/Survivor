@@ -1,4 +1,4 @@
-import { Text } from "@/components/Themed";
+import { Text, View } from "@/components/Themed";
 import { useEffect } from "react";
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
@@ -6,6 +6,8 @@ import { UserSettings } from "@/types/settings";
 import i18next from "i18next";
 import { useAtom } from "jotai";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
+import { Button } from "react-native-paper";
+import { router } from "expo-router";
 
 const HomeScreen = () => {
 	const [, setUserSettings] = useAtom(userSettingsAtom);
@@ -27,7 +29,13 @@ const HomeScreen = () => {
 		})();
 	}, []);
 
-	return <Text>Blank home screen</Text>;
+	return (
+		<View>
+			<Button onPress={ () => { router.push("/home/modal") }}>
+				Chat
+			</Button>
+		</View>
+	);
 };
 
 export default HomeScreen;
