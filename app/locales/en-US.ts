@@ -72,10 +72,6 @@ const translations = {
 		nbaGames: {
 			loading: "NBA games loading...",
 			title: "Random NBA games",
-			from: "From:",
-			to: "To:",
-			date: "Date:",
-			at: "at",
 		},
 	},
 	tabs: {

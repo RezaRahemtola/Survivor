@@ -3,6 +3,7 @@ import { initReactI18next } from "react-i18next";
 import en from "@/locales/en-US";
 import fr from "@/locales/fr-FR";
 import es from "@/locales/es-ES";
+import zh from "@/locales/zh-CN";
 
 i18n.use(initReactI18next).init({
 	compatibilityJSON: "v3",
@@ -15,6 +16,9 @@ i18n.use(initReactI18next).init({
 		},
 		es: {
 			translation: es,
+		},
+		zh: {
+			translation: zh,
 		},
 	},
 	fallbackLng: "en",
