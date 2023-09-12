@@ -15,7 +15,10 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ChatAuthGuard } from './chat-auth.guard';
-import MessageSendDto from './dto/message-send.dto';
+import {
+  DirectMessageSendDto,
+  GlobalMessageSendDto,
+} from './dto/message-send.dto';
 import { JwtPayload } from '../auth/jwt.strategy';
 import { BadRequestTransformationFilter } from './bad-request-transformation.filter';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
@@ -42,13 +45,34 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ) {}
 
   @SubscribeMessage('global-message')
-  handleMessage(
+  handleGlobalMessage(
     @MessageBody()
-    { message }: MessageSendDto,
+    { message }: GlobalMessageSendDto,
     @MessageBody('user')
     { email }: JwtPayload,
   ) {
     this.server.emit('global-message', { sender: email, message });
+  }
+
+  @SubscribeMessage('direct-message')
+  async handleDirectMessage(
+    @MessageBody()
+    { message, receiver }: DirectMessageSendDto,
+    @MessageBody('user')
+    { email }: JwtPayload,
+  ) {
+    const clients = await this.cacheManager.get<Set<string>>(
+      `e2is/${receiver}`,
+    );
+    if (!clients) {
+      return;
+    }
+    for (const client of clients) {
+      this.server.to(client).emit('direct-message', {
+        sender: email,
+        message,
+      });
+    }
   }
 
   async handleConnection(client: Socket) {
@@ -69,7 +93,11 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   async handleDisconnect(client: Socket) {
     const email = await this.cacheManager.get(`i2e/${client.id}`);
-    await this.cacheManager.del(`e2is/${email}`);
+    let clientIds = [
+      ...(await this.cacheManager.get<Set<string>>(`e2is/${email}`)),
+    ];
+    clientIds = clientIds.filter((clientId) => clientId !== client.id);
+    if (clientIds.length === 0) await this.cacheManager.del(`e2is/${email}`);
     await this.cacheManager.del(`i2e/${client.id}`);
   }
 }
