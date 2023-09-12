@@ -1,6 +1,11 @@
 const translations = {
 	user: {
-		settings: "Settings",
+		settings: {
+			title: "Settings",
+			reset: "Reset",
+			theme: "Theme",
+			language: "Language",
+		},
 		signIn: {
 			email: "Email",
 			password: "Password",
@@ -16,7 +21,6 @@ const translations = {
 			dark: "Dark",
 			light: "Light",
 		},
-		reset: "Reset",
 	},
 	gallery: {
 		search: "Search",

@@ -1,6 +1,11 @@
 const translations = {
 	user: {
-		settings: "Parámetros",
+		settings: {
+			title: "Parámetros",
+			reset: "Reiniciar",
+			theme: "Tema",
+			language: "Idioma",
+		},
 		signIn: {
 			email: "Correo electrónico",
 			password: "Contraseña",
@@ -16,7 +21,6 @@ const translations = {
 			dark: "Oscuro",
 			light: "Ligero",
 		},
-		reset: "Reiniciar",
 	},
 	gallery: {
 		search: "Buscar",
