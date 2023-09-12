@@ -6,6 +6,7 @@ import fr from "dayjs/locale/fr";
 import es from "dayjs/locale/es";
 import zh from "dayjs/locale/zh-cn";
 import hi from "dayjs/locale/hi";
+import pt from "dayjs/locale/pt";
 
 dayjs.extend(weekday);
 dayjs.extend(customParsePlugin);
@@ -16,5 +17,6 @@ export const locales = {
 	es,
 	zh,
 	hi,
+	pt,
 };
 export default dayjs;
