@@ -47,7 +47,7 @@ const translations = {
 			humidity: "Humidity",
 			rain: "Rain",
 			loading: {
-				location: "Waiting for location data..",
+				location: "Waiting for location data...",
 				data: "Waiting for weather data...",
 			},
 		},
