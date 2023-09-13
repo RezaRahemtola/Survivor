@@ -75,9 +75,16 @@ const ChatModal = () => {
             <FlatList inverted
                     data={[...messages].reverse()}
                     renderItem={ ({item}) =>
-                    <View style={item.sender === "Me" ? { flexDirection: "row", justifyContent: "flex-end" } : { flexDirection: "row", justifyContent: "flex-start" }}>
-                        <View style={colorScheme === "dark" ? styles.textWrapWhite : styles.textWrapBlack }>
-                            <Text style={colorScheme === "dark" ? styles.textBlack : styles.textWhite}>{item.message}</Text>
+                    <View>
+                        <View style={item.sender === "Me" ? { flexDirection: "row", justifyContent: "flex-end" } : { flexDirection: "row", justifyContent: "flex-start" }}>
+                            <Text style={[ colorScheme === "dark" ? styles.textWhite : styles.textBlack, { marginRight: 20, marginLeft: 20, fontSize: 12 } ]}>
+                                { item.sender }
+                            </Text>
+                        </View>
+                        <View style={item.sender === "Me" ? { flexDirection: "row", justifyContent: "flex-end" } : { flexDirection: "row", justifyContent: "flex-start" }}>
+                            <View style={colorScheme === "dark" ? styles.textWrapWhite : styles.textWrapBlack }>
+                                <Text style={colorScheme === "dark" ? styles.textBlack : styles.textWhite}>{item.message}</Text>
+                            </View>
                         </View>
                     </View> }
             />
@@ -99,6 +106,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: "#000000",
         margin: 10,
+        marginTop: 3,
     },
     textWrapWhite: {
         maxWidth: "50%",
@@ -108,6 +116,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: "#FFFFFF",
         margin: 10,
+        marginTop: 3,
     },
     textBlack: {
         color: "#000000",
