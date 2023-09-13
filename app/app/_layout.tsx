@@ -5,6 +5,7 @@ import { Slot, SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import "@/config/i18n";
+import { useTranslation } from "react-i18next";
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -45,6 +46,7 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
 	const colorScheme = useColorScheme();
+	const { t } = useTranslation();
 
 	return (
 		<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
@@ -52,6 +54,7 @@ function RootLayoutNav() {
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 				<Stack.Screen name="user/modal" options={{ presentation: "modal", headerShown: false }} />
 				<Stack.Screen name="widgets/modal" options={{ presentation: "modal", headerShown: false }} />
+				<Stack.Screen name="home/modal" options={{ presentation: "modal", title: t("tabs.chat") }} />
 			</Stack>
 		</ThemeProvider>
 	);

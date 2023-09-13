@@ -63,6 +63,7 @@ const translations = {
 		gallery: "Galería",
 		widgets: "Widgets",
 		user: "Usuario",
+		chat: "Charla general",
 	},
 	screen: {
 		missing: {
@@ -70,6 +71,9 @@ const translations = {
 			homeRedirection: "Ir a la pantalla de inicio!",
 		},
 	},
+	chat: {
+		sendMessage: "Enviar un mensaje",
+	}
 };
 
 export default translations;
