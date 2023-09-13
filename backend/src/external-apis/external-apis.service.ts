@@ -97,7 +97,7 @@ export class ExternalApisService {
     const avatar_url = this.configService.get<string>(
       'DISCORD_WEBHOOK_AVATAR_URL',
     );
-    return await runHttpRequestWithData<any>(
+    await runHttpRequestWithData<never>(
       this.httpService.axiosRef,
       'post',
       webhookUrl,
@@ -109,7 +109,6 @@ export class ExternalApisService {
       {
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json',
         },
       },
     );
