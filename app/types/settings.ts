@@ -1,6 +1,6 @@
 import { WidgetType } from "@/types/widgets";
 
-export type LanguageType = "fr" | "en" | "es" | "zh" | "hi" | "pt" | "ja" | "de" | "ko";
+export type LanguageType = "fr" | "en" | "es" | "zh" | "hi" | "pt" | "ja" | "de" | "ko" | "it";
 
 export const interfaceThemes = ["auto", "dark", "light"] as const;
 export type ThemeType = (typeof interfaceThemes)[number];

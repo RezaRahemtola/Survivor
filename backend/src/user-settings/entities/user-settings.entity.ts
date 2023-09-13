@@ -19,6 +19,7 @@ export const LANGUAGES = [
   'ja',
   'de',
   'ko',
+  'it',
 ] as const;
 export type Language = (typeof LANGUAGES)[number];
 export const INTERFACE_SCHEMES = ['auto', 'dark', 'light'] as const;

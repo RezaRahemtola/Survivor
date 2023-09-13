@@ -9,6 +9,8 @@ import hi from "dayjs/locale/hi";
 import pt from "dayjs/locale/pt";
 import ja from "dayjs/locale/ja";
 import de from "dayjs/locale/de";
+import ko from "dayjs/locale/ko";
+import it from "dayjs/locale/it";
 
 dayjs.extend(weekday);
 dayjs.extend(customParsePlugin);
@@ -22,5 +24,7 @@ export const locales = {
 	pt,
 	ja,
 	de,
+	ko,
+	it,
 };
 export default dayjs;
