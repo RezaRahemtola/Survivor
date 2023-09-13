@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, TextInput, TouchableWithoutFeedback, useColorScheme } from "react-native";
 import { io } from 'socket.io-client';
@@ -12,17 +12,26 @@ export const MessageSender = () => {
 
     const [message, setMessage] = useState(String);
     const [, setMessageReceived] = useAtom(MessageReceiveAtom)
+    const [token, setToken] = useState<string | undefined>();
 
-    const socket = io('http://localhost:3000', {transportOptions: {
+    useEffect(() => {
+        const createSocket = async () => {
+            const tkn = await getAccessToken();
+            setToken(tkn);
+        };
+        createSocket();
+    }, []);
+
+    const socket = io(`${process.env.EXPO_PUBLIC_API_URL}`, {transportOptions: {
         polling: {
             extraHeaders: {
-                Authorization: `Bearer ${getAccessToken()}`
+                Authorization: `Bearer ${token}`,
             }
         }
-      }});
-      socket.on('connect', function() {
+    }});
+    socket.on('connect', function() {
         console.log('Connectedsender');
-      });
+    });
     const sendMessage = (message: string) => {
         socket.emit('global-message', {message: `${message} (${socket.id})`});
         setMessageReceived(oldList => [...oldList, {message: message, email: "Me"}]);
@@ -34,9 +43,10 @@ export const MessageSender = () => {
     socket.on('exception', function(data) {
         console.error('exception', data);
     });
-      socket.on('disconnect', function() {
+    socket.on('disconnect', function() {
         console.warn('Disconnected');
     });
+
     const colorScheme = useColorScheme();
     const { t } = useTranslation();
 
