@@ -7,6 +7,7 @@ import { ExternalApisModule } from './external-apis/external-apis.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserSettingsModule } from './user-settings/user-settings.module';
 import { ChatModule } from './chat/chat.module';
+import { MotdModule } from './motd/motd.module';
 import UserSettings from './user-settings/entities/user-settings.entity';
 
 @Module({
@@ -36,6 +37,7 @@ import UserSettings from './user-settings/entities/user-settings.entity';
     ExternalApisModule,
     UserSettingsModule,
     ChatModule,
+    MotdModule,
   ],
   controllers: [],
 })
