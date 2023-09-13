@@ -5,15 +5,23 @@ import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { UserSettings } from "@/types/settings";
 import i18next from "i18next";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
+import Icon, { IconProps } from "@/components/Icon";
+import { MessageSender } from "@/components/MessageSender";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
 import { router } from "expo-router";
+import { io } from 'socket.io-client';
+import { MessageReceiveAtom } from "@/stores/chat";
+
+
+const receiveMessage = () => {
+
+};
 
 const HomeScreen = () => {
 	const [, setUserSettings] = useAtom(userSettingsAtom);
 	const [, setEditionWidgets] = useAtom(editionWidgetsAtom);
-	const [FirstLatestTchat, setFirstLatestTchat] = useState(String)
-	const [NewMessage, setNewMessage] = useState(String);
+	const [, setMessageReceived] = useAtom(MessageReceiveAtom)
 
 	useEffect(() => {
 		(async () => {
@@ -31,6 +39,19 @@ const HomeScreen = () => {
 		})();
 	}, []);
 
+	const socket = io('http://localhost:3000', {transportOptions: {
+        polling: {
+            extraHeaders: {
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYXN1cmFvVG9rZW4iOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZOelFzSW1WdFlXbHNJam9pYjJ4cGRtVnlMbXhsZDJselFHMWhjM1Z5WVc4dWFuQWlMQ0p1WVcxbElqb2lUMnhwZG1WeUlpd2ljM1Z5Ym1GdFpTSTZJa3hsZDJseklpd2laWGh3SWpveE5qazJNelF3TkRrNWZRLnBtUFBEbG1mLW5JcGhWTmVaWlhXMG5OeURuMk43UXk4WUdWU1ZIY0ZnRG8iLCJlbWFpbCI6Im9saXZlci5sZXdpc0BtYXN1cmFvLmpwIiwiaWF0IjoxNjk0NTI2MDk5LCJleHAiOjE2OTUxMzA4OTl9.c_QG0YAL08HonDidyfWhLx5A1HVDnR2L0B8OqeIZxDc'
+            }
+        }
+      }});
+
+	socket.on('global-message', function({sender, message}) {
+		console.log(`${sender} said: ${message}`);
+		setMessageReceived(oldList => [...oldList, {message: message, email: sender}]);
+	})
+
 	return (
 		<View style={styles.container}>
 			<View style={[styles.tchatPreview, {borderWidth: 2, borderBottomColor: 'black'}]}>
@@ -46,16 +67,7 @@ const HomeScreen = () => {
 				<View style={[styles.messageReceived]}>
 					<Text> {"empty message"} </Text>
 				</View>
-			<View style={styles.MessageSender}>
-				<TextInput
-					style={styles.MessageInput}
-					placeholder="Type a new message"
-					onChangeText={setNewMessage}
-					value={NewMessage}/>
-				<TouchableWithoutFeedback onPress={() => console.log("send Message")}>
-						<Icon name="send" source="MaterialIcons" size={25} style={{ alignSelf: 'center', margin: 10}} />
-				</TouchableWithoutFeedback>
-			</View>
+				<MessageSender/>
 			</View>
 		</View>);
 };
@@ -67,7 +79,7 @@ const styles = StyleSheet.create({
 	tchatPreview: {
 		marginTop: 20,
 		borderRadius: 20,
-		paddingBottom: 15,
+		paddingBottom: 5,
 		marginHorizontal: 10,
 	},
 	Title: {
