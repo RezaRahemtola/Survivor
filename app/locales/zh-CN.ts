@@ -35,6 +35,7 @@ const translations = {
 	widgets: {
 		noWidgets: "还没有小部件",
 		notAvailable: "无法使用",
+		communication: "交流工具",
 		edition: {
 			addTitle: "添加小部件",
 			edit: "编辑",

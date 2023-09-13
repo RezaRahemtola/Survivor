@@ -35,6 +35,7 @@ const translations = {
 	widgets: {
 		noWidgets: "Aún no hay widgets",
 		notAvailable: "No disponible",
+		communication: "Herramientas de comunicación",
 		edition: {
 			addTitle: "Agregar un widget",
 			edit: "Editar",

@@ -37,7 +37,7 @@ export const WidgetEditionAddButton = () => {
 	return (
 		<>
 			{isWidgetsEditionMode ? (
-				<IconButton icon="plus" mode="contained" onPress={() => router.push("/widgets/modal")} />
+				<IconButton icon="plus" mode="contained" onPress={() => router.push("/widgets/add")} />
 			) : (
 				<></>
 			)}
