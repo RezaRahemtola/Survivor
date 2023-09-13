@@ -35,6 +35,7 @@ const translations = {
 	widgets: {
 		noWidgets: "まだウィジェットはありません",
 		notAvailable: "利用不可",
+		communication: "コミュニケーション・ツール",
 		edition: {
 			addTitle: "ウィジェットを追加する",
 			edit: "編集",

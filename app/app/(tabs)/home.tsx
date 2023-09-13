@@ -6,6 +6,7 @@ import i18next from "i18next";
 import { useAtom } from "jotai";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
 import WorkPresenceCard from "@/components/home/WorkPresenceCard";
+import CommunicationCard from "@/components/home/CommunicationCard";
 
 const HomeScreen = () => {
 	const [, setUserSettings] = useAtom(userSettingsAtom);
@@ -30,6 +31,7 @@ const HomeScreen = () => {
 	return (
 		<>
 			<WorkPresenceCard />
+			<CommunicationCard />
 		</>
 	);
 };

@@ -43,6 +43,7 @@
     "react-native-screens": "~3.22.1",
     "react-native-select-dropdown": "^3.4.0",
     "react-native-web": "~0.19.8",
+    "react-native-webview": "^13.6.0",
     "styled-components": "^5.3.0"
   },
   "devDependencies": {

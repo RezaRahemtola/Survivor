@@ -35,6 +35,7 @@ const translations = {
 	widgets: {
 		noWidgets: "अभी तक कोई विजेट नहीं",
 		notAvailable: "उपलब्ध नहीं है",
+		communication: "संचार के साधन",
 		edition: {
 			addTitle: "एक विजेट जोड़ें",
 			edit: "संपादन करना",
