@@ -18,6 +18,20 @@ export const signIn = async (email: string, password: string) => {
 	}
 };
 
+export const signInDebug = async (accessToken: string) => {
+	try {
+		await setAccessToken(accessToken);
+		if (router.canGoBack()) {
+			router.back();
+		} else {
+			router.push("/(tabs)/home");
+		}
+		return true;
+	} catch (error) {
+		return false;
+	}
+};
+
 export const signOut = async () => {
 	await removeAccessToken();
 	router.push("/sign-in");
