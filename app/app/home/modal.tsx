@@ -1,105 +1,68 @@
 import { MessageSender } from "@/components/MessageSender";
-import { StyleSheet, View, Text, TextInput } from "react-native";
-import { Icon } from "react-native-elements";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
-
-type Message = {
-    message: string,
-};
-
-let messages: Message[] = [
-    {
-        message: "Test",
-    },
-    {
-        message: "AJIUHHJ",
-    },
-    {
-        message: "Test",
-    },
-    {
-        message: "AJIUHHJ",
-    },
-    {
-        message: "Test",
-    },
-    {
-        message: "AJIUHHJ",
-    },
-    {
-        message: "Test",
-    },
-    {
-        message: "AJIUHHJ",
-    },
-    {
-        message: "Test",
-    },
-    {
-        message: "AJIUHHJ",
-    },
-    {
-        message: "Test",
-    },
-    {
-        message: "AJIUHHJ",
-    },
-    {
-        message: "Test",
-    },
-    {
-        message: "AJIUHHJ",
-    },
-    {
-        message: "Test",
-    },
-    {
-        message: "AJIUHHJ",
-    },
-    {
-        message: "Test",
-    },
-    {
-        message: "AJIUHHJ",
-    },
-    {
-        message: "Test",
-    },
-    {
-        message: "AJIUHHJ",
-    },
-];
+import { MessageReceiveAtom } from "@/stores/chat";
+import { Message } from "@/types/message";
+import { useAtom } from "jotai";
+import { StyleSheet, View, Text, useColorScheme } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 
 const ChatModal = () => {
+
+    const colorScheme = useColorScheme();
+    const [messages,] = useAtom(MessageReceiveAtom);
+
     return (
         <View style={styles.view}>
-            <FlatList inverted data={[...messages].reverse()} renderItem={({item}) => <Text style={styles.text}>{item.message}</Text>} />
+            <FlatList inverted
+                    data={[...messages].reverse()}
+                    renderItem={ ({item}) =>
+                    <View>
+                        <View style={item.email === "Me" ? { flexDirection: "row", justifyContent: "flex-end" } : { flexDirection: "row", justifyContent: "flex-start" }}>
+                            <Text style={[ colorScheme === "dark" ? styles.textWhite : styles.textBlack, { marginRight: 20, marginLeft: 20, fontSize: 12 } ]}>
+                                { item.email }
+                            </Text>
+                        </View>
+                        <View style={item.email === "Me" ? { flexDirection: "row", justifyContent: "flex-end" } : { flexDirection: "row", justifyContent: "flex-start" }}>
+                            <View style={colorScheme === "dark" ? styles.textWrapWhite : styles.textWrapBlack }>
+                                <Text style={colorScheme === "dark" ? styles.textBlack : styles.textWhite}>{item.message}</Text>
+                            </View>
+                        </View>
+                    </View> }
+            />
             <MessageSender />
         </View>
     )
 };
 
 const styles = StyleSheet.create({
-    textInput: {
-        margin: 10,
-        padding: 10,
-        paddingLeft: 20,
-        paddingRight: 20,
-        borderRadius: 30,
-        backgroundColor: '#000000',
-        borderColor: '#FFFFFF',
-        borderWidth: 1,
-        color: "#FFFFFF",
-        flex: 8,
-    },
     view: {
         flex: 1,
-        justifyContent: 'flex-end',
+        justifyContent: "flex-end",
     },
-    text: {
-        color: '#FFFFFF',
+    textWrapBlack: {
+        maxWidth: "50%",
+        paddingHorizontal: 15,
         paddingTop: 10,
-        paddingBottom: 10,
+        paddingBottom: 15,
+        borderRadius: 25,
+        backgroundColor: "#000000",
+        margin: 10,
+        marginTop: 3,
+    },
+    textWrapWhite: {
+        maxWidth: "50%",
+        paddingHorizontal: 15,
+        paddingTop: 10,
+        paddingBottom: 15,
+        borderRadius: 25,
+        backgroundColor: "#FFFFFF",
+        margin: 10,
+        marginTop: 3,
+    },
+    textBlack: {
+        color: "#000000",
+    },
+    textWhite: {
+        color: "#FFFFFF",
     },
 });
 

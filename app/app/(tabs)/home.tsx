@@ -42,15 +42,29 @@ const HomeScreen = () => {
 	const socket = io('http://localhost:3000', {transportOptions: {
         polling: {
             extraHeaders: {
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYXN1cmFvVG9rZW4iOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZOelFzSW1WdFlXbHNJam9pYjJ4cGRtVnlMbXhsZDJselFHMWhjM1Z5WVc4dWFuQWlMQ0p1WVcxbElqb2lUMnhwZG1WeUlpd2ljM1Z5Ym1GdFpTSTZJa3hsZDJseklpd2laWGh3SWpveE5qazJNelF3TkRrNWZRLnBtUFBEbG1mLW5JcGhWTmVaWlhXMG5OeURuMk43UXk4WUdWU1ZIY0ZnRG8iLCJlbWFpbCI6Im9saXZlci5sZXdpc0BtYXN1cmFvLmpwIiwiaWF0IjoxNjk0NTI2MDk5LCJleHAiOjE2OTUxMzA4OTl9.c_QG0YAL08HonDidyfWhLx5A1HVDnR2L0B8OqeIZxDc'
+                Authorization: `Bearer ${getAccessToken()}`
             }
         }
       }});
+
+	  socket.on('connect', function() {
+        console.log('ConnectedReceiver');
+      });
 
 	socket.on('global-message', function({sender, message}) {
 		console.log(`${sender} said: ${message}`);
 		setMessageReceived(oldList => [...oldList, {message: message, email: sender}]);
 	})
+
+	socket.on('events', function(data) {
+        console.log('Revent', data);
+    });
+    socket.on('exception', function(data) {
+        console.error('Rexception', data);
+    });
+      socket.on('disconnect', function() {
+        console.warn('RDisconnected');
+    });
 
 	return (
 		<View style={styles.container}>
