@@ -6,6 +6,10 @@ import Icon from "@/components/Icon";
 import { ModalUser } from "@/types/user";
 import { useThemeColor } from "@/components/Themed";
 import { useTranslation } from "react-i18next";
+import dayjs from "@/config/dayjs";
+import { useAtom } from "jotai";
+import { userSettingsAtom } from "@/stores/widgets";
+import i18n from "@/config/i18n";
 
 type HeadComponentProps = {
 	name: string;
@@ -40,6 +44,7 @@ const HeadComponent = ({ name, surname, work, picture }: HeadComponentProps) => 
 
 const UserLayout = ({ user }: { user: ModalUser }) => {
 	const { t } = useTranslation();
+	const [userSettings] = useAtom(userSettingsAtom)
 	return (
 		<View style={{ ...styles.container, backgroundColor: useThemeColor({}, "background") }}>
 			<Card containerStyle={{ backgroundColor: useThemeColor({}, "background") }}>
@@ -49,7 +54,7 @@ const UserLayout = ({ user }: { user: ModalUser }) => {
 					value={t(`user.gender.${user.gender.toLowerCase()}`)}
 					icon={{ source: "MaterialCommunityIcons", name: user.gender === "Male" ? "gender-male" : "gender-female" }}
 				/>
-				<ValueLine value={user.birth_date} icon={{ source: "FontAwesome", name: "birthday-cake" }} />
+				<ValueLine value={dayjs(user.birth_date, "YYYY-MM-DD").locale(userSettings?.language ?? i18n.language).format("dddd D MMMM YYYY")} icon={{ source: "FontAwesome", name: "birthday-cake" }} />
 			</Card>
 		</View>
 	);

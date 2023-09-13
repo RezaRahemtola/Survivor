@@ -23,14 +23,12 @@ export class MasuraoShortEmployeeDto {
 
   @ApiProperty({
     description: 'Email of the employee',
-    example: 'name.surname@masurao.ext',
   })
   @IsEmail()
   email!: string;
 
   @ApiProperty({
     description: 'Name of the employee',
-    example: 'John',
   })
   @IsString()
   @IsNotEmpty()
@@ -38,7 +36,6 @@ export class MasuraoShortEmployeeDto {
 
   @ApiProperty({
     description: 'Surname of the employee',
-    example: 'Smith',
   })
   @IsString()
   @IsNotEmpty()
@@ -48,7 +45,6 @@ export class MasuraoShortEmployeeDto {
 export class MasuraoLongEmployeeDto extends MasuraoShortEmployeeDto {
   @ApiProperty({
     description: 'Birth date of the employee',
-    example: '1970-01-01',
   })
   @IsDateString()
   birth_date!: Date;
@@ -62,7 +58,6 @@ export class MasuraoLongEmployeeDto extends MasuraoShortEmployeeDto {
 
   @ApiProperty({
     description: 'IDs of the suboordinates of the employee',
-    example: [2, 3],
   })
   @IsNumber({}, { each: true })
   @Min(1, { each: true })

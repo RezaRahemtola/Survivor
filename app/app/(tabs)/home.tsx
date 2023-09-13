@@ -7,7 +7,6 @@ import { UserSettings } from "@/types/settings";
 import i18next from "i18next";
 import { useAtom } from "jotai";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
-import Icon, { IconProps } from "@/components/Icon";
 import { router } from "expo-router";
 
 const HomeScreen = () => {
@@ -37,7 +36,7 @@ const HomeScreen = () => {
 			<View style={[styles.tchatPreview, {borderWidth: 2, borderBottomColor: 'black'}]}>
 				<View style={[styles.Header]}>
 					<Text style={[styles.Title]}> Lastest Message </Text>
-					<TouchableWithoutFeedback onPress={() => router.push("/gallery")}>
+					<TouchableWithoutFeedback onPress={() => router.push("/home/modal")}>
 						<Icon name="resize-full-screen" source="Entypo" size={25} style={{ alignSelf: 'center'}} />
 					</TouchableWithoutFeedback>
 				</View>

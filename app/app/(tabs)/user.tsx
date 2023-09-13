@@ -4,7 +4,7 @@ import axios from "@/config/axios";
 import { FullUser } from "@/types/user";
 import { getAccessToken } from "@/cache/accessToken";
 import { getPicture } from "@/cache/pictures";
-import UserSettings from "@/components/user/Settings";
+import UserSettingsCard from "@/components/user/Settings";
 import { ScrollView } from "react-native";
 
 const UserScreen = () => {
@@ -29,7 +29,7 @@ const UserScreen = () => {
 	return user ? (
 		<ScrollView>
 			<UserLayout user={user} />
-			<UserSettings />
+			<UserSettingsCard />
 		</ScrollView>
 	) : (
 		<></>

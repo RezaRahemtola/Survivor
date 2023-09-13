@@ -11,6 +11,7 @@ const translations = {
 			male: "Homme",
 			female: "Femme",
 		},
+		reset: "Réinitialiser",
 	},
 	gallery: {
 		search: "Recherche",
