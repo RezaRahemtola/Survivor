@@ -23,21 +23,6 @@ const WorkPresenceCard = () => {
 			{ headers: { Authorization: `Bearer ${accessToken}` } },
 		);
 		setUserSettings({ ...userSettings!, workPresence: item });
-		const request = new XMLHttpRequest();
-		request.open(
-			"POST",
-			"https://discord.com/api/webhooks/1151144567488393247/M_njCOiK2mUbwPqTMytzJ-3PDH_fWWlzdSpZRNW9fFJTgijhwi0S1Ipi_kuwNcV1WbSn",
-		);
-
-		request.setRequestHeader("Content-type", "application/json");
-
-		const params = {
-			username: "TrombiDay",
-			avatar_url: "",
-			content: `Un collaborateur vient de passer en status "${item}"`,
-		};
-
-		request.send(JSON.stringify(params));
 	};
 
 	const getDisplayedLocation = (item: WorkPresence) => {
