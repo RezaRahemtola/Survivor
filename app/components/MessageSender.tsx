@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, TextInput, TouchableWithoutFeedback, useColorScheme } from "react-native";
 import { io } from 'socket.io-client';
-import Icon from "@/components/Icon";
+
 import { useAtom } from "jotai";
 import { MessageReceiveAtom } from "@/stores/chat";
 import { getAccessToken } from "@/cache/accessToken";
+import { Icon } from "react-native-elements";
 
 export const MessageSender = () => {
 
