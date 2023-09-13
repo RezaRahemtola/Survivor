@@ -21,6 +21,13 @@ const translations = {
 			dark: "अँधेरा",
 			light: "रोशनी",
 		},
+		workPresence: {
+			title: "काम की स्थिति",
+			office: "कार्यालय",
+			remote: "दूर",
+			vacations: "छुट्टियां",
+			client: "एक ग्राहक से मिलना",
+		},
 	},
 	gallery: {
 		search: "खोज",

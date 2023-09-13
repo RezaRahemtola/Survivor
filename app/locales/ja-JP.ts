@@ -21,6 +21,13 @@ const translations = {
 			dark: "暗い",
 			light: "ライト",
 		},
+		workPresence: {
+			title: "仕事の状態",
+			office: "オフィス",
+			remote: "リモート",
+			vacations: "休暇中",
+			client: "クライアントとの出会い",
+		},
 	},
 	gallery: {
 		search: "検索",
