@@ -55,6 +55,22 @@ export class EmployeesController {
     type: MasuraoErrorDto,
   })
   @CacheTTL(1000 * 60 * 15) // 15 minutes
+  @UseInterceptors(TokenAwareCacheInterceptor)
+  @HttpCode(HttpStatus.OK)
+  @Get('/me')
+  getSelfEmployee(@Req() { user: { masuraoToken } }: APIRequest) {
+    return this.employeesService.getSelfEmployeeLong(masuraoToken);
+  }
+
+  @ApiOkResponse({
+    description: 'Employee details',
+    type: EmployeeLongDto,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid access token',
+    type: MasuraoErrorDto,
+  })
+  @CacheTTL(1000 * 60 * 15) // 15 minutes
   @UseInterceptors(CacheInterceptor)
   @HttpCode(HttpStatus.OK)
   @Get('/:id')
@@ -81,21 +97,5 @@ export class EmployeesController {
     @Req() { user: { masuraoToken } }: APIRequest,
   ) {
     return this.employeesService.getEmployeePicture(id, masuraoToken);
-  }
-
-  @ApiOkResponse({
-    description: 'Employee details',
-    type: EmployeeLongDto,
-  })
-  @ApiUnauthorizedResponse({
-    description: 'Invalid access token',
-    type: MasuraoErrorDto,
-  })
-  @CacheTTL(1000 * 60 * 15) // 15 minutes
-  @UseInterceptors(TokenAwareCacheInterceptor)
-  @HttpCode(HttpStatus.OK)
-  @Get('/me')
-  getSelfEmployee(@Req() { user: { masuraoToken } }: APIRequest) {
-    return this.employeesService.getSelfEmployeeLong(masuraoToken);
   }
 }
