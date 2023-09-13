@@ -8,6 +8,7 @@ import hi from "@/locales/hi-IN";
 import pt from "@/locales/pt-PT";
 import ja from "@/locales/ja-JP";
 import de from "@/locales/de-DE";
+import ko from "@/locales/ko-KR";
 
 i18n.use(initReactI18next).init({
 	compatibilityJSON: "v3",
@@ -35,6 +36,9 @@ i18n.use(initReactI18next).init({
 		},
 		de: {
 			translation: de,
+		},
+		ko: {
+			translation: ko,
 		},
 	},
 	fallbackLng: "en",
