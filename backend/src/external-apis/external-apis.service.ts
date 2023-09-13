@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { runHttpRequest } from '../http';
+import { runHttpRequest, runHttpRequestWithData } from '../http';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import TrendingNewsResultDto from './dto/trending-news-result.dto';
@@ -84,5 +84,34 @@ export class ExternalApisService {
       latitude,
       longitude,
     };
+  }
+
+  async sendDiscordWebhookMessage(message: string) {
+    const webhookUrl = this.configService.getOrThrow<string>(
+      'DISCORD_WEBHOOK_URL',
+    );
+    const username = this.configService.get<string>(
+      'DISCORD_WEBHOOK_USERNAME',
+      'TrombiDay',
+    );
+    const avatar_url = this.configService.get<string>(
+      'DISCORD_WEBHOOK_AVATAR_URL',
+    );
+    return await runHttpRequestWithData<any>(
+      this.httpService.axiosRef,
+      'post',
+      webhookUrl,
+      {
+        content: message,
+        username,
+        avatar_url,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },
+    );
   }
 }
