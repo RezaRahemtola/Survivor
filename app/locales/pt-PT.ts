@@ -21,6 +21,13 @@ const translations = {
 			dark: "Escuro",
 			light: "Luz",
 		},
+		workPresence: {
+			title: "Status de trabalho",
+			office: "Escritório",
+			remote: "Teletrabalho",
+			vacations: "Férias",
+			client: "Conhecendo um cliente",
+		},
 	},
 	gallery: {
 		search: "Procurar",
