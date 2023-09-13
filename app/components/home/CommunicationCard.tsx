@@ -12,8 +12,9 @@ const CommunicationCard = () => {
 	const slackWorkspace = process.env.EXPO_PUBLIC_SLACK_WORKSPACE;
 	const discordEnabled = process.env.EXPO_PUBLIC_DISCORD_ENABLED;
 	const elementEnabled = process.env.EXPO_PUBLIC_ELEMENT_ENABLED;
+	const hangoutsEnabled = process.env.EXPO_PUBLIC_HANGOUTS_ENABLED;
 
-	if (!slackWorkspace && !discordEnabled && !elementEnabled) return <></>;
+	if (!slackWorkspace && !discordEnabled && !elementEnabled && !hangoutsEnabled) return <></>;
 
 	return (
 		<Card containerStyle={{ ...styles.container, backgroundColor }}>
@@ -76,6 +77,27 @@ const CommunicationCard = () => {
 					>
 						<Icon name="message" source="MaterialIcons" size={24} />
 						<Text style={styles.toolName}>Element</Text>
+					</TouchableOpacity>
+				</View>
+			) : (
+				<></>
+			)}
+
+			{hangoutsEnabled ? (
+				<View>
+					<TouchableOpacity
+						style={styles.lineView}
+						onPress={() =>
+							router.push({
+								pathname: "/widgets/webview",
+								params: {
+									url: "https://hangouts.google.com/",
+								},
+							})
+						}
+					>
+						<Icon name="google-hangouts" source="MaterialCommunityIcons" size={24} />
+						<Text style={styles.toolName}>Hangouts</Text>
 					</TouchableOpacity>
 				</View>
 			) : (

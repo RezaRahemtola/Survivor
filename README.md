@@ -16,7 +16,7 @@
 - Home dashboard
   - Set your status (at the office 🏢, working remotely 💻, vacationing 🌴...)
     - Status updates can be sent in a Discord channel via webhook
-  - Quick access to communication tools (Discord, Slack and Element, each one can be separately activated)
+  - Quick access to communication tools (Discord, Slack, Hangouts and Element, each one can be separately activated)
 - Widgets dashboard (see below)
   - Widget selection with preferences persisted in a database
   - Friendly UI to add, remove and reorder widgets (inspired from iPhones design)
