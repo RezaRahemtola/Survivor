@@ -22,6 +22,7 @@
   - Friendly UI to add, remove and reorder widgets (inspired from iPhones design)
 - Coworkers gallery
   - Search bar to filter by name
+  - Status displayed and possibility to open a profile in a modal to see detailled information
 - Widgets
   - Weather 🌥️ (using the current location of the user)
     - Current weather (temperature, wind, humidity...)
