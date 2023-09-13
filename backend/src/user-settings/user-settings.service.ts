@@ -2,10 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import UserSettings, {
   DEFAULT_USER_SETTINGS,
+  WorkPresence,
 } from './entities/user-settings.entity';
 import { Repository } from 'typeorm';
 import { UserSettingsUpdateDto } from './dto/user-settings-update.dto';
 import { ExternalApisService } from '../external-apis/external-apis.service';
+
+export const WORK_PRESENCE_EMOJIS: Record<WorkPresence, string> = {
+  office: '🏢',
+  remote: '💻',
+  vacations: '🌴',
+  client: '🤝',
+};
 
 @Injectable()
 export class UserSettingsService {
@@ -26,9 +34,13 @@ export class UserSettingsService {
     newSettings: UserSettingsUpdateDto,
   ): Promise<UserSettings> {
     if (newSettings.workPresence) {
+      const newWorkPresence = newSettings.workPresence;
       await this.externalApisService
-        .sendDiscordWebhookMessage(
-          `User identified as ${email} changed their work presence to ${newSettings.workPresence.toUpperCase()}`,
+        .sendDiscordWebhookEmbed(
+          `${email} changed their work presence to ${
+            WORK_PRESENCE_EMOJIS[newWorkPresence]
+          } ${newWorkPresence.toUpperCase()}`,
+          'User work presence changed',
         )
         .catch(console.error);
     }
