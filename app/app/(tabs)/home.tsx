@@ -14,7 +14,6 @@ const HomeScreen = () => {
 	const [, setUserSettings] = useAtom(userSettingsAtom);
 	const [, setEditionWidgets] = useAtom(editionWidgetsAtom);
 	const [FirstLatestTchat, setFirstLatestTchat] = useState(String)
-	const [FirstSecondLatest, setsetchat] = useState(String)
 	const [NewMessage, setNewMessage] = useState(String);
 
 	useEffect(() => {
@@ -33,7 +32,6 @@ const HomeScreen = () => {
 		})();
 	}, []);
 
-
 	return (
 		<View style={styles.container}>
 			<View style={[styles.tchatPreview, {borderWidth: 2, borderBottomColor: 'black'}]}>
@@ -43,13 +41,12 @@ const HomeScreen = () => {
 						<Icon name="resize-full-screen" source="Entypo" size={25} style={{ alignSelf: 'center'}} />
 					</TouchableWithoutFeedback>
 				</View>
-				{/* <View style={[styles.HeaderMessage]}>
-					<Text> SEND BY ????</Text>
-					<Text> AT HHHH </Text>
+				<View style={[styles.HeaderMessageReceive]}>
+					<Text> send by name</Text>
 				</View>
-				<View style={[styles.MessageView]}>
-					<Text> {"empty messageeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"} </Text>
-				</View> */}
+				<View style={[styles.messageReceived]}>
+					<Text> {"empty message"} </Text>
+				</View>
 			<View style={styles.MessageSender}>
 				<TextInput
 					style={styles.MessageInput}
@@ -77,18 +74,27 @@ const styles = StyleSheet.create({
 	Title: {
 		alignSelf: "center",
 	},
-	MessageView: {
-		marginHorizontal: 10,
+	Messagesended: {
+	},
+	messageReceived: {
+		backgroundColor: 'green',
+		width: '50%',
+		borderRadius: 10,
+		paddingVertical: 10,
+		paddingStart: 5
+	},
+	HeaderMessageSend: {
+		marginLeft: 60,
+		flexDirection: 'row',
+	},
+	HeaderMessageReceive: {
+		marginLeft: 60,
 		flexDirection: 'row',
 	},
 	Header: {
 		flexDirection: 'row',
   		justifyContent: 'center',
 		backgroundColor: 'transparent'
-	},
-	HeaderMessage: {
-		marginHorizontal: 10,
-		flexDirection: 'row',
 	},
 	MessageInput: {
 		borderWidth: 2,
@@ -100,6 +106,7 @@ const styles = StyleSheet.create({
 	MessageSender: {
 		flexDirection: 'row',
 		marginHorizontal: 10,
+		paddingTop: 20,
 	}
 });
 
