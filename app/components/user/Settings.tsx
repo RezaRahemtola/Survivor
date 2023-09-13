@@ -11,6 +11,7 @@ import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
 import { interfaceThemes, LanguageType, ThemeType, UserSettings } from "@/types/settings";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
+import { applyUserSettings } from "@/utils/settings";
 
 type Language = {
 	icon: string;
@@ -37,23 +38,15 @@ const UserSettingsCard = () => {
 
 	const onLanguageChange = async (item: Language) => {
 		await i18n.changeLanguage(item.locale);
-		const accessToken = await getAccessToken();
-		await axios.patch(
-			"/user-settings",
-			{ language: item.locale },
-			{ headers: { Authorization: `Bearer ${accessToken}` } },
-		);
-		setUserSettings({ ...userSettings!, language: item.locale });
+		const newSettings = { language: item.locale };
+		await applyUserSettings(newSettings);
+		setUserSettings((prev) => ({ ...prev!, ...newSettings }));
 	};
 
 	const onThemeChange = async (item: ThemeType) => {
-		const accessToken = await getAccessToken();
-		await axios.patch(
-			"/user-settings",
-			{ interfaceTheme: item },
-			{ headers: { Authorization: `Bearer ${accessToken}` } },
-		);
-		setUserSettings({ ...userSettings!, interfaceTheme: item });
+		const newSettings = { interfaceTheme: item };
+		await applyUserSettings(newSettings);
+		setUserSettings((prev) => ({ ...prev!, ...newSettings }));
 	};
 
 	const onSettingsReset = async () => {

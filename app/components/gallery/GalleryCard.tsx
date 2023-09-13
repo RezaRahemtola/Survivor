@@ -7,6 +7,7 @@ import { FullUser, isFullUser, User } from "@/types/user";
 import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
 import { useThemeColor } from "@/components/Themed";
+import { workPresenceIcons } from "@/types/settings";
 
 const GalleryCard = ({ user }: { user: User }) => {
 	const onPressEmail = (email: string) => Linking.openURL(`mailto:${email}`).catch((err) => console.log("Error:", err));
@@ -40,7 +41,7 @@ const GalleryCard = ({ user }: { user: User }) => {
 					<View style={styles.headerColumn}>
 						<Image style={styles.userImage} source={{ uri: `data:image/png;base64,${user.picture}` }} />
 						<Text style={styles.userNameText}>
-							{user.name} {user.surname}
+							{user.name} {user.surname} {workPresenceIcons[user.workPresence]}
 						</Text>
 						<View style={styles.userEmailRow}>
 							<View>
@@ -84,6 +85,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	userEmailContent: {
+		marginLeft: 5,
 		backgroundColor: "transparent",
 	},
 	userEmailText: {

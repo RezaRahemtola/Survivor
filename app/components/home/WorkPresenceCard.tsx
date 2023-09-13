@@ -6,9 +6,8 @@ import { Card } from "react-native-elements";
 
 import { userSettingsAtom } from "@/stores/widgets";
 import { WorkPresence, workPresenceIcons, workPresences } from "@/types/settings";
-import { getAccessToken } from "@/cache/accessToken";
-import axios from "@/config/axios";
 import { Text, useThemeColor } from "@/components/Themed";
+import { applyUserSettings } from "@/utils/settings";
 
 const WorkPresenceCard = () => {
 	const [userSettings, setUserSettings] = useAtom(userSettingsAtom);
@@ -16,13 +15,9 @@ const WorkPresenceCard = () => {
 	const backgroundColor = useThemeColor({}, "background");
 
 	const onWorkPresenceChange = async (item: WorkPresence) => {
-		const accessToken = await getAccessToken();
-		await axios.patch(
-			"/user-settings",
-			{ workPresence: item },
-			{ headers: { Authorization: `Bearer ${accessToken}` } },
-		);
-		setUserSettings({ ...userSettings!, workPresence: item });
+		const newSettings = { workPresence: item };
+		await applyUserSettings(newSettings);
+		setUserSettings((prev) => ({ ...prev!, ...newSettings }));
 	};
 
 	const getDisplayedLocation = (item: WorkPresence) => {
