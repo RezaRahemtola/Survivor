@@ -80,6 +80,7 @@ const translations = {
 		gallery: "गैलरी",
 		widgets: "विजेट",
 		user: "उपयोगकर्ता",
+		chat: "सामान्य बातचीत",
 	},
 	screen: {
 		missing: {
@@ -87,6 +88,10 @@ const translations = {
 			homeRedirection: "होम स्क्रीन पर जाएँ!",
 		},
 	},
+	chat: {
+		sendMessage: "एक संदेश भेजो",
+		title: "नवीनतम संदेश",
+	}
 };
 
 export default translations;

@@ -80,12 +80,17 @@ const translations = {
 		gallery: "ギャラリー",
 		widgets: "ウィジェット",
 		user: "ユーザー",
+		chat: "一般的なチャット",
 	},
 	screen: {
 		missing: {
 			title: "この画面は存在しません。",
 			homeRedirection: "ホーム画面へGO！",
 		},
+	},
+	chat: {
+		sendMessage: "メッセージを送ります",
+		title: "最新のメッセージ",
 	},
 };
 
