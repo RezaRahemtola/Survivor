@@ -100,7 +100,7 @@ export class EmployeesService {
   }
 
   async getEmployeePicture(id: number, accessToken: string): Promise<string> {
-    let picture = await runHttpRequest<ArrayBuffer>(
+    const picture = await runHttpRequest<ArrayBuffer>(
       this.httpService.axiosRef,
       'get',
       `/employees/${id}/image`,
