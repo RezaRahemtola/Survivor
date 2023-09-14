@@ -38,7 +38,6 @@ const MotdCard = () => {
 	}, []);
 
 	const onLeaderSubmitMotd = async () => {
-		console.log("onLeaderSubmitMotd", motd);
 		try {
 			const accessToken = await getAccessToken();
 			await axios.patch(
