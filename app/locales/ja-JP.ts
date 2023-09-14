@@ -38,6 +38,7 @@ const translations = {
 		communication: "コミュニケーション・ツール",
 		edition: {
 			addTitle: "ウィジェットを追加する",
+			noneAvailable: "利用可能なウィジェットがありません",
 			edit: "編集",
 		},
 		selector: {

@@ -22,6 +22,7 @@ const AddWidgetModal = () => {
 	return (
 		<View style={styles.view}>
 			<Text style={styles.title}>{t("widgets.edition.addTitle")}</Text>
+			{widgets.length === 0 ? <Text style={styles.noWidgets}>{t("widgets.edition.noneAvailable")}</Text> : <></>}
 			{widgets.map((widget) => (
 				<Button
 					key={widget.value}
@@ -46,6 +47,10 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 25,
 		marginVertical: 20,
+	},
+	noWidgets: {
+		marginTop: 15,
+		fontSize: 20,
 	},
 	button: {
 		marginBottom: 10,
