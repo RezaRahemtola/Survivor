@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import {
   ApiBearerAuth,
   ApiOkResponse,
@@ -20,6 +20,7 @@ import {
 import MasuraoErrorDto from '../error.dto';
 import { EmployeeLongDto, EmployeeShortDto } from './dto/employee.dto';
 import { APIRequest } from '../http';
+import { MasuraoShortEmployeeDto } from './dto/masurao-results.dto';
 
 @ApiBearerAuth()
 @ApiTags('Employees')
@@ -89,5 +90,22 @@ export class EmployeesController {
     @Req() { user: { masuraoToken } }: APIRequest,
   ) {
     return this.employeesService.getEmployeePicture(id, masuraoToken);
+  }
+
+  @ApiOkResponse({
+    description: 'Employees that are leaders',
+    type: MasuraoShortEmployeeDto,
+    isArray: true,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid access token',
+    type: MasuraoErrorDto,
+  })
+  @CacheTTL(1000 * 60 * 60) // 1 hour
+  @UseInterceptors(CacheInterceptor)
+  @HttpCode(HttpStatus.OK)
+  @Get('/leaders')
+  getLeaders(@Req() { user: { masuraoToken } }: APIRequest) {
+    return this.employeesService.getLeaders(masuraoToken);
   }
 }
