@@ -9,7 +9,18 @@ export const WIDGETS = [
   'nbaGames',
 ] as const;
 export type Widget = (typeof WIDGETS)[number];
-export const LANGUAGES = ['fr', 'en', 'es', 'zh', 'gu'] as const;
+export const LANGUAGES = [
+  'fr',
+  'en',
+  'es',
+  'zh',
+  'hi',
+  'pt',
+  'ja',
+  'de',
+  'ko',
+  'it',
+] as const;
 export type Language = (typeof LANGUAGES)[number];
 export const INTERFACE_SCHEMES = ['auto', 'dark', 'light'] as const;
 export type InterfaceScheme = (typeof INTERFACE_SCHEMES)[number];

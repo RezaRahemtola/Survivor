@@ -1,8 +1,11 @@
+import { WorkPresence } from "@/types/settings";
+
 export type BaseUser = {
 	id: number;
 	email: string;
 	name: string;
 	surname: string;
+	workPresence: WorkPresence;
 };
 
 type UserPicture = {

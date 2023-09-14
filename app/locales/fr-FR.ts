@@ -1,6 +1,11 @@
 const translations = {
 	user: {
-		settings: "Paramètres",
+		settings: {
+			title: "Paramètres",
+			reset: "Réinitialiser",
+			theme: "Thème",
+			language: "Langage",
+		},
 		signIn: {
 			email: "Email",
 			password: "Mot de passe",
@@ -11,7 +16,18 @@ const translations = {
 			male: "Homme",
 			female: "Femme",
 		},
-		reset: "Réinitialiser",
+		theme: {
+			auto: "Automatique",
+			dark: "Sombre",
+			light: "Clair",
+		},
+		workPresence: {
+			title: "Status de travail",
+			office: "Bureau",
+			remote: "Télétravail",
+			vacations: "En vacances",
+			client: "En RDV client",
+		},
 	},
 	gallery: {
 		search: "Recherche",
@@ -19,6 +35,7 @@ const translations = {
 	widgets: {
 		noWidgets: "Aucun widgets défini",
 		notAvailable: "Non disponible",
+		communication: "Outils de communication",
 		edition: {
 			addTitle: "Ajouter un widget",
 			edit: "Modifier",
@@ -56,10 +73,6 @@ const translations = {
 		nbaGames: {
 			loading: "Chargement des matchs de NBA...",
 			title: "Matchs de NBA aléatoires",
-			from: "De :",
-			to: "À :",
-			date: "Date :",
-			at: "à",
 		},
 	},
 	tabs: {

@@ -1,6 +1,11 @@
 const translations = {
 	user: {
-		settings: "Settings",
+		settings: {
+			title: "Settings",
+			reset: "Reset",
+			theme: "Theme",
+			language: "Language",
+		},
 		signIn: {
 			email: "Email",
 			password: "Password",
@@ -11,7 +16,18 @@ const translations = {
 			male: "Male",
 			female: "Female",
 		},
-		reset: "Reset",
+		theme: {
+			auto: "Automatic",
+			dark: "Dark",
+			light: "Light",
+		},
+		workPresence: {
+			title: "Work status",
+			office: "Office",
+			remote: "Remote",
+			vacations: "Vacationing",
+			client: "Meeting a client",
+		},
 	},
 	gallery: {
 		search: "Search",
@@ -19,6 +35,7 @@ const translations = {
 	widgets: {
 		noWidgets: "No widgets yet",
 		notAvailable: "Not available",
+		communication: "Communication tools",
 		edition: {
 			addTitle: "Add a widget",
 			edit: "Edit",
@@ -38,7 +55,7 @@ const translations = {
 			humidity: "Humidity",
 			rain: "Rain",
 			loading: {
-				location: "Waiting for location data..",
+				location: "Waiting for location data...",
 				data: "Waiting for weather data...",
 			},
 		},
@@ -56,10 +73,6 @@ const translations = {
 		nbaGames: {
 			loading: "NBA games loading...",
 			title: "Random NBA games",
-			from: "From:",
-			to: "To:",
-			date: "Date:",
-			at: "at",
 		},
 	},
 	tabs: {

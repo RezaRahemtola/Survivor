@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { runHttpRequest } from '../http';
+import { runHttpRequest, runHttpRequestWithData } from '../http';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import TrendingNewsResultDto from './dto/trending-news-result.dto';
@@ -9,6 +9,27 @@ import {
   CountryCode,
   WeatherDataDto,
 } from './dto/location.dto';
+
+export const DISCORD_WEBHOOK_EMBED_TYPES = {
+  info: {
+    color: 0x0000ff,
+    authorName: '❕ Information',
+  },
+  success: {
+    color: 0x00ff00,
+    authorName: '✅ Success',
+  },
+  warn: {
+    color: 0xffff00,
+    authorName: '⚠️ Warning',
+  },
+  error: {
+    color: 0xff0000,
+    authorName: '❌ Error',
+  },
+} as const;
+export type DiscordWebhookEmbedStatus =
+  keyof typeof DISCORD_WEBHOOK_EMBED_TYPES;
 
 @Injectable()
 export class ExternalApisService {
@@ -84,5 +105,75 @@ export class ExternalApisService {
       latitude,
       longitude,
     };
+  }
+
+  async sendDiscordWebhookMessage(message: string) {
+    const webhookUrl = this.configService.getOrThrow<string>(
+      'DISCORD_WEBHOOK_URL',
+    );
+    const username = this.configService.get<string>(
+      'DISCORD_WEBHOOK_USERNAME',
+      'TrombiDay',
+    );
+    const avatar_url = this.configService.get<string>(
+      'DISCORD_WEBHOOK_AVATAR_URL',
+    );
+    await runHttpRequestWithData<never>(
+      this.httpService.axiosRef,
+      'post',
+      webhookUrl,
+      {
+        content: message,
+        username,
+        avatar_url,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+  }
+
+  async sendDiscordWebhookEmbed(
+    message: string,
+    title?: string,
+    status: DiscordWebhookEmbedStatus = 'info',
+  ) {
+    const webhookUrl = this.configService.getOrThrow<string>(
+      'DISCORD_WEBHOOK_URL',
+    );
+    const username = this.configService.get<string>(
+      'DISCORD_WEBHOOK_USERNAME',
+      'TrombiDay',
+    );
+    const avatar_url = this.configService.get<string>(
+      'DISCORD_WEBHOOK_AVATAR_URL',
+    );
+    const embedType = DISCORD_WEBHOOK_EMBED_TYPES[status];
+    await runHttpRequestWithData<never>(
+      this.httpService.axiosRef,
+      'post',
+      webhookUrl,
+      {
+        embeds: [
+          {
+            title,
+            description: message,
+            author: {
+              name: embedType.authorName,
+            },
+            color: embedType.color,
+          },
+        ],
+        username,
+        avatar_url,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
   }
 }

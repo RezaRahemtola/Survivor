@@ -1,6 +1,11 @@
 const translations = {
 	user: {
-		settings: "Parámetros",
+		settings: {
+			title: "Parámetros",
+			reset: "Reiniciar",
+			theme: "Tema",
+			language: "Idioma",
+		},
 		signIn: {
 			email: "Correo electrónico",
 			password: "Contraseña",
@@ -11,7 +16,18 @@ const translations = {
 			male: "Hombre",
 			female: "Mujer",
 		},
-		reset: "Reiniciar",
+		theme: {
+			auto: "Automático",
+			dark: "Oscuro",
+			light: "Ligero",
+		},
+		workPresence: {
+			title: "Situación laboral",
+			office: "Oficina",
+			remote: "Teletrabajo",
+			vacations: "De vacaciones",
+			client: "Reunión con un cliente",
+		},
 	},
 	gallery: {
 		search: "Buscar",
@@ -19,6 +35,7 @@ const translations = {
 	widgets: {
 		noWidgets: "Aún no hay widgets",
 		notAvailable: "No disponible",
+		communication: "Herramientas de comunicación",
 		edition: {
 			addTitle: "Agregar un widget",
 			edit: "Editar",

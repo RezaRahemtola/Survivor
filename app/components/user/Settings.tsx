@@ -1,16 +1,17 @@
 import { Card } from "react-native-elements";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import SelectDropdown from "react-native-select-dropdown";
 import { useAtom } from "jotai";
+import { Button } from "react-native-paper";
 
 import { Text, useThemeColor } from "@/components/Themed";
 import i18n from "@/config/i18n";
 import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
+import { interfaceThemes, LanguageType, ThemeType, UserSettings } from "@/types/settings";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
-import { LanguageType, UserSettings } from "@/types/settings";
-import { Button } from "react-native-paper";
+import { applyUserSettings } from "@/utils/settings";
 
 type Language = {
 	icon: string;
@@ -21,22 +22,31 @@ const languages: Language[] = [
 	{ icon: "🇺🇸", name: "English", locale: "en" },
 	{ icon: "🇫🇷", name: "Francais", locale: "fr" },
 	{ icon: "🇪🇸", name: "Español", locale: "es" },
+	{ icon: "🇨🇳", name: "中国人", locale: "zh" },
+	{ icon: "🇮🇳", name: "हिंदी", locale: "hi" },
+	{ icon: "🇵🇹", name: "Português", locale: "pt" },
+	{ icon: "🇯🇵", name: "日本語", locale: "ja" },
+	{ icon: "🇩🇪", name: "Deutsch", locale: "de" },
+	{ icon: "🇰🇷", name: "한국인", locale: "ko" },
+	{ icon: "🇮🇹", name: "Italiano", locale: "it" },
 ];
 
 const UserSettingsCard = () => {
 	const { t } = useTranslation();
 	const [userSettings, setUserSettings] = useAtom(userSettingsAtom);
-	const [currentWidgets, setCurrentWidgets] = useAtom(editionWidgetsAtom);
+	const [, setCurrentWidgets] = useAtom(editionWidgetsAtom);
 
 	const onLanguageChange = async (item: Language) => {
 		await i18n.changeLanguage(item.locale);
-		const accessToken = await getAccessToken();
-		await axios.patch(
-			"/user-settings",
-			{ language: item.locale },
-			{ headers: { Authorization: `Bearer ${accessToken}` } },
-		);
-		setUserSettings({ ...userSettings!, language: item.locale });
+		const newSettings = { language: item.locale };
+		await applyUserSettings(newSettings);
+		setUserSettings((prev) => ({ ...prev!, ...newSettings }));
+	};
+
+	const onThemeChange = async (item: ThemeType) => {
+		const newSettings = { interfaceTheme: item };
+		await applyUserSettings(newSettings);
+		setUserSettings((prev) => ({ ...prev!, ...newSettings }));
 	};
 
 	const onSettingsReset = async () => {
@@ -57,16 +67,29 @@ const UserSettingsCard = () => {
 
 	return (
 		<Card containerStyle={{ backgroundColor: useThemeColor({}, "background") }}>
-			<Text style={styles.title}>{t("user.settings")}</Text>
-			<SelectDropdown
-				data={languages}
-				defaultValue={languages.find((language) => language.locale === userSettings?.language)}
-				buttonTextAfterSelection={(item: Language) => `${item.icon} ${item.name}`}
-				rowTextForSelection={(item: Language) => `${item.icon} ${item.name}`}
-				onSelect={onLanguageChange}
-			/>
-			<Button mode="contained-tonal" onPress={onSettingsReset} style={{ marginTop: 5 }}>
-				{t("user.reset")}
+			<Text style={styles.title}>{t("user.settings.title")}</Text>
+			<View style={styles.settingsView}>
+				<Text style={styles.settingsText}>{t("user.settings.language")}</Text>
+				<SelectDropdown
+					data={languages}
+					defaultValue={languages.find((language) => language.locale === userSettings?.language)}
+					buttonTextAfterSelection={(item: Language) => `${item.icon} ${item.name}`}
+					rowTextForSelection={(item: Language) => `${item.icon} ${item.name}`}
+					onSelect={onLanguageChange}
+				/>
+			</View>
+			<View style={styles.settingsView}>
+				<Text style={styles.settingsText}>{t("user.settings.theme")}</Text>
+				<SelectDropdown
+					data={[...interfaceThemes]}
+					defaultValue={interfaceThemes.find((theme) => theme === userSettings?.interfaceTheme) ?? "auto"}
+					buttonTextAfterSelection={(item: ThemeType) => t(`user.theme.${item}`)}
+					rowTextForSelection={(item: ThemeType) => t(`user.theme.${item}`)}
+					onSelect={onThemeChange}
+				/>
+			</View>
+			<Button icon="restore" mode="contained-tonal" onPress={onSettingsReset} style={{ marginTop: 5 }}>
+				{t("user.settings.reset")}
 			</Button>
 		</Card>
 	);
@@ -76,6 +99,16 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 20,
 		marginBottom: 20,
+	},
+	settingsView: {
+		flexDirection: "row",
+		alignItems: "center",
+		marginBottom: 10,
+	},
+	settingsText: {
+		fontSize: 18,
+		marginHorizontal: 10,
+		width: 80,
 	},
 });
 

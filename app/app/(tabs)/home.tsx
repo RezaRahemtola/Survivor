@@ -12,10 +12,10 @@ import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
 import { router } from "expo-router";
 import { io } from 'socket.io-client';
 import { MessageReceiveAtom } from "@/stores/chat";
-import { color } from "react-native-elements/dist/helpers";
 import { MessageReceiveData } from "@/types/chat";
 import { useTranslation } from "react-i18next";
-
+import WorkPresenceCard from "@/components/home/WorkPresenceCard";
+import CommunicationCard from "@/components/home/CommunicationCard";
 
 const latestMessage = (message: MessageReceiveData[]) => {
 	const colorScheme = useColorScheme();
@@ -126,19 +126,23 @@ const HomeScreen = () => {
     }, []);
 
 	return (
-		<View style={styles.container}>
-			<View style={[styles.tchatPreview, {borderWidth: 2, borderColor: colorScheme === "dark" ? "#FFFFFF" : "#000000"}]}>
-				<View style={[styles.Header]}>
-					<Text style={[styles.Title]}> {t("chat.title")} </Text>
-					<TouchableWithoutFeedback onPress={() => router.push("/home/modal")}>
-						<Icon name="resize-full-screen" source="Entypo" size={25} style={{ alignSelf: 'center'}} />
-					</TouchableWithoutFeedback>
+		<>
+			<WorkPresenceCard />
+			<CommunicationCard />
+			<View style={styles.container}>
+				<View style={[styles.tchatPreview, {borderWidth: 2, borderColor: colorScheme === "dark" ? "#FFFFFF" : "#000000"}]}>
+					<View style={[styles.Header]}>
+						<Text style={[styles.Title]}> {t("chat.title")} </Text>
+						<TouchableWithoutFeedback onPress={() => router.push("/home/modal")}>
+							<Icon name="resize-full-screen" source="Entypo" size={25} style={{ alignSelf: 'center'}} />
+						</TouchableWithoutFeedback>
+					</View>
+					{latestMessage(messages)}
+					<MessageSender/>
 				</View>
-				{latestMessage(messages)}
-				<MessageSender/>
 			</View>
-		</View>
-		);
+		</>
+	);
 };
 
 const styles = StyleSheet.create({

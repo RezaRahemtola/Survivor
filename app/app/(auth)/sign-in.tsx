@@ -1,6 +1,6 @@
 import { Button, StyleSheet, TextInput, View } from "react-native";
 import { useState } from "react";
-import { signIn } from "@/config/auth";
+import { signIn, signInDebug } from "@/config/auth";
 import { Text, useThemeColor } from "@/components/Themed";
 import { useTranslation } from "react-i18next";
 
@@ -8,6 +8,8 @@ export default function SignIn() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isWrongCredentials, setIsWrongCredentials] = useState(false);
+	const [debugToken, setDebugToken] = useState("");
+
 	const borderColor = useThemeColor({ light: "black", dark: "white" }, "background");
 	const textColor = useThemeColor({}, "text");
 	const { t } = useTranslation();
@@ -18,6 +20,21 @@ export default function SignIn() {
 				<Text lightColor="red" darkColor="red" style={styles.errorMessage}>
 					{t("user.signIn.wrongCredentials")}
 				</Text>
+			) : (
+				<></>
+			)}
+
+			{process.env.EXPO_PUBLIC_DEBUG_MODE ? (
+				<View style={{ marginBottom: 40 }}>
+					<TextInput
+						value={debugToken}
+						onChangeText={(value) => setDebugToken(value)}
+						placeholder="Debug token"
+						style={{ ...styles.input, borderColor, color: textColor }}
+					/>
+
+					<Button title="Debug login" onPress={async () => await signInDebug(debugToken)} />
+				</View>
 			) : (
 				<></>
 			)}

@@ -8,7 +8,13 @@ import * as packageJson from '../package.json';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
   if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
   const config = new DocumentBuilder()
     .setTitle('TrombiDay API')

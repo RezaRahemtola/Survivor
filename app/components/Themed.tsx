@@ -3,9 +3,11 @@
  * https://docs.expo.io/guides/color-schemes/
  */
 
-import { Text as DefaultText, useColorScheme, View as DefaultView } from "react-native";
+import { Text as DefaultText, useColorScheme as defaultUseColorScheme, View as DefaultView } from "react-native";
 
 import Colors from "@/constants/Colors";
+import { useAtom } from "jotai";
+import { userSettingsAtom } from "@/stores/widgets";
 
 type ThemeProps = {
 	lightColor?: string;
@@ -14,6 +16,18 @@ type ThemeProps = {
 
 export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
+
+export function useColorScheme() {
+	const [userSettings] = useAtom(userSettingsAtom);
+	const deviceTheme = defaultUseColorScheme() ?? "light";
+	const userTheme = userSettings?.interfaceTheme
+		? userSettings.interfaceTheme === "auto"
+			? deviceTheme
+			: userSettings.interfaceTheme
+		: undefined;
+
+	return userTheme ?? deviceTheme;
+}
 
 export function useThemeColor(
 	props: { light?: string; dark?: string },

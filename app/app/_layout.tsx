@@ -3,9 +3,9 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native
 import { useFonts } from "expo-font";
 import { Slot, SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
-import { useColorScheme } from "react-native";
 import "@/config/i18n";
 import { useTranslation } from "react-i18next";
+import { useColorScheme } from "@/components/Themed";
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -53,8 +53,9 @@ function RootLayoutNav() {
 			<Stack>
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 				<Stack.Screen name="user/modal" options={{ presentation: "modal", headerShown: false }} />
-				<Stack.Screen name="widgets/modal" options={{ presentation: "modal", headerShown: false }} />
 				<Stack.Screen name="home/modal" options={{ presentation: "modal", title: t("tabs.chat") }} />
+				<Stack.Screen name="widgets/add" options={{ presentation: "modal", headerShown: false }} />
+				<Stack.Screen name="widgets/webview" options={{ presentation: "modal", headerShown: false }} />
 			</Stack>
 		</ThemeProvider>
 	);

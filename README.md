@@ -10,12 +10,19 @@
   - Possibility to log out
 - User profile with your personal information
   - Settings customization
-    - Language (🇺🇸, 🇫🇷 or 🇪🇸)
+    - Language (🇺🇸, 🇫🇷, 🇪🇸, 🇨🇳, 🇮🇳, 🇵🇹, 🇯🇵, 🇩🇪, 🇰🇷 or 🇮🇹)
+    - Theme (device-based 📱, dark ⚫ or light ⚪)
+    - Option to reset to default settings
+- Home dashboard
+  - Set your status (at the office 🏢, working remotely 💻, vacationing 🌴...)
+    - Status updates can be sent in a Discord channel via webhook
+  - Quick access to communication tools (Discord, Slack, Hangouts and Element, each one can be separately activated)
 - Widgets dashboard (see below)
   - Widget selection with preferences persisted in a database
   - Friendly UI to add, remove and reorder widgets (inspired from iPhones design)
 - Coworkers gallery
   - Search bar to filter by name
+  - Status displayed and possibility to open a profile in a modal to see detailled information
 - Widgets
   - Weather 🌥️ (using the current location of the user)
     - Current weather (temperature, wind, humidity...)
