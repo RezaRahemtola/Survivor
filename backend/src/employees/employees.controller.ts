@@ -9,9 +9,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import TokenAwareCacheInterceptor, {
-  APIRequest,
-} from '../token-aware-cache.interceptor';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import {
@@ -22,6 +19,7 @@ import {
 } from '@nestjs/swagger';
 import MasuraoErrorDto from '../error.dto';
 import { EmployeeLongDto, EmployeeShortDto } from './dto/employee.dto';
+import { APIRequest } from '../http';
 
 @ApiBearerAuth()
 @ApiTags('Employees')
