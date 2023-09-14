@@ -84,8 +84,8 @@ const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
 							: { flexDirection: "row", justifyContent: "flex-start" }
 					}
 				>
-					<View style={[styles.messageReceived, { backgroundColor: colorScheme === "dark" ? "#FFFFFF" : "#000000" }]}>
-						<Text style={{ color: colorScheme === "dark" ? "#000000" : "#FFFFFF" }}> {message.at(-2)?.message} </Text>
+					<View style={[styles.messageReceived,  { backgroundColor: colorScheme === "dark" ? "#666" : "#EEE" }]}>
+						<Text> {message.at(-2)?.message} </Text>
 					</View>
 				</View>
 				<View
@@ -114,7 +114,7 @@ const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
 							: { flexDirection: "row", justifyContent: "flex-start" }
 					}
 				>
-					<View style={[styles.messageReceived, { backgroundColor: colorScheme === "dark" ? "#FFFFFF" : "#000000" }]}>
+					<View style={[styles.messageReceived, { backgroundColor: colorScheme === "dark" ? "#666" : "#EEE" }]}>
 						<Text> {message.at(-1)?.message} </Text>
 					</View>
 				</View>
