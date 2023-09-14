@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth/auth.service';
-import { APIRequest } from './token-aware-cache.interceptor';
+import { APIRequest } from './http';
 
 @Injectable()
 export class LeaderGuard implements CanActivate {

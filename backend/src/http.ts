@@ -4,6 +4,10 @@ import { HttpException } from '@nestjs/common';
 export type HttpMethod = 'get' | 'delete' | 'head' | 'options';
 export type DataHttpMethod = 'put' | 'post' | 'patch';
 
+export type APIRequest = Request & {
+  user: { masuraoToken: string; email: string };
+};
+
 export const AUTHORIZED_HEADERS = (accessToken: string) => ({
   Authorization: `Bearer ${accessToken}`,
 });
