@@ -91,6 +91,7 @@ const translations = {
 	chat: {
 		sendMessage: "Eine Nachricht schicken",
 		title: "Neueste Nachrichten",
+		me: "Mich",
 	},
 };
 

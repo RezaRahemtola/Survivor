@@ -91,6 +91,7 @@ const translations = {
 	chat: {
 		sendMessage: "메세지를 보내다",
 		title: "최신 메시지",
+		me: "나",
 	},
 };
 
