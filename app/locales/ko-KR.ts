@@ -92,6 +92,7 @@ const translations = {
 		sendMessage: "메세지를 보내다",
 		title: "최신 메시지",
 		me: "나",
+		noMessage: "메시지 없음"
 	},
 };
 

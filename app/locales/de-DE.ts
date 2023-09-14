@@ -92,6 +92,7 @@ const translations = {
 		sendMessage: "Eine Nachricht schicken",
 		title: "Neueste Nachrichten",
 		me: "Mich",
+		noMessage: "Keine Nachricht"
 	},
 };
 

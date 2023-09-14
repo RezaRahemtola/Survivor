@@ -91,7 +91,8 @@ const translations = {
 	chat: {
 		sendMessage: "发送一个消息",
 		title: "最新消息",
-		me: "我"
+		me: "我",
+		noMessage: "没有消息"
 	},
 };
 
