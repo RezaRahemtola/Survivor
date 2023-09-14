@@ -18,7 +18,7 @@ const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
 	const { t } = useTranslation();
 
 	if (message.length === 0) {
-		return <Text style={styles.NoMessage}>{t("chat.noMessage")}</Text>;
+		return <Text style={styles.noMessage}>{t("chat.noMessage")}</Text>;
 	}
 	if (message.length === 1) {
 		return (
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
 		marginHorizontal: 10,
 		paddingTop: 20,
 	},
-	NoMessage: {
+	noMessage: {
 		fontSize: 25,
 		alignSelf: "center",
 	},

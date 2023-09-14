@@ -91,7 +91,7 @@ const translations = {
 	chat: {
 		sendMessage: "Send a message",
 		me: "Me",
-		noMessage: "No Message",
+		noMessage: "No message",
 	},
 };
 
