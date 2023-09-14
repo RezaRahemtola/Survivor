@@ -82,7 +82,7 @@ const UserSettingsCard = () => {
 				<Text style={styles.settingsText}>{t("user.settings.theme")}</Text>
 				<SelectDropdown
 					data={[...interfaceSchemes]}
-					defaultValue={interfaceSchemes.find((theme) => theme === userSettings?.interfaceTheme) ?? "auto"}
+					defaultValue={interfaceSchemes.find((theme) => theme === userSettings?.interfaceScheme) ?? "auto"}
 					buttonTextAfterSelection={(item: ThemeType) => t(`user.theme.${item}`)}
 					rowTextForSelection={(item: ThemeType) => t(`user.theme.${item}`)}
 					onSelect={onThemeChange}
