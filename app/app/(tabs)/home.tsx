@@ -9,7 +9,7 @@ import { UserSettings } from "@/types/settings";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
 import WorkPresenceCard from "@/components/home/WorkPresenceCard";
 import CommunicationCard from "@/components/home/CommunicationCard";
-import ChatWidget from "@/components/home/ChatWidget";
+import GeneralChatCard from "@/components/chat/GeneralChatCard";
 
 const HomeScreen = () => {
 	const [, setUserSettings] = useAtom(userSettingsAtom);
@@ -35,7 +35,7 @@ const HomeScreen = () => {
 		<ScrollView>
 			<WorkPresenceCard />
 			<CommunicationCard />
-			<ChatWidget />
+			<GeneralChatCard />
 		</ScrollView>
 	);
 };
