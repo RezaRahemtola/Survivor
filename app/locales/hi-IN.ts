@@ -91,6 +91,8 @@ const translations = {
 	chat: {
 		sendMessage: "एक संदेश भेजो",
 		title: "नवीनतम संदेश",
+		me: "मी",
+		noMessage: "संदेश नाही"
 	}
 };
 

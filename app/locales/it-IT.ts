@@ -91,6 +91,8 @@ const translations = {
 	chat: {
 		sendMessage: "Mandare un messaggio",
 		title: "ultimi messaggi",
+		me: "Me",
+		noMessage: "Nessun Messaggio"
 	},
 };
 
