@@ -43,7 +43,7 @@ export class EmployeesOfflineService implements OnApplicationBootstrap {
   }
 
   async getEmployeesShort(): Promise<EmployeeShortDto[]> {
-    let employees =
+    const employees =
       await this.cacheManager.get<MockingJayEmployeeDto[]>('employees');
     return Promise.all(
       employees.map(async ({ id, email, name, surname }) => {
@@ -81,6 +81,7 @@ export class EmployeesOfflineService implements OnApplicationBootstrap {
     const { workPresence } = await this.userSettingsService.getUserSettings(
       employee.email,
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { picture, ...employeeWithPicture } = employee;
     return {
       ...employeeWithPicture,
