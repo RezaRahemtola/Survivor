@@ -13,7 +13,7 @@ import TokenAwareCacheInterceptor, {
   APIRequest,
 } from '../token-aware-cache.interceptor';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
-import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 import {
   ApiBearerAuth,
   ApiOkResponse,
@@ -38,8 +38,6 @@ export class EmployeesController {
   @ApiUnauthorizedResponse({
     description: 'Invalid access token',
   })
-  @CacheTTL(1000 * 60 * 15) // 15 minutes
-  @UseInterceptors(CacheInterceptor)
   @HttpCode(HttpStatus.OK)
   @Get()
   getEmployees(@Req() { user: { masuraoToken } }: APIRequest) {
@@ -54,8 +52,6 @@ export class EmployeesController {
     description: 'Invalid access token',
     type: MasuraoErrorDto,
   })
-  @CacheTTL(1000 * 60 * 15) // 15 minutes
-  @UseInterceptors(TokenAwareCacheInterceptor)
   @HttpCode(HttpStatus.OK)
   @Get('/me')
   getSelfEmployee(@Req() { user: { masuraoToken } }: APIRequest) {
@@ -70,8 +66,6 @@ export class EmployeesController {
     description: 'Invalid access token',
     type: MasuraoErrorDto,
   })
-  @CacheTTL(1000 * 60 * 15) // 15 minutes
-  @UseInterceptors(CacheInterceptor)
   @HttpCode(HttpStatus.OK)
   @Get('/:id')
   getEmployee(
