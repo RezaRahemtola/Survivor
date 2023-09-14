@@ -1,42 +1,52 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, TextInput, TouchableWithoutFeedback, useColorScheme } from "react-native";
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 
 import { useAtom } from "jotai";
 import { MessageReceiveAtom } from "@/stores/chat";
 import { getAccessToken } from "@/cache/accessToken";
-import { Icon } from "react-native-elements";
+import { Icon, SocialIcon } from "react-native-elements";
 
 export const MessageSender = () => {
 
     const [message, setMessage] = useState(String);
+    const [socket, setSocket] = useState(io());
+    const [Token, setToken] = useState<String | undefined>();
     const [, setMessageReceived] = useAtom(MessageReceiveAtom)
 
-    const socket = io('http://localhost:3000', {transportOptions: {
-        polling: {
-            extraHeaders: {
-                Authorization: `Bearer ${getAccessToken()}`
-            }
-        }
-      }});
-      socket.on('connect', function() {
-        console.log('Connectedsender');
-      });
+    useEffect (() => {
+        (async () => { const accessToken = await getAccessToken();
+            setToken(accessToken);
+            console.log(Token)
+            const socket = io(`${process.env.EXPO_PUBLIC_API_URL}`, {transportOptions: {
+                polling: {
+                    extraHeaders: {
+                        Authorization: "Bearer " + Token
+                    }
+                }
+              }});
+            setSocket(socket)
+              socket.on('connect', function() {
+                console.log('Connectedsender');
+              });
+        })()
+    }, []);
+    // console.log(Token)
     const sendMessage = (message: string) => {
         socket.emit('global-message', {message: `${message} (${socket.id})`});
         setMessageReceived(oldList => [...oldList, {message: message, email: "Me"}]);
         setMessage("");
     }
-    socket.on('events', function(data) {
-        console.log('event', data);
-    });
-    socket.on('exception', function(data) {
-        console.error('exception', data);
-    });
-      socket.on('disconnect', function() {
-        console.warn('Disconnected');
-    });
+    // socket.on('events', function(data) {
+    //     console.log('event', data);
+    // });
+    // socket.on('exception', function(data) {
+    //     console.error('exception', data);
+    // });
+    // socket.on('disconnect', function() {
+    //     console.warn('Disconnected');
+    // });
     const colorScheme = useColorScheme();
     const { t } = useTranslation();
 
