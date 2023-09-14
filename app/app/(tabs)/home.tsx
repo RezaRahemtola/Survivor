@@ -13,11 +13,6 @@ import { router } from "expo-router";
 import { io } from 'socket.io-client';
 import { MessageReceiveAtom } from "@/stores/chat";
 
-
-const receiveMessage = () => {
-
-};
-
 const HomeScreen = () => {
 	const [, setUserSettings] = useAtom(userSettingsAtom);
 	const [, setEditionWidgets] = useAtom(editionWidgetsAtom);
@@ -39,32 +34,40 @@ const HomeScreen = () => {
 		})();
 	}, []);
 
-	const socket = io('http://localhost:3000', {transportOptions: {
-        polling: {
-            extraHeaders: {
-                Authorization: `Bearer ${getAccessToken()}`
-            }
-        }
-      }});
+	useEffect(() => {
+        const createSocket = async () => {
+            const token = await getAccessToken();
+			const socket = io(`${process.env.EXPO_PUBLIC_API_URL}`, {transportOptions: {
+				polling: {
+					extraHeaders: {
+						Authorization: `Bearer ${token}`
+					}
+				}
+			}});
 
-	  socket.on('connect', function() {
-        console.log('ConnectedReceiver');
-      });
+			socket.on('connect', function() {
+			  console.log('ConnectedReceiver');
+			});
 
-	socket.on('global-message', function({sender, message}) {
-		console.log(`${sender} said: ${message}`);
-		setMessageReceived(oldList => [...oldList, {message: message, email: sender}]);
-	})
+		  socket.on('global-message', function({sender, message}) {
+			  console.log(`${sender} said: ${message}`);
+			  setMessageReceived(oldList => [...oldList, {message: message, email: sender}]);
+		  })
 
-	socket.on('events', function(data) {
-        console.log('Revent', data);
-    });
-    socket.on('exception', function(data) {
-        console.error('Rexception', data);
-    });
-      socket.on('disconnect', function() {
-        console.warn('RDisconnected');
-    });
+		  socket.on('events', function(data) {
+			  console.log('Revent', data);
+		  });
+
+		  socket.on('exception', function(data) {
+			  console.error('Rexception', data);
+		  });
+
+			socket.on('disconnect', function() {
+			  console.warn('RDisconnected');
+		  });
+        };
+        createSocket();
+    }, []);
 
 	return (
 		<View style={styles.container}>

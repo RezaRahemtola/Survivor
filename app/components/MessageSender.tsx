@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, TextInput, TouchableWithoutFeedback, useColorScheme } from "react-native";
-import { io } from 'socket.io-client';
-
+import { Socket, io } from 'socket.io-client';
 import { useAtom } from "jotai";
 import { MessageReceiveAtom } from "@/stores/chat";
 import { getAccessToken } from "@/cache/accessToken";
@@ -12,40 +11,43 @@ export const MessageSender = () => {
 
     const [message, setMessage] = useState(String);
     const [, setMessageReceived] = useAtom(MessageReceiveAtom)
-    const [token, setToken] = useState<string | undefined>();
+    const [socket, setSocket] = useState<Socket | undefined>(undefined);
 
     useEffect(() => {
         const createSocket = async () => {
-            const tkn = await getAccessToken();
-            setToken(tkn);
+            const token = await getAccessToken();
+            const socket = io(`${process.env.EXPO_PUBLIC_API_URL}`, {transportOptions: {
+                polling: {
+                    extraHeaders: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            }});
+            setSocket(socket);
+            socket.on('connect', function() {
+                console.log('Connectedsender');
+            });
+
+            socket.on('events', function(data) {
+                console.log('event', data);
+            });
+
+            socket.on('exception', function(data) {
+                console.error('exception', data);
+            });
+
+            socket.on('disconnect', function() {
+                console.warn('Disconnected');
+            });
         };
         createSocket();
     }, []);
 
-    const socket = io(`${process.env.EXPO_PUBLIC_API_URL}`, {transportOptions: {
-        polling: {
-            extraHeaders: {
-                Authorization: `Bearer ${token}`,
-            }
-        }
-    }});
-    socket.on('connect', function() {
-        console.log('Connectedsender');
-    });
     const sendMessage = (message: string) => {
-        socket.emit('global-message', {message: `${message} (${socket.id})`});
+        socket?.emit('global-message', {message: `${message} (${socket.id})`});
         setMessageReceived(oldList => [...oldList, {message: message, email: "Me"}]);
         setMessage("");
-    }
-    socket.on('events', function(data) {
-        console.log('event', data);
-    });
-    socket.on('exception', function(data) {
-        console.error('exception', data);
-    });
-    socket.on('disconnect', function() {
-        console.warn('Disconnected');
-    });
+    };
 
     const colorScheme = useColorScheme();
     const { t } = useTranslation();
