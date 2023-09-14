@@ -67,6 +67,8 @@ const HomeScreen = () => {
 	const [, setMessageReceived] = useAtom(MessageReceiveAtom)
 	const colorScheme = useColorScheme();
 	const [messages,] = useAtom(MessageReceiveAtom);
+	const [Token, setToken] = useState<String | undefined>();
+	const [Socket, setSocket] = useState(io())
 
 	useEffect(() => {
 		(async () => {
@@ -84,32 +86,38 @@ const HomeScreen = () => {
 		})();
 	}, []);
 
-	// const socket = io('http://localhost:3000', {transportOptions: {
-    //     polling: {
-    //         extraHeaders: {
-    //             Authorization: `Bearer ${getAccessToken()}`
-    //         }
-    //     }
-    //   }});
+	useEffect (() => {
+		const createSocket = async () => {
+            const tkn = await getAccessToken();
+            setToken(tkn);
+        };
+		const socket = io(`${process.env.EXPO_PUBLIC_API_URL}`, {transportOptions: {
+        polling: {
+            extraHeaders: {
+                Authorization: `Bearer ${Token}`
+            }
+        }
+      }});
+	  setSocket(socket);
+	}, []);
+	Socket.on('connect', function() {
+        console.log('ConnectedReceiver');
+    });
 
-	//   socket.on('connect', function() {
-    //     console.log('ConnectedReceiver');
-    //   });
+	Socket.on('global-message', function({sender, message}) {
+		console.log(`${sender} said: ${message}`);
+		setMessageReceived(oldList => [...oldList, {message: message, email: sender}]);
+	})
 
-	// socket.on('global-message', function({sender, message}) {
-	// 	console.log(`${sender} said: ${message}`);
-	// 	setMessageReceived(oldList => [...oldList, {message: message, email: sender}]);
-	// })
-
-	// socket.on('events', function(data) {
-    //     console.log('Revent', data);
-    // });
-    // socket.on('exception', function(data) {
-    //     console.error('Rexception', data);
-    // });
-    //   socket.on('disconnect', function() {
-    //     console.warn('RDisconnected');
-    // });
+	Socket.on('events', function(data) {
+        console.log('Revent', data);
+    });
+    Socket.on('exception', function(data) {
+        console.error('Rexception', data);
+    });
+    Socket.on('disconnect', function() {
+        console.warn('RDisconnected');
+    });
 
 	return (
 		<View style={styles.container}>
