@@ -9,8 +9,8 @@ import { MessageReceiveAtom } from "@/stores/chat";
 import { MessageReceiveData } from "@/types/chat";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
-import { getAccessToken } from "@/cache/accessToken";
 import { Card } from "react-native-elements";
+import { TrombiSocket } from "@/config/socket";
 
 const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
 	const colorScheme = useColorScheme();
@@ -84,8 +84,8 @@ const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
 							: { flexDirection: "row", justifyContent: "flex-start" }
 					}
 				>
-					<View style={[styles.messageReceived, { backgroundColor: colorScheme === "dark" ? "#FFFFFF" : "#000000" }]}>
-						<Text style={{ color: colorScheme === "dark" ? "#000000" : "#FFFFFF" }}> {message.at(-2)?.message} </Text>
+					<View style={[styles.messageReceived, { backgroundColor: colorScheme === "dark" ? "#666" : "#EEE" }]}>
+						<Text> {message.at(-2)?.message} </Text>
 					</View>
 				</View>
 				<View
@@ -114,7 +114,7 @@ const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
 							: { flexDirection: "row", justifyContent: "flex-start" }
 					}
 				>
-					<View style={[styles.messageReceived, { backgroundColor: colorScheme === "dark" ? "#FFFFFF" : "#000000" }]}>
+					<View style={[styles.messageReceived, { backgroundColor: colorScheme === "dark" ? "#666" : "#EEE" }]}>
 						<Text> {message.at(-1)?.message} </Text>
 					</View>
 				</View>
@@ -122,47 +122,6 @@ const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
 		);
 	}
 };
-
-export class TrombiSocket {
-	private static instance: Socket;
-
-	public static async getInstance(oldMessages: MessageReceiveData[], setMessages: any) {
-		if (!TrombiSocket.instance) {
-			const token = await getAccessToken();
-			TrombiSocket.instance = io(`${process.env.EXPO_PUBLIC_API_URL}`, {
-				transportOptions: {
-					polling: {
-						extraHeaders: {
-							Authorization: `Bearer ${token}`,
-						},
-					},
-				},
-			});
-			TrombiSocket.instance.on("connect", function () {
-				console.log("ConnectedReceiver");
-			});
-
-			TrombiSocket.instance.on("global-message", function ({ sender, message }) {
-				console.log(`${sender} said: ${message}`);
-				setMessages([...oldMessages, { message: message, email: sender }]);
-			});
-
-			TrombiSocket.instance.on("events", function (data) {
-				console.log("Revent", data);
-			});
-
-			TrombiSocket.instance.on("exception", function (data) {
-				console.error("Rexception", data);
-			});
-
-			TrombiSocket.instance.on("disconnect", function () {
-				console.warn("RDisconnected");
-			});
-		}
-
-		return TrombiSocket.instance;
-	}
-}
 
 const ChatWidget = () => {
 	const [messages, setMessageReceived] = useAtom(MessageReceiveAtom);
@@ -207,7 +166,7 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 	},
 	messageReceived: {
-		maxWidth: "50%",
+		maxWidth: "70%",
 		paddingHorizontal: 15,
 		paddingTop: 10,
 		paddingBottom: 15,

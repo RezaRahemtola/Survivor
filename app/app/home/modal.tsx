@@ -1,12 +1,23 @@
 import { MessageSender } from "@/components/MessageSender";
+import { TrombiSocket } from "@/config/socket";
 import { MessageReceiveAtom } from "@/stores/chat";
 import { useAtom } from "jotai";
-import { StyleSheet, Text, useColorScheme, View } from "react-native";
+import { useEffect, useState } from "react";
+import { StyleSheet, useColorScheme, View } from "react-native";
+import { Text } from "@/components/Themed";
 import { FlatList } from "react-native-gesture-handler";
+import { Socket } from 'socket.io-client';
 
 const ChatModal = () => {
 	const colorScheme = useColorScheme();
-	const [messages] = useAtom(MessageReceiveAtom);
+	const [socket, setSocket] = useState<Socket | undefined>(undefined);
+	const [messages, setMessageReceived] = useAtom(MessageReceiveAtom);
+
+	useEffect(() => {
+		(async () => {
+			setSocket(await TrombiSocket.getInstance(messages, setMessageReceived));
+		})();
+	}, []);
 
 	return (
 		<View style={styles.view}>
@@ -26,14 +37,13 @@ const ChatModal = () => {
 							}
 						>
 							<Text
-								style={[
-									colorScheme === "dark" ? styles.textWhite : styles.textBlack,
+								style={
 									{
 										marginRight: 20,
 										marginLeft: 20,
 										fontSize: 12,
-									},
-								]}
+									}
+								}
 							>
 								{item.email}
 							</Text>
@@ -48,14 +58,19 @@ const ChatModal = () => {
 									: { flexDirection: "row", justifyContent: "flex-start" }
 							}
 						>
-							<View style={colorScheme === "dark" ? styles.textWrapWhite : styles.textWrapBlack}>
-								<Text style={colorScheme === "dark" ? styles.textBlack : styles.textWhite}>{item.message}</Text>
+							<View style={[styles.textWrap, { backgroundColor: colorScheme === "dark" ? "#666" : "#DDD" }]}>
+								<Text>{item.message}</Text>
 							</View>
 						</View>
 					</View>
 				)}
 			/>
-			<MessageSender />
+			{ socket ? (
+				<MessageSender socket={socket}/>
+				) : (
+				<></>
+				)
+			}
 		</View>
 	);
 };
@@ -65,31 +80,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "flex-end",
 	},
-	textWrapBlack: {
-		maxWidth: "50%",
+	textWrap: {
+		maxWidth: "70%",
 		paddingHorizontal: 15,
 		paddingTop: 10,
 		paddingBottom: 15,
 		borderRadius: 25,
-		backgroundColor: "#000000",
 		margin: 10,
 		marginTop: 3,
-	},
-	textWrapWhite: {
-		maxWidth: "50%",
-		paddingHorizontal: 15,
-		paddingTop: 10,
-		paddingBottom: 15,
-		borderRadius: 25,
-		backgroundColor: "#FFFFFF",
-		margin: 10,
-		marginTop: 3,
-	},
-	textBlack: {
-		color: "#000000",
-	},
-	textWhite: {
-		color: "#FFFFFF",
 	},
 });
 

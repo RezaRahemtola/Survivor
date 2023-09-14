@@ -8,6 +8,7 @@ import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
 import WorkPresenceCard from "@/components/home/WorkPresenceCard";
 import CommunicationCard from "@/components/home/CommunicationCard";
 import ChatWidget from "@/components/home/ChatWidget";
+import { ScrollView } from "react-native-gesture-handler";
 
 const HomeScreen = () => {
 	const [, setUserSettings] = useAtom(userSettingsAtom);
@@ -31,9 +32,11 @@ const HomeScreen = () => {
 
 	return (
 		<>
-			<WorkPresenceCard />
-			<CommunicationCard />
-			<ChatWidget />
+			<ScrollView>
+				<WorkPresenceCard />
+				<CommunicationCard />
+				<ChatWidget />
+			</ScrollView>
 		</>
 	);
 };
