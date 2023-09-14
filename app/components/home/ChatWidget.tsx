@@ -72,7 +72,7 @@ const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
 				>
 					<Text style={[styles.TextMessage]}>
 						{" "}
-						{message.at(-1)?.email === "Me" ? t("chat.me") : message.at(-1)?.email}
+						{message.at(-2)?.email === "Me" ? t("chat.me") : message.at(-2)?.email}
 					</Text>
 				</View>
 				<View
@@ -86,7 +86,7 @@ const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
 					}
 				>
 					<View style={[styles.messageReceived, { backgroundColor: colorScheme === "dark" ? "#666" : "#EEE" }]}>
-						<Text> {message.at(-2)?.message} </Text>
+						<Text>{message.at(-2)?.message}</Text>
 					</View>
 				</View>
 				<View
@@ -141,6 +141,7 @@ const ChatWidget = () => {
 			{socket ? (
 				<Card containerStyle={{ backgroundColor }}>
 					<View style={styles.Header}>
+						<Text style={styles.title}>{t("tabs.chat")}</Text>
 						<TouchableWithoutFeedback onPress={() => router.push("/home/modal")}>
 							<Icon name="resize-full-screen" source="Entypo" size={25} style={styles.fullScreenIcon} />
 						</TouchableWithoutFeedback>
@@ -156,12 +157,6 @@ const ChatWidget = () => {
 };
 
 const styles = StyleSheet.create({
-	tchatPreview: {
-		marginTop: 20,
-		borderRadius: 20,
-		paddingBottom: 5,
-		marginHorizontal: 10,
-	},
 	fullScreenIcon: {
 		marginBottom: 10,
 	},
@@ -193,8 +188,16 @@ const styles = StyleSheet.create({
 		paddingTop: 20,
 	},
 	noMessage: {
-		fontSize: 25,
+		fontSize: 16,
 		alignSelf: "center",
+		right: 0,
+	},
+	title: {
+		textAlign: "center",
+		fontSize: 20,
+		fontWeight: "bold",
+		paddingBottom: 10,
+		marginRight: 80,
 	},
 });
 
