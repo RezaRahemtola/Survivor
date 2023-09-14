@@ -11,7 +11,7 @@ export const MessageSender = ({ socket }: { socket: Socket }) => {
 	const [, setMessageReceived] = useAtom(MessageReceiveAtom);
 
 	const sendMessage = (message: string) => {
-		socket.emit("global-message", { message: `${message} (${socket.id})` });
+		socket.emit("global-message", { message });
 		setMessageReceived((oldList) => [...oldList, { message: message, email: "Me" }]);
 		setMessage("");
 	};
