@@ -38,6 +38,7 @@ const translations = {
 		communication: "Strumenti di comunicazione",
 		edition: {
 			addTitle: "Aggiungi un widget",
+			noneAvailable: "Nessun widget disponibile",
 			edit: "Modificare",
 		},
 		selector: {

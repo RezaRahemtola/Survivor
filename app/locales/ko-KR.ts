@@ -38,6 +38,7 @@ const translations = {
 		communication: "커뮤니케이션 도구",
 		edition: {
 			addTitle: "위젯 추가",
+			noneAvailable: "사용 가능한 위젯이 없습니다.",
 			edit: "편집하다",
 		},
 		selector: {
