@@ -11,8 +11,8 @@ import {
 import JwtAuthGuard from '../auth/jwt-auth.guard';
 import { ChatMessagesService } from './chat-messages.service';
 import PaginationDto from '../pagination.dto';
-import { APIRequest } from '../token-aware-cache.interceptor';
 import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
+import { APIRequest } from '../http';
 
 @ApiTags('Chat Messages')
 @ApiBearerAuth()
