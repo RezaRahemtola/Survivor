@@ -17,12 +17,13 @@
   - Set your status (at the office 🏢, working remotely 💻, vacationing 🌴...)
     - Status updates can be sent in a Discord channel via webhook
   - Quick access to communication tools (Discord, Slack, Hangouts and Element, each one can be separately activated)
+  - Global application chat to discuss with your co-workers in realtime 💬
 - Widgets dashboard (see below)
   - Widget selection with preferences persisted in a database
   - Friendly UI to add, remove and reorder widgets (inspired from iPhones design)
 - Coworkers gallery
   - Search bar to filter by name
-  - Status displayed and possibility to open a profile in a modal to see detailled information
+  - Status displayed and possibility to open a profile in a modal to see detailed information
 - Widgets
   - Weather 🌥️ (using the current location of the user)
     - Current weather (temperature, wind, humidity...)
@@ -45,6 +46,9 @@
     - Minimal data fetched for everyone, with additional content fetched when opening the profile modal
     - Pictures lazy-loading (fetched only when they need to be displayed)
   - User profile fetched only when necessary
+- Mocking Jay mode 🐦‍⬛ (aka Stealth mode) for the API
+  - Can be activated with an env variable when the data source API is unavailable
+  - Keep the same behavior but fetch data from a JSON file (dump of the whole API created with [our script](./scripts/dump_api.py)) 
 
 ## Credits 🙏
 - The weather widgets are heavily inspired from [this weather application](https://github.com/stefanylaforest/react-native-weather-app)
