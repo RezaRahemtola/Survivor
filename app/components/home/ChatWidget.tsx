@@ -1,16 +1,17 @@
-import { Text, useThemeColor, View } from "@/components/Themed";
 import { useEffect, useState } from "react";
 import { StyleSheet, TouchableWithoutFeedback, useColorScheme } from "react-native";
-import Icon from "@/components/Icon";
-import { MessageSender } from "@/components/MessageSender";
 import { router } from "expo-router";
-import { io, Socket } from "socket.io-client";
-import { MessageReceiveAtom } from "@/stores/chat";
-import { MessageReceiveData } from "@/types/chat";
+import { Socket } from "socket.io-client";
 import { useTranslation } from "react-i18next";
 import { useAtom } from "jotai";
 import { Card } from "react-native-elements";
-import { TrombiSocket } from "@/config/socket";
+
+import { Text, useThemeColor, View } from "@/components/Themed";
+import Icon from "@/components/Icon";
+import { MessageSender } from "@/components/MessageSender";
+import { MessageReceiveAtom } from "@/stores/chat";
+import { MessageReceiveData } from "@/types/chat";
+import { ChatSocket } from "@/config/socket";
 
 const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
 	const colorScheme = useColorScheme();
@@ -131,7 +132,7 @@ const ChatWidget = () => {
 
 	useEffect(() => {
 		(async () => {
-			setSocket(await TrombiSocket.getInstance(messages, setMessageReceived));
+			setSocket(await ChatSocket.getInstance(setMessageReceived));
 		})();
 	}, []);
 
@@ -140,9 +141,8 @@ const ChatWidget = () => {
 			{socket ? (
 				<Card containerStyle={{ backgroundColor }}>
 					<View style={styles.Header}>
-						<Text style={styles.Title}>{t("chat.title")} </Text>
 						<TouchableWithoutFeedback onPress={() => router.push("/home/modal")}>
-							<Icon name="resize-full-screen" source="Entypo" size={25} style={{ alignSelf: "center" }} />
+							<Icon name="resize-full-screen" source="Entypo" size={25} style={styles.fullScreenIcon} />
 						</TouchableWithoutFeedback>
 					</View>
 					<LatestMessage message={messages} />
@@ -162,8 +162,8 @@ const styles = StyleSheet.create({
 		paddingBottom: 5,
 		marginHorizontal: 10,
 	},
-	Title: {
-		alignSelf: "center",
+	fullScreenIcon: {
+		marginBottom: 10,
 	},
 	messageReceived: {
 		maxWidth: "70%",
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
 	},
 	Header: {
 		flexDirection: "row",
-		justifyContent: "center",
+		justifyContent: "flex-end",
 		backgroundColor: "transparent",
 	},
 	MessageSender: {
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
 		paddingTop: 20,
 	},
 	NoMessage: {
-		fontSize: 40,
+		fontSize: 25,
 		alignSelf: "center",
 	},
 });

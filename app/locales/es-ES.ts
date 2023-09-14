@@ -90,10 +90,9 @@ const translations = {
 	},
 	chat: {
 		sendMessage: "Enviar un mensaje",
-		title: "últimos mensajes",
 		me: "Yo",
-		noMessage: "Ningún Mensaje"
-	}
+		noMessage: "Ningún Mensaje",
+	},
 };
 
 export default translations;

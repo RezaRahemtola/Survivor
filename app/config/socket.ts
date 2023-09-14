@@ -1,44 +1,38 @@
-import { getAccessToken } from '@/cache/accessToken';
-import { MessageReceiveData } from '@/types/chat';
-import { Socket, io } from 'socket.io-client';
+import { io, Socket } from "socket.io-client";
 
-export class TrombiSocket {
+import { getAccessToken } from "@/cache/accessToken";
+import { MessageReceiveData } from "@/types/chat";
+import axios from "@/config/axios";
+import { FullUser } from "@/types/user";
+
+export class ChatSocket {
 	private static instance: Socket;
+	private static email: string;
+	private static setupStarted: boolean = false;
 
-	public static async getInstance(oldMessages: MessageReceiveData[], setMessages: any) {
-		if (!TrombiSocket.instance) {
-			const token = await getAccessToken();
-			TrombiSocket.instance = io(`${process.env.EXPO_PUBLIC_API_URL}`, {
+	public static async getInstance(setMessages: any) {
+		if (!ChatSocket.instance && !ChatSocket.setupStarted) {
+			ChatSocket.setupStarted = true;
+			const accessToken = await getAccessToken();
+			const response = await axios.get<FullUser>("/employees/me", {
+				headers: { Authorization: `Bearer ${accessToken}` },
+			});
+			ChatSocket.email = response.data.email;
+			ChatSocket.instance = io(process.env.EXPO_PUBLIC_API_URL!, {
 				transportOptions: {
 					polling: {
 						extraHeaders: {
-							Authorization: `Bearer ${token}`,
+							Authorization: `Bearer ${accessToken}`,
 						},
 					},
 				},
 			});
-			TrombiSocket.instance.on("connect", function () {
-				console.log("ConnectedReceiver");
-			});
-
-			TrombiSocket.instance.on("global-message", function ({ sender, message }) {
-				console.log(`${sender} said: ${message}`);
-				setMessages([...oldMessages, { message: message, email: sender }]);
-			});
-
-			TrombiSocket.instance.on("events", function (data) {
-				console.log("Revent", data);
-			});
-
-			TrombiSocket.instance.on("exception", function (data) {
-				console.error("Rexception", data);
-			});
-
-			TrombiSocket.instance.on("disconnect", function () {
-				console.warn("RDisconnected");
+			ChatSocket.instance.on("global-message", ({ sender, message }) => {
+				const email = sender === ChatSocket.email ? "Me" : sender;
+				setMessages((prev: MessageReceiveData[]) => [...prev, { message, email }]);
 			});
 		}
 
-		return TrombiSocket.instance;
+		return ChatSocket.instance;
 	}
 }

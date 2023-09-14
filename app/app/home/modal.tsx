@@ -1,12 +1,12 @@
 import { MessageSender } from "@/components/MessageSender";
-import { TrombiSocket } from "@/config/socket";
+import { ChatSocket } from "@/config/socket";
 import { MessageReceiveAtom } from "@/stores/chat";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { StyleSheet, useColorScheme, View } from "react-native";
 import { Text } from "@/components/Themed";
 import { FlatList } from "react-native-gesture-handler";
-import { Socket } from 'socket.io-client';
+import { Socket } from "socket.io-client";
 
 const ChatModal = () => {
 	const colorScheme = useColorScheme();
@@ -15,7 +15,7 @@ const ChatModal = () => {
 
 	useEffect(() => {
 		(async () => {
-			setSocket(await TrombiSocket.getInstance(messages, setMessageReceived));
+			setSocket(await ChatSocket.getInstance(setMessageReceived));
 		})();
 	}, []);
 
@@ -37,13 +37,11 @@ const ChatModal = () => {
 							}
 						>
 							<Text
-								style={
-									{
-										marginRight: 20,
-										marginLeft: 20,
-										fontSize: 12,
-									}
-								}
+								style={{
+									marginRight: 20,
+									marginLeft: 20,
+									fontSize: 12,
+								}}
 							>
 								{item.email}
 							</Text>
@@ -65,12 +63,7 @@ const ChatModal = () => {
 					</View>
 				)}
 			/>
-			{ socket ? (
-				<MessageSender socket={socket}/>
-				) : (
-				<></>
-				)
-			}
+			{socket ? <MessageSender socket={socket} /> : <></>}
 		</View>
 	);
 };
