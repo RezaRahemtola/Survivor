@@ -56,6 +56,7 @@ const translations = {
 			rain: "雨",
 			loading: {
 				location: "正在等待位置数据...",
+				noneAvailable: "没有可用的小部件",
 				data: "等待天气数据...",
 			},
 		},

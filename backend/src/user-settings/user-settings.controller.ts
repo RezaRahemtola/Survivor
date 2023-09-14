@@ -9,7 +9,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserSettingsService } from './user-settings.service';
-import { APIRequest } from '../token-aware-cache.interceptor';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
 import { UserSettingsUpdateDto } from './dto/user-settings-update.dto';
 import {
@@ -20,6 +19,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import UserSettings from './entities/user-settings.entity';
+import { APIRequest } from '../http';
 
 @ApiTags('User settings')
 @ApiBearerAuth()

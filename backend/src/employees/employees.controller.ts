@@ -9,11 +9,8 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import TokenAwareCacheInterceptor, {
-  APIRequest,
-} from '../token-aware-cache.interceptor';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
-import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 import {
   ApiBearerAuth,
   ApiOkResponse,
@@ -22,13 +19,20 @@ import {
 } from '@nestjs/swagger';
 import MasuraoErrorDto from '../error.dto';
 import { EmployeeLongDto, EmployeeShortDto } from './dto/employee.dto';
+import { APIRequest } from '../http';
+import { EmployeesOfflineService } from './employees-offline.service';
+import { ConfigService } from '@nestjs/config';
 
 @ApiBearerAuth()
 @ApiTags('Employees')
 @UseGuards(JwtAuthGuard)
 @Controller('employees')
 export class EmployeesController {
-  constructor(private readonly employeesService: EmployeesService) {}
+  constructor(
+    private readonly employeesService: EmployeesService,
+    private readonly employeesOfflineService: EmployeesOfflineService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @ApiOkResponse({
     description: 'List of the employees',
@@ -38,11 +42,11 @@ export class EmployeesController {
   @ApiUnauthorizedResponse({
     description: 'Invalid access token',
   })
-  @CacheTTL(1000 * 60 * 15) // 15 minutes
-  @UseInterceptors(CacheInterceptor)
   @HttpCode(HttpStatus.OK)
   @Get()
   getEmployees(@Req() { user: { masuraoToken } }: APIRequest) {
+    if (this.configService.get<string>('MOCKING_JAY_MODE', 'false') === 'true')
+      return this.employeesOfflineService.getEmployeesShort();
     return this.employeesService.getEmployeesShort(masuraoToken);
   }
 
@@ -54,11 +58,11 @@ export class EmployeesController {
     description: 'Invalid access token',
     type: MasuraoErrorDto,
   })
-  @CacheTTL(1000 * 60 * 15) // 15 minutes
-  @UseInterceptors(TokenAwareCacheInterceptor)
   @HttpCode(HttpStatus.OK)
   @Get('/me')
-  getSelfEmployee(@Req() { user: { masuraoToken } }: APIRequest) {
+  getSelfEmployee(@Req() { user: { masuraoToken, email } }: APIRequest) {
+    if (this.configService.get<string>('MOCKING_JAY_MODE', 'false') === 'true')
+      return this.employeesOfflineService.getSelfEmployeeLong(email);
     return this.employeesService.getSelfEmployeeLong(masuraoToken);
   }
 
@@ -70,14 +74,14 @@ export class EmployeesController {
     description: 'Invalid access token',
     type: MasuraoErrorDto,
   })
-  @CacheTTL(1000 * 60 * 15) // 15 minutes
-  @UseInterceptors(CacheInterceptor)
   @HttpCode(HttpStatus.OK)
   @Get('/:id')
   getEmployee(
     @Param('id') id: number,
     @Req() { user: { masuraoToken } }: APIRequest,
   ) {
+    if (this.configService.get<string>('MOCKING_JAY_MODE', 'false') === 'true')
+      return this.employeesOfflineService.getEmployeeLong(id);
     return this.employeesService.getEmployeeLong(id, masuraoToken);
   }
 
@@ -96,6 +100,8 @@ export class EmployeesController {
     @Param('id') id: number,
     @Req() { user: { masuraoToken } }: APIRequest,
   ) {
+    if (this.configService.get<string>('MOCKING_JAY_MODE', 'false') === 'true')
+      return this.employeesOfflineService.getEmployeePicture(id);
     return this.employeesService.getEmployeePicture(id, masuraoToken);
   }
 }

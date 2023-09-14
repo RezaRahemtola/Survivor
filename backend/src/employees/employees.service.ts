@@ -1,9 +1,9 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import {
   MasuraoLongEmployeeDto,
   MasuraoShortEmployeeDto,
-} from './dto/masurao-results.dto';
+} from './dto/masurao-employee.dto';
 import {
   AUTHORIZED_AXIOS_CONFIGURATION,
   AUTHORIZED_HEADERS,
@@ -11,21 +11,30 @@ import {
 } from '../http';
 import { UserSettingsService } from '../user-settings/user-settings.service';
 import { EmployeeLongDto, EmployeeShortDto } from './dto/employee.dto';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class EmployeesService {
   constructor(
     private readonly httpService: HttpService,
     private readonly userSettingsService: UserSettingsService,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
 
   async getEmployeesShort(accessToken: string): Promise<EmployeeShortDto[]> {
-    const employees = await runHttpRequest<MasuraoShortEmployeeDto[]>(
-      this.httpService.axiosRef,
-      'get',
-      '/employees',
-      AUTHORIZED_AXIOS_CONFIGURATION(accessToken),
-    );
+    let employees =
+      await this.cacheManager.get<MasuraoShortEmployeeDto[]>('employees');
+    if (!employees) {
+      employees = await runHttpRequest<MasuraoShortEmployeeDto[]>(
+        this.httpService.axiosRef,
+        'get',
+        '/employees',
+        AUTHORIZED_AXIOS_CONFIGURATION(accessToken),
+      );
+      await this.cacheManager.set('employees', employees, 1000 * 60 * 15); // 15 minutes
+    }
     return Promise.all(
       employees.map(async (employee) => {
         const { workPresence } = await this.userSettingsService.getUserSettings(
@@ -40,12 +49,22 @@ export class EmployeesService {
   }
 
   async getSelfEmployeeLong(accessToken: string): Promise<EmployeeLongDto> {
-    const employee = await runHttpRequest<MasuraoLongEmployeeDto>(
-      this.httpService.axiosRef,
-      'get',
-      '/employees/me',
-      AUTHORIZED_AXIOS_CONFIGURATION(accessToken),
+    let employee = await this.cacheManager.get<MasuraoLongEmployeeDto>(
+      `selfEmployee/${accessToken}`,
     );
+    if (!employee) {
+      employee = await runHttpRequest<MasuraoLongEmployeeDto>(
+        this.httpService.axiosRef,
+        'get',
+        '/employees/me',
+        AUTHORIZED_AXIOS_CONFIGURATION(accessToken),
+      );
+      await this.cacheManager.set(
+        `selfEmployee/${accessToken}`,
+        employee,
+        1000 * 60 * 15,
+      ); // 15 minutes
+    }
     const { workPresence } = await this.userSettingsService.getUserSettings(
       employee.email,
     );
@@ -59,12 +78,18 @@ export class EmployeesService {
     id: number,
     accessToken: string,
   ): Promise<EmployeeLongDto> {
-    const employee = await runHttpRequest<MasuraoLongEmployeeDto>(
-      this.httpService.axiosRef,
-      'get',
-      `/employees/${id}`,
-      AUTHORIZED_AXIOS_CONFIGURATION(accessToken),
+    let employee = await this.cacheManager.get<MasuraoLongEmployeeDto>(
+      `employee/${id}`,
     );
+    if (!employee) {
+      employee = await runHttpRequest<MasuraoLongEmployeeDto>(
+        this.httpService.axiosRef,
+        'get',
+        `/employees/${id}`,
+        AUTHORIZED_AXIOS_CONFIGURATION(accessToken),
+      );
+      await this.cacheManager.set(`employee/${id}`, employee, 1000 * 60 * 15); // 15 minutes
+    }
     const { workPresence } = await this.userSettingsService.getUserSettings(
       employee.email,
     );
@@ -74,8 +99,8 @@ export class EmployeesService {
     };
   }
 
-  getEmployeePicture(id: number, accessToken: string): Promise<string> {
-    return runHttpRequest<ArrayBuffer>(
+  async getEmployeePicture(id: number, accessToken: string): Promise<string> {
+    const picture = await runHttpRequest<ArrayBuffer>(
       this.httpService.axiosRef,
       'get',
       `/employees/${id}/image`,
@@ -86,11 +111,8 @@ export class EmployeesService {
         },
         responseType: 'arraybuffer',
       },
-    )
-      .then((data) => Buffer.from(data).toString('base64'))
-      .catch(({ response: { data, status } }) => {
-        throw new HttpException(data, status);
-      });
+    );
+    return Buffer.from(picture).toString('base64');
   }
 
   getLeaders(accessToken: string): Promise<MasuraoShortEmployeeDto[]> {

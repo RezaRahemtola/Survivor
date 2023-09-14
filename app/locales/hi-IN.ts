@@ -38,6 +38,7 @@ const translations = {
 		communication: "संचार के साधन",
 		edition: {
 			addTitle: "एक विजेट जोड़ें",
+			noneAvailable: "कोई विजेट उपलब्ध नहीं है",
 			edit: "संपादन करना",
 		},
 		selector: {

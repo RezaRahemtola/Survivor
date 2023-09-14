@@ -9,7 +9,7 @@ import { Text, useThemeColor } from "@/components/Themed";
 import i18n from "@/config/i18n";
 import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
-import { interfaceThemes, LanguageType, ThemeType, UserSettings } from "@/types/settings";
+import { interfaceSchemes, LanguageType, ThemeType, UserSettings } from "@/types/settings";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
 import { applyUserSettings } from "@/utils/settings";
 
@@ -44,7 +44,7 @@ const UserSettingsCard = () => {
 	};
 
 	const onThemeChange = async (item: ThemeType) => {
-		const newSettings = { interfaceTheme: item };
+		const newSettings = { interfaceScheme: item };
 		await applyUserSettings(newSettings);
 		setUserSettings((prev) => ({ ...prev!, ...newSettings }));
 	};
@@ -72,7 +72,7 @@ const UserSettingsCard = () => {
 				<Text style={styles.settingsText}>{t("user.settings.language")}</Text>
 				<SelectDropdown
 					data={languages}
-					defaultValue={languages.find((language) => language.locale === userSettings?.language)}
+					defaultValue={languages.find((language) => language.locale === userSettings?.language) ?? "en"}
 					buttonTextAfterSelection={(item: Language) => `${item.icon} ${item.name}`}
 					rowTextForSelection={(item: Language) => `${item.icon} ${item.name}`}
 					onSelect={onLanguageChange}
@@ -81,8 +81,8 @@ const UserSettingsCard = () => {
 			<View style={styles.settingsView}>
 				<Text style={styles.settingsText}>{t("user.settings.theme")}</Text>
 				<SelectDropdown
-					data={[...interfaceThemes]}
-					defaultValue={interfaceThemes.find((theme) => theme === userSettings?.interfaceTheme) ?? "auto"}
+					data={[...interfaceSchemes]}
+					defaultValue={interfaceSchemes.find((theme) => theme === userSettings?.interfaceTheme) ?? "auto"}
 					buttonTextAfterSelection={(item: ThemeType) => t(`user.theme.${item}`)}
 					rowTextForSelection={(item: ThemeType) => t(`user.theme.${item}`)}
 					onSelect={onThemeChange}
