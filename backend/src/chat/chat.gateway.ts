@@ -24,6 +24,7 @@ import { BadRequestTransformationFilter } from './bad-request-transformation.fil
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { AuthService } from 'src/auth/auth.service';
+import { ChatMessagesService } from './chat-messages.service';
 
 @UsePipes(new ValidationPipe())
 @UseFilters(BadRequestTransformationFilter)
@@ -42,16 +43,18 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     private readonly cacheManager: Cache,
     @Inject(AuthService)
     private readonly authService: AuthService,
+    private readonly chatMessagesService: ChatMessagesService,
   ) {}
 
   @SubscribeMessage('global-message')
-  handleGlobalMessage(
+  async handleGlobalMessage(
     @MessageBody()
     { message }: GlobalMessageSendDto,
     @MessageBody('user')
     { email }: JwtPayload,
   ) {
     this.server.emit('global-message', { sender: email, message });
+    await this.chatMessagesService.saveMessage(message, email);
   }
 
   @SubscribeMessage('direct-message')
@@ -64,6 +67,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const clients = await this.cacheManager.get<Set<string>>(
       `e2is/${receiver}`,
     );
+    await this.chatMessagesService.saveMessage(message, email, receiver);
     if (!clients) {
       return;
     }
