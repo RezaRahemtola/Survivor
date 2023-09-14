@@ -9,6 +9,7 @@ import { UserSettingsModule } from './user-settings/user-settings.module';
 import { ChatModule } from './chat/chat.module';
 import { MotdModule } from './motd/motd.module';
 import UserSettings from './user-settings/entities/user-settings.entity';
+import ChatMessage from './chat/entities/chat-message.entity';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import UserSettings from './user-settings/entities/user-settings.entity';
         username: config.getOrThrow<string>('POSTGRES_USERNAME'),
         password: config.getOrThrow<string>('POSTGRES_PASSWORD'),
         database: config.getOrThrow<string>('POSTGRES_DATABASE'),
-        entities: [UserSettings],
+        entities: [UserSettings, ChatMessage],
         synchronize: true,
       }),
     }),
