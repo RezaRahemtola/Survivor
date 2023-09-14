@@ -4,10 +4,7 @@ import {
   NotFoundException,
   OnApplicationBootstrap,
 } from '@nestjs/common';
-import {
-  MasuraoLongEmployeeDto,
-  MasuraoShortEmployeeDto,
-} from './dto/masurao-employee.dto';
+import { MasuraoShortEmployeeDto } from './dto/masurao-employee.dto';
 import { UserSettingsService } from '../user-settings/user-settings.service';
 import { EmployeeLongDto, EmployeeShortDto } from './dto/employee.dto';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
@@ -62,13 +59,15 @@ export class EmployeesOfflineService implements OnApplicationBootstrap {
 
   async getSelfEmployeeLong(email: string): Promise<EmployeeLongDto> {
     const employees =
-      await this.cacheManager.get<MasuraoLongEmployeeDto[]>(`employees`);
+      await this.cacheManager.get<MockingJayEmployeeDto[]>(`employees`);
     const employee = employees.find((e) => e.email === email);
     if (!employee) throw new NotFoundException('Employee not found');
     const { workPresence } =
       await this.userSettingsService.getUserSettings(email);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { picture, ...employeeWithoutPicture } = employee;
     return {
-      ...employee,
+      ...employeeWithoutPicture,
       workPresence,
     };
   }
