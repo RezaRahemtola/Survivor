@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import {
   MasuraoLongEmployeeDto,
   MasuraoShortEmployeeDto,
-} from './dto/masurao-results.dto';
+} from './dto/masurao-employee.dto';
 import {
   AUTHORIZED_AXIOS_CONFIGURATION,
   AUTHORIZED_HEADERS,

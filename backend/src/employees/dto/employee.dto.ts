@@ -1,7 +1,7 @@
 import {
   MasuraoLongEmployeeDto,
   MasuraoShortEmployeeDto,
-} from './masurao-results.dto';
+} from './masurao-employee.dto';
 import { IsEnum } from 'class-validator';
 import {
   WORK_PRESENCES,
