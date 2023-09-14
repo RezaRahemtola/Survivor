@@ -77,6 +77,7 @@ const translations = {
 	},
 	chat: {
 		sendMessage: "Send a message",
+		title: "latest messages",
 	}
 };
 
