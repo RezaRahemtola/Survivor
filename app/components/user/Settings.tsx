@@ -72,7 +72,7 @@ const UserSettingsCard = () => {
 				<Text style={styles.settingsText}>{t("user.settings.language")}</Text>
 				<SelectDropdown
 					data={languages}
-					defaultValue={languages.find((language) => language.locale === userSettings?.language)}
+					defaultValue={languages.find((language) => language.locale === userSettings?.language) ?? "en"}
 					buttonTextAfterSelection={(item: Language) => `${item.icon} ${item.name}`}
 					rowTextForSelection={(item: Language) => `${item.icon} ${item.name}`}
 					onSelect={onLanguageChange}
