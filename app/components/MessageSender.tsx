@@ -10,8 +10,6 @@ import { Icon, SocialIcon } from "react-native-elements";
 export const MessageSender = () => {
 
     const [message, setMessage] = useState(String);
-    const [socket, setSocket] = useState(io());
-    const [Token, setToken] = useState<String | undefined>();
     const [, setMessageReceived] = useAtom(MessageReceiveAtom)
     const [socket, setSocket] = useState<Socket | undefined>(undefined);
 
