@@ -1,5 +1,5 @@
 import { ComponentProps } from "react";
-import { AntDesign, FontAwesome, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, FontAwesome, MaterialCommunityIcons, MaterialIcons, Entypo } from "@expo/vector-icons";
 import { useThemeColor } from "@/components/Themed";
 
 type FontAwesomeIconProps = {
@@ -17,6 +17,11 @@ type MaterialIconsIconProps = {
 	source: "MaterialIcons";
 } & ComponentProps<typeof MaterialIcons>;
 
+type EntypoIconProps = {
+	name: ComponentProps<typeof Entypo>["name"];
+	source: "Entypo";
+} & ComponentProps<typeof Entypo>;
+
 type MaterialCommunityIconsIconProps = {
 	name: ComponentProps<typeof MaterialCommunityIcons>["name"];
 	source: "MaterialCommunityIcons";
@@ -26,7 +31,8 @@ export type IconProps =
 	| FontAwesomeIconProps
 	| AntDesignIconProps
 	| MaterialIconsIconProps
-	| MaterialCommunityIconsIconProps;
+	| MaterialCommunityIconsIconProps
+	| EntypoIconProps;
 
 const Icon = ({ name, source, ...props }: IconProps) => {
 	const color = useThemeColor({}, "text");
@@ -39,7 +45,9 @@ const Icon = ({ name, source, ...props }: IconProps) => {
 		return <MaterialIcons name={name} color={color} {...props} />;
 	} else if (source === "MaterialCommunityIcons") {
 		return <MaterialCommunityIcons name={name} color={color} {...props} />;
-	}
+	} else if (source === "Entypo") {
+		return <Entypo name={name} color={color} {...props} />
+	};
 };
 
 export default Icon;

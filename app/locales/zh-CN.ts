@@ -81,12 +81,18 @@ const translations = {
 		gallery: "画廊",
 		widgets: "小部件",
 		user: "用户",
+		chat: "一般聊天",
 	},
 	screen: {
 		missing: {
 			title: "该屏幕不存在。",
 			homeRedirection: "转到主屏幕！",
 		},
+	},
+	chat: {
+		sendMessage: "发送一个消息",
+		me: "我",
+		noMessage: "没有消息",
 	},
 };
 

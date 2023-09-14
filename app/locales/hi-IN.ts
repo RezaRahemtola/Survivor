@@ -81,12 +81,18 @@ const translations = {
 		gallery: "गैलरी",
 		widgets: "विजेट",
 		user: "उपयोगकर्ता",
+		chat: "सामान्य बातचीत",
 	},
 	screen: {
 		missing: {
 			title: "यह स्क्रीन मौजूद नहीं है.",
 			homeRedirection: "होम स्क्रीन पर जाएँ!",
 		},
+	},
+	chat: {
+		sendMessage: "एक संदेश भेजो",
+		me: "मी",
+		noMessage: "संदेश नाही",
 	},
 };
 

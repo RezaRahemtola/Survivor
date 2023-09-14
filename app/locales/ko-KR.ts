@@ -81,12 +81,18 @@ const translations = {
 		gallery: "갤러리",
 		widgets: "위젯",
 		user: "사용자",
+		chat: "일반채팅",
 	},
 	screen: {
 		missing: {
 			title: "이 화면은 존재하지 않습니다.",
 			homeRedirection: "홈 화면으로 이동!",
 		},
+	},
+	chat: {
+		sendMessage: "메세지를 보내다",
+		me: "나",
+		noMessage: "메시지 없음",
 	},
 };
 

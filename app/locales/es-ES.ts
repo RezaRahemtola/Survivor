@@ -81,12 +81,18 @@ const translations = {
 		gallery: "Galería",
 		widgets: "Widgets",
 		user: "Usuario",
+		chat: "Charla general",
 	},
 	screen: {
 		missing: {
 			title: "Esta pantalla no existe.",
 			homeRedirection: "Ir a la pantalla de inicio!",
 		},
+	},
+	chat: {
+		sendMessage: "Enviar un mensaje",
+		me: "Yo",
+		noMessage: "Ningún Mensaje",
 	},
 };
 

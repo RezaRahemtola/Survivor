@@ -1,12 +1,15 @@
 import { useEffect } from "react";
+import { ScrollView } from "react-native";
+import i18next from "i18next";
+import { useAtom } from "jotai";
+
 import { getAccessToken } from "@/cache/accessToken";
 import axios from "@/config/axios";
 import { UserSettings } from "@/types/settings";
-import i18next from "i18next";
-import { useAtom } from "jotai";
 import { editionWidgetsAtom, userSettingsAtom } from "@/stores/widgets";
 import WorkPresenceCard from "@/components/home/WorkPresenceCard";
 import CommunicationCard from "@/components/home/CommunicationCard";
+import GeneralChatCard from "@/components/chat/GeneralChatCard";
 
 const HomeScreen = () => {
 	const [, setUserSettings] = useAtom(userSettingsAtom);
@@ -29,10 +32,11 @@ const HomeScreen = () => {
 	}, []);
 
 	return (
-		<>
+		<ScrollView>
 			<WorkPresenceCard />
 			<CommunicationCard />
-		</>
+			<GeneralChatCard />
+		</ScrollView>
 	);
 };
 

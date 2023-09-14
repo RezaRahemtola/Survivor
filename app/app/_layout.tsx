@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import { Slot, SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import "@/config/i18n";
+import { useTranslation } from "react-i18next";
 import { useColorScheme } from "@/components/Themed";
 
 export {
@@ -45,12 +46,14 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
 	const colorScheme = useColorScheme();
+	const { t } = useTranslation();
 
 	return (
 		<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
 			<Stack>
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 				<Stack.Screen name="user/modal" options={{ presentation: "modal", headerShown: false }} />
+				<Stack.Screen name="chat/modal" options={{ presentation: "modal", title: t("tabs.chat") }} />
 				<Stack.Screen name="widgets/add" options={{ presentation: "modal", headerShown: false }} />
 				<Stack.Screen name="widgets/webview" options={{ presentation: "modal", headerShown: false }} />
 			</Stack>

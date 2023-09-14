@@ -81,12 +81,18 @@ const translations = {
 		gallery: "Galerie",
 		widgets: "Widgets",
 		user: "Profil",
+		chat: "Discussion générale",
 	},
 	screen: {
 		missing: {
 			title: "Cet page n'existe pas.",
 			homeRedirection: "Revenir à la page d'accueil !",
 		},
+	},
+	chat: {
+		sendMessage: "Envoyer un message",
+		me: "Moi",
+		noMessage: "Aucun Message",
 	},
 };
 
