@@ -1,5 +1,9 @@
 const translations = {
 	user: {
+		motd: {
+			title: "今日のメッセージ",
+			placeholder: "まだメッセージはありません",
+		},
 		settings: {
 			title: "設定",
 			reset: "リセット",

@@ -1,5 +1,9 @@
 const translations = {
 	user: {
+		motd: {
+			title: "Messaggio del giorno",
+			placeholder: "Nessun messaggio del giorno ancora",
+		},
 		settings: {
 			title: "Impostazioni",
 			reset: "Ripristina",

@@ -1,5 +1,9 @@
 const translations = {
 	user: {
+		motd: {
+			title: "今日的消息",
+			placeholder: "今天还没有消息",
+		},
 		settings: {
 			title: "设置",
 			reset: "重置",
