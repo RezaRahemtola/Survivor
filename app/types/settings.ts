@@ -2,8 +2,8 @@ import { WidgetType } from "@/types/widgets";
 
 export type LanguageType = "fr" | "en" | "es" | "zh" | "hi" | "pt" | "ja" | "de" | "ko" | "it";
 
-export const interfaceThemes = ["auto", "dark", "light"] as const;
-export type ThemeType = (typeof interfaceThemes)[number];
+export const interfaceSchemes = ["auto", "dark", "light"] as const;
+export type ThemeType = (typeof interfaceSchemes)[number];
 
 export const workPresences = ["office", "remote", "vacations", "client"] as const;
 export type WorkPresence = (typeof workPresences)[number];
@@ -17,6 +17,6 @@ export const workPresenceIcons: Record<WorkPresence, string> = {
 export type UserSettings = {
 	widgets: WidgetType[];
 	language: LanguageType;
-	interfaceTheme: ThemeType;
+	interfaceScheme: ThemeType;
 	workPresence: WorkPresence;
 };

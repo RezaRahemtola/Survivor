@@ -20,10 +20,10 @@ export type ViewProps = ThemeProps & DefaultView["props"];
 export function useColorScheme() {
 	const [userSettings] = useAtom(userSettingsAtom);
 	const deviceTheme = defaultUseColorScheme() ?? "light";
-	const userTheme = userSettings?.interfaceTheme
-		? userSettings.interfaceTheme === "auto"
+	const userTheme = userSettings?.interfaceScheme
+		? userSettings.interfaceScheme === "auto"
 			? deviceTheme
-			: userSettings.interfaceTheme
+			: userSettings.interfaceScheme
 		: undefined;
 
 	return userTheme ?? deviceTheme;
