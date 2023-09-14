@@ -82,9 +82,9 @@ export class EmployeesOfflineService implements OnApplicationBootstrap {
       employee.email,
     );
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { picture, ...employeeWithPicture } = employee;
+    const { picture, ...employeeWithoutPicture } = employee;
     return {
-      ...employeeWithPicture,
+      ...employeeWithoutPicture,
       workPresence,
     };
   }
