@@ -23,4 +23,4 @@ jobs:
           private_key: ${{ secrets.SSH_KEY }}
           scp_source: .
           scp_target: ${{ secrets.SCP_TARGET }}
-          after_script: cd ${{ secrets.SCP_TARGET }} && cp /root/.env.survivor ./backend/.env && docker compose up survivor_api --build -d
+          after_script: cd ${{ secrets.SCP_TARGET }} && cp /root/.env.survivor ./backend/.env && docker compose down survivor_api --remove-orphans --rmi all -v && docker compose up survivor_api --build -d
