@@ -3,6 +3,8 @@ export type MessageReceiveData = {
 	email: string;
 };
 
+export type ChatMessageType = "global" | "direct";
+
 export type Message = {
 	id: number;
 	sender: string;

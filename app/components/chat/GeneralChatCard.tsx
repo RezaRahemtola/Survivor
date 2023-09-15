@@ -9,7 +9,6 @@ import { Card } from "react-native-elements";
 import { Text, useThemeColor, View } from "@/components/Themed";
 import Icon from "@/components/Icon";
 import { MessageSender } from "@/components/MessageSender";
-import { MessageReceiveAtom } from "@/stores/chat";
 import { Message, MessageReceiveData } from "@/types/chat";
 import { ChatSocket } from "@/config/socket";
 import SingleMessage from "@/components/chat/SingleMessage";
@@ -17,6 +16,7 @@ import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
 import { ActivityIndicator } from "react-native-paper";
 import { userSettingsAtom } from "@/stores/widgets";
+import { globalMessageReceiveAtom } from "@/stores/chat";
 
 const LatestMessages = ({ messages }: { messages: MessageReceiveData[] }) => {
 	const { t } = useTranslation();
@@ -39,7 +39,7 @@ const LatestMessages = ({ messages }: { messages: MessageReceiveData[] }) => {
 
 const GeneralChatCard = () => {
 	const [userSettings] = useAtom(userSettingsAtom);
-	const [messages, setMessageReceived] = useAtom(MessageReceiveAtom);
+	const [messages, setMessageReceived] = useAtom(globalMessageReceiveAtom);
 	const [socket, setSocket] = useState<Socket | undefined>(undefined);
 	const [isLoading, setIsLoading] = useState(true);
 	const { t } = useTranslation();
@@ -59,7 +59,7 @@ const GeneralChatCard = () => {
 					message: message.content,
 				})),
 			);
-			setSocket(await ChatSocket.getInstance(setMessageReceived));
+			setSocket(await ChatSocket.getInstance("global", setMessageReceived, userSettings!.email));
 			setIsLoading(false);
 		})();
 	}, []);
@@ -68,7 +68,16 @@ const GeneralChatCard = () => {
 		<Card containerStyle={{ backgroundColor }}>
 			<View style={styles.Header}>
 				<Text style={styles.title}>{t("tabs.chat")}</Text>
-				<TouchableWithoutFeedback onPress={() => router.push("/chat/modal")}>
+				<TouchableWithoutFeedback
+					onPress={() =>
+						router.push({
+							pathname: "/chat/modal",
+							params: {
+								type: "global",
+							},
+						})
+					}
+				>
 					<Icon name="resize-full-screen" source="Entypo" size={25} style={styles.fullScreenIcon} />
 				</TouchableWithoutFeedback>
 			</View>

@@ -6,16 +6,20 @@ import { Socket } from "socket.io-client";
 
 import { MessageSender } from "@/components/MessageSender";
 import { ChatSocket } from "@/config/socket";
-import { MessageReceiveAtom } from "@/stores/chat";
+import { globalMessageReceiveAtom } from "@/stores/chat";
 import SingleMessage from "@/components/chat/SingleMessage";
+import { MessageReceiveData } from "@/types/chat";
+import { userSettingsAtom } from "@/stores/widgets";
 
-const ChatModal = () => {
+const ChatModal = (options: { type: "global" } | { type: "direct"; withUser: string }) => {
 	const [socket, setSocket] = useState<Socket | undefined>(undefined);
-	const [messages, setMessageReceived] = useAtom(MessageReceiveAtom);
+	const [messages, setMessageReceived] =
+		options.type === "global" ? useAtom(globalMessageReceiveAtom) : useState<MessageReceiveData[]>([]);
+	const [userSettings] = useAtom(userSettingsAtom);
 
 	useEffect(() => {
 		(async () => {
-			setSocket(await ChatSocket.getInstance(setMessageReceived));
+			setSocket(await ChatSocket.getInstance(options.type, setMessageReceived, userSettings!.email));
 		})();
 	}, []);
 
