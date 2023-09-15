@@ -16,6 +16,7 @@ import SingleMessage from "@/components/chat/SingleMessage";
 import axios from "@/config/axios";
 import { getAccessToken } from "@/cache/accessToken";
 import { ActivityIndicator } from "react-native-paper";
+import { userSettingsAtom } from "@/stores/widgets";
 
 const LatestMessages = ({ messages }: { messages: MessageReceiveData[] }) => {
 	const { t } = useTranslation();
@@ -37,6 +38,7 @@ const LatestMessages = ({ messages }: { messages: MessageReceiveData[] }) => {
 };
 
 const GeneralChatCard = () => {
+	const [userSettings] = useAtom(userSettingsAtom);
 	const [messages, setMessageReceived] = useAtom(MessageReceiveAtom);
 	const [socket, setSocket] = useState<Socket | undefined>(undefined);
 	const [isLoading, setIsLoading] = useState(true);
@@ -53,7 +55,7 @@ const GeneralChatCard = () => {
 			const fetchedMessages = response.data.reverse();
 			setMessageReceived(
 				fetchedMessages.map<MessageReceiveData>((message) => ({
-					email: message.sender,
+					email: message.sender === userSettings?.email ? "Me" : message.sender,
 					message: message.content,
 				})),
 			);
