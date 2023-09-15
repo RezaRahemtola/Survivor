@@ -63,6 +63,8 @@ export class EmployeesController {
   @HttpCode(HttpStatus.OK)
   @Get('/leaders')
   getLeaders(@Req() { user: { masuraoToken } }: APIRequest) {
+    if (this.configService.get<string>('MOCKING_JAY_MODE', 'false') === 'true')
+      return this.employeesOfflineService.getLeaders();
     return this.employeesService.getLeaders(masuraoToken);
   }
 
