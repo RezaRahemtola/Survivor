@@ -22,7 +22,7 @@ import { EmployeeLongDto, EmployeeShortDto } from './dto/employee.dto';
 import { APIRequest } from '../http';
 import { EmployeesOfflineService } from './employees-offline.service';
 import { ConfigService } from '@nestjs/config';
-import { MasuraoShortEmployeeDto } from './dto/masurao-results.dto';
+import { MasuraoShortEmployeeDto } from './dto/masurao-employee.dto';
 
 @ApiBearerAuth()
 @ApiTags('Employees')
