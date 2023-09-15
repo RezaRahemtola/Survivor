@@ -21,7 +21,7 @@ const ChatModal = () => {
 
 	return (
 		<View style={styles.view}>
-			<FlatList inverted data={[...messages].reverse()} renderItem={({ item }) => <SingleMessage message={item} />} />
+			<FlatList data={messages} renderItem={({ item }) => <SingleMessage message={item} />} />
 			{socket ? <MessageSender socket={socket} /> : <></>}
 		</View>
 	);
@@ -31,15 +31,6 @@ const styles = StyleSheet.create({
 	view: {
 		flex: 1,
 		justifyContent: "flex-end",
-	},
-	textWrap: {
-		maxWidth: "70%",
-		paddingHorizontal: 15,
-		paddingTop: 10,
-		paddingBottom: 15,
-		borderRadius: 25,
-		margin: 10,
-		marginTop: 3,
 	},
 });
 

@@ -20,7 +20,7 @@ const SingleMessage = ({ message }: { message: MessageReceiveData }) => {
 						: { flexDirection: "row", justifyContent: "flex-start" },
 				]}
 			>
-				<Text style={[styles.TextMessage]}> {message.email === "Me" ? t("chat.me") : message.email}</Text>
+				<Text style={[styles.TextMessage]}>{message.email === "Me" ? t("chat.me") : message.email}</Text>
 			</View>
 			<View
 				style={
@@ -33,7 +33,7 @@ const SingleMessage = ({ message }: { message: MessageReceiveData }) => {
 				}
 			>
 				<View style={[styles.messageReceived, { backgroundColor: colorScheme === "dark" ? "#666" : "#EEE" }]}>
-					<Text> {message.message} </Text>
+					<Text>{message.message}</Text>
 				</View>
 			</View>
 		</>
