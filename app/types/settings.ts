@@ -15,6 +15,7 @@ export const workPresenceIcons: Record<WorkPresence, string> = {
 };
 
 export type UserSettings = {
+	email: string;
 	widgets: WidgetType[];
 	language: LanguageType;
 	interfaceScheme: ThemeType;
