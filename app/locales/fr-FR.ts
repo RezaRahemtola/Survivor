@@ -22,7 +22,7 @@ const translations = {
 			light: "Clair",
 		},
 		workPresence: {
-			title: "Status de travail",
+			title: "Statut de travail",
 			office: "Bureau",
 			remote: "Télétravail",
 			vacations: "En vacances",
