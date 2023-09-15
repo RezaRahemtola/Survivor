@@ -10,24 +10,27 @@ import { Text, useThemeColor, View } from "@/components/Themed";
 import Icon from "@/components/Icon";
 import { MessageSender } from "@/components/MessageSender";
 import { MessageReceiveAtom } from "@/stores/chat";
-import { MessageReceiveData } from "@/types/chat";
+import { Message, MessageReceiveData } from "@/types/chat";
 import { ChatSocket } from "@/config/socket";
 import SingleMessage from "@/components/chat/SingleMessage";
+import axios from "@/config/axios";
+import { getAccessToken } from "@/cache/accessToken";
+import { ActivityIndicator } from "react-native-paper";
 
-const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
+const LatestMessages = ({ messages }: { messages: MessageReceiveData[] }) => {
 	const { t } = useTranslation();
 
-	if (message.length === 0) {
+	if (messages.length === 0) {
 		return <Text style={styles.noMessage}>{t("chat.noMessage")}</Text>;
 	}
-	if (message.length === 1) {
-		return <SingleMessage message={message.at(-1)!} />;
+	if (messages.length === 1) {
+		return <SingleMessage message={messages.at(-1)!} />;
 	}
-	if (message.length > 1) {
+	if (messages.length > 1) {
 		return (
 			<>
-				<SingleMessage message={message.at(-2)!} />
-				<SingleMessage message={message.at(-1)!} />
+				<SingleMessage message={messages.at(-2)!} />
+				<SingleMessage message={messages.at(-1)!} />
 			</>
 		);
 	}
@@ -36,32 +39,46 @@ const LatestMessage = ({ message }: { message: MessageReceiveData[] }) => {
 const GeneralChatCard = () => {
 	const [messages, setMessageReceived] = useAtom(MessageReceiveAtom);
 	const [socket, setSocket] = useState<Socket | undefined>(undefined);
+	const [isLoading, setIsLoading] = useState(true);
 	const { t } = useTranslation();
 	const backgroundColor = useThemeColor({}, "background");
 
 	useEffect(() => {
 		(async () => {
+			const accessToken = await getAccessToken();
+			const response = await axios.get<Message[]>("/messages", {
+				params: { take: 25 },
+				headers: { Authorization: `Bearer ${accessToken}` },
+			});
+			const fetchedMessages = response.data.reverse();
+			setMessageReceived(
+				fetchedMessages.map<MessageReceiveData>((message) => ({
+					email: message.sender,
+					message: message.content,
+				})),
+			);
 			setSocket(await ChatSocket.getInstance(setMessageReceived));
+			setIsLoading(false);
 		})();
 	}, []);
 
 	return (
-		<>
-			{socket ? (
-				<Card containerStyle={{ backgroundColor }}>
-					<View style={styles.Header}>
-						<Text style={styles.title}>{t("tabs.chat")}</Text>
-						<TouchableWithoutFeedback onPress={() => router.push("/chat/modal")}>
-							<Icon name="resize-full-screen" source="Entypo" size={25} style={styles.fullScreenIcon} />
-						</TouchableWithoutFeedback>
-					</View>
-					<LatestMessage message={messages} />
+		<Card containerStyle={{ backgroundColor }}>
+			<View style={styles.Header}>
+				<Text style={styles.title}>{t("tabs.chat")}</Text>
+				<TouchableWithoutFeedback onPress={() => router.push("/chat/modal")}>
+					<Icon name="resize-full-screen" source="Entypo" size={25} style={styles.fullScreenIcon} />
+				</TouchableWithoutFeedback>
+			</View>
+			{socket && !isLoading ? (
+				<>
+					<LatestMessages messages={messages} />
 					<MessageSender socket={socket} />
-				</Card>
+				</>
 			) : (
-				<></>
+				<ActivityIndicator size="large" />
 			)}
-		</>
+		</Card>
 	);
 };
 
