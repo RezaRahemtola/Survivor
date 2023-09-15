@@ -53,14 +53,16 @@ const GeneralChatCard = () => {
 				headers: { Authorization: `Bearer ${accessToken}` },
 			});
 			const fetchedMessages = response.data.reverse();
-			setMessageReceived(
-				fetchedMessages.map<MessageReceiveData>((message) => ({
-					email: message.sender === userSettings?.email ? "Me" : message.sender,
-					message: message.content,
-				})),
-			);
-			setSocket(await ChatSocket.getInstance("global", setMessageReceived, userSettings!.email));
-			setIsLoading(false);
+			if (userSettings) {
+				setMessageReceived(
+					fetchedMessages.map<MessageReceiveData>((message) => ({
+						email: message.sender === userSettings.email ? "Me" : message.sender,
+						message: message.content,
+					})),
+				);
+				setSocket(await ChatSocket.getInstance("global", setMessageReceived, userSettings.email));
+				setIsLoading(false);
+			}
 		})();
 	}, []);
 

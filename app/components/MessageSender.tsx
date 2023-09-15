@@ -5,14 +5,14 @@ import { Socket } from "socket.io-client";
 import Icon from "@/components/Icon";
 import { useColorScheme } from "@/components/Themed";
 
-export const MessageSender = ({ socket }: { socket: Socket }) => {
+export const MessageSender = ({ socket, toUser }: { toUser?: string; socket: Socket }) => {
 	const [message, setMessage] = useState(String);
 
 	const colorScheme = useColorScheme();
 	const { t } = useTranslation();
 
 	const sendMessage = (message: string) => {
-		socket.emit("global-message", { message });
+		socket.emit(`${toUser ? "direct" : "global"}-message`, { message, receiver: toUser });
 		setMessage("");
 	};
 

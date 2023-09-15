@@ -54,6 +54,19 @@ const GalleryCard = ({ user }: { user: User }) => {
 							</View>
 						</View>
 					</View>
+					<TouchableWithoutFeedback
+						onPress={() =>
+							router.push({
+								pathname: "/chat/modal",
+								params: {
+									type: "direct",
+									withUser: user.email,
+								},
+							})
+						}
+					>
+						<Icon name="message" source="Entypo" size={26} />
+					</TouchableWithoutFeedback>
 				</Card>
 			</TouchableWithoutFeedback>
 		</View>

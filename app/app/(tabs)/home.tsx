@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
 import i18next from "i18next";
 import { useAtom } from "jotai";

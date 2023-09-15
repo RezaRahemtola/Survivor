@@ -53,7 +53,7 @@ function RootLayoutNav() {
 			<Stack>
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 				<Stack.Screen name="user/modal" options={{ presentation: "modal", headerShown: false }} />
-				<Stack.Screen name="chat/modal" options={{ presentation: "modal", title: t("tabs.chat") }} />
+				<Stack.Screen name="chat/modal" options={{ presentation: "modal", title: "Chat" }} />
 				<Stack.Screen name="widgets/add" options={{ presentation: "modal", headerShown: false }} />
 				<Stack.Screen name="widgets/webview" options={{ presentation: "modal", headerShown: false }} />
 			</Stack>
