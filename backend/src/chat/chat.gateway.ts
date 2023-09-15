@@ -64,9 +64,14 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @MessageBody('user')
     { email }: JwtPayload,
   ) {
-    const clients = await this.cacheManager.get<Set<string>>(
-      `e2is/${receiver}`,
-    );
+    const clients = [
+      ...((await this.cacheManager.get<Set<string> | undefined>(
+        `e2is/${receiver}`,
+      )) ?? []),
+      ...((await this.cacheManager.get<Set<string> | undefined>(
+        `e2is/${email}`,
+      )) ?? []),
+    ];
     await this.chatMessagesService.saveMessage(message, email, receiver);
     if (!clients) {
       return;
@@ -98,7 +103,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async handleDisconnect(client: Socket) {
     const email = await this.cacheManager.get(`i2e/${client.id}`);
     let clientIds = [
-      ...(await this.cacheManager.get<Set<string>>(`e2is/${email}`)),
+      ...((await this.cacheManager.get<Set<string> | undefined>(
+        `e2is/${email}`,
+      )) ?? []),
     ];
     clientIds = clientIds.filter((clientId) => clientId !== client.id);
     if (clientIds.length === 0) await this.cacheManager.del(`e2is/${email}`);
