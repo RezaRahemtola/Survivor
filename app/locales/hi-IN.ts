@@ -1,5 +1,9 @@
 const translations = {
 	user: {
+		motd: {
+			title: "दिन का संदेश",
+			placeholder: "अभी तक कोई संदेश नहीं",
+		},
 		settings: {
 			title: "समायोजन",
 			reset: "रीसेट",

@@ -6,11 +6,9 @@ import {
   HttpStatus,
   Patch,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { MotdService } from './motd.service';
 import { MotdDto } from './dto/motd.dto';
-import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
 import { LeaderGuard } from '../leader.guard';
 import {
@@ -36,8 +34,6 @@ export class MotdController {
   @ApiUnauthorizedResponse({
     description: 'Invalid access token',
   })
-  @CacheTTL(1000 * 60 * 60) // 1 hour
-  @UseInterceptors(CacheInterceptor)
   @HttpCode(HttpStatus.OK)
   @Get()
   async getMotd(): Promise<MotdDto> {

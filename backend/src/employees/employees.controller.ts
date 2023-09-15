@@ -22,6 +22,7 @@ import { EmployeeLongDto, EmployeeShortDto } from './dto/employee.dto';
 import { APIRequest } from '../http';
 import { EmployeesOfflineService } from './employees-offline.service';
 import { ConfigService } from '@nestjs/config';
+import { MasuraoShortEmployeeDto } from './dto/masurao-results.dto';
 
 @ApiBearerAuth()
 @ApiTags('Employees')
@@ -48,6 +49,21 @@ export class EmployeesController {
     if (this.configService.get<string>('MOCKING_JAY_MODE', 'false') === 'true')
       return this.employeesOfflineService.getEmployeesShort();
     return this.employeesService.getEmployeesShort(masuraoToken);
+  }
+
+  @ApiOkResponse({
+    description: 'Employees that are leaders',
+    type: MasuraoShortEmployeeDto,
+    isArray: true,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid access token',
+    type: MasuraoErrorDto,
+  })
+  @HttpCode(HttpStatus.OK)
+  @Get('/leaders')
+  getLeaders(@Req() { user: { masuraoToken } }: APIRequest) {
+    return this.employeesService.getLeaders(masuraoToken);
   }
 
   @ApiOkResponse({

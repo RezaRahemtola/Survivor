@@ -24,6 +24,7 @@ export type BaseUserWithPicture = BaseUser & Partial<UserPicture>;
 export type User = BaseUserWithPicture & Partial<FullUserData>;
 export type FullUser = BaseUserWithPicture & FullUserData;
 export type ModalUser = Omit<FullUser, "id" | "subordinates">;
+export type LeaderUser = Omit<BaseUser, "workPresence">;
 
 export const isFullUser = (user: User | FullUser): user is User => {
 	return (user as User).work !== undefined;
